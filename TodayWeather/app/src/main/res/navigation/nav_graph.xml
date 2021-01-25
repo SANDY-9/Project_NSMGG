@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dailyMainFragment">
+    <fragment
+        android:id="@+id/dailyMainFragment"
+        android:name="com.example.todayweather.view.main.MainFragment"
+        android:label="fragment_daily_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_dailyMainFragment_to_searchMainFragment"
+            app:destination="@id/searchMainFragment" />
+        <action
+            android:id="@+id/action_dailyMainFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchMainFragment"
+        android:name="com.example.todayweather.view.search.SearchMainFragment"
+        android:label="fragment_search_main"
+        tools:layout="@layout/fragment_search_main" >
+        <action
+            android:id="@+id/action_searchMainFragment_to_dailyMainFragment"
+            app:destination="@id/dailyMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dailyFragment"
+        android:name="com.example.todayweather.view.basic.DailyFragment"
+        android:label="fragment_daily"
+        tools:layout="@layout/fragment_daily" >
+        <action
+            android:id="@+id/action_dailyFragment_to_weeklyFragment"
+            app:destination="@id/weeklyFragment" />
+        <action
+            android:id="@+id/action_dailyFragment_to_dailyDetailFragment"
+            app:destination="@id/dailyDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/weeklyFragment"
+        android:name="com.example.todayweather.view.basic.WeeklyFragment"
+        android:label="fragment_weekly"
+        tools:layout="@layout/fragment_weekly" >
+        <action
+            android:id="@+id/action_weeklyFragment_to_dailyFragment"
+            app:destination="@id/dailyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dailyDetailFragment"
+        android:name="com.example.todayweather.view.basic.DailyDetailFragment"
+        android:label="fragment_daily_detail"
+        tools:layout="@layout/fragment_daily_detail" >
+        <action
+            android:id="@+id/action_dailyDetailFragment_to_weeklyFragment"
+            app:destination="@id/weeklyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchBeforeFragment"
+        android:name="com.example.todayweather.view.search.SearchBeforeFragment"
+        android:label="SearchBeforeFragment" >
+        <action
+            android:id="@+id/action_searchBeforeFragment_to_searchFailFragment"
+            app:destination="@id/searchFailFragment" />
+        <action
+            android:id="@+id/action_searchBeforeFragment_to_searchSuccessFragment"
+            app:destination="@id/searchSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFailFragment"
+        android:name="com.example.todayweather.view.search.SearchFailFragment"
+        android:label="fragment_search_fail"
+        tools:layout="@layout/fragment_search_fail" />
+    <fragment
+        android:id="@+id/searchSuccessFragment"
+        android:name="com.example.todayweather.view.search.SearchSuccessFragment"
+        android:label="fragment_search_success"
+        tools:layout="@layout/fragment_search_success" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.todayweather.view.setting.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_dailyMainFragment"
+            app:destination="@id/dailyMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookmarkWeeklyFragment"
+        android:name="com.example.todayweather.view.bookmark.BookmarkWeeklyFragment"
+        android:label="fragment_bookmark_weekly"
+        tools:layout="@layout/fragment_bookmark_weekly" >
+        <action
+            android:id="@+id/action_bookmarkWeeklyFragment_to_bookmarkDailyFragment"
+            app:destination="@id/bookmarkDailyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookmarkDailyFragment"
+        android:name="com.example.todayweather.view.bookmark.BookmarkDailyFragment"
+        android:label="fragment_bookmark_daily"
+        tools:layout="@layout/fragment_bookmark_daily" >
+        <action
+            android:id="@+id/action_bookmarkDailyFragment_to_bookmarkWeeklyFragment"
+            app:destination="@id/bookmarkWeeklyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookmarkMainFragment"
+        android:name="com.example.todayweather.view.bookmark.BookmarkMainFragment"
+        android:label="fragment_bookmark_main"
+        tools:layout="@layout/fragment_bookmark_main" />
+</navigation>
