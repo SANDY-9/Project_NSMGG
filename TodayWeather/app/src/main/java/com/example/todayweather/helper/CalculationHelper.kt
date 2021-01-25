@@ -105,11 +105,3 @@ object CalculationHelper {
     }
     
 }
-
-fun main() {
-    val testX = CalculationHelper.convertGRID_X(37.54102, 127.0495)
-    val testY = CalculationHelper.convertGRID_Y(37.54102, 127.0495)
-    val testTemp = CalculationHelper.convertFeelTemperature(-8.9, 5.0)
-
-    println("정상적으로 작동 잘되나 테스트 = ${testX}, ${testY}, ${testTemp}")
-}
