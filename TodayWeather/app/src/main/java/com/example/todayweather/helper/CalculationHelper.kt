@@ -3,14 +3,14 @@ package com.example.todayweather.helper
 /**
  * @author SANDY
  * @email nnal0256@naver.com
- * @created 2021-01-25
+ * @created 2021-01-24
  * @desc 기상청 X, Y값 변환, 체감온도 등 변환해야 하는 값 계산
  */
 
 object CalculationHelper {
 
     //위도, 경도를 기상청 격자 x값으로 바꿔주는 함수 (lat_X : 위도, lng_Y : 경도)
-    fun convertGRID_X(lat_X: Double, lng_Y: Double) : Int {
+    fun convertGRID_X (lat_X: Double, lng_Y: Double) : Int {
 
         //불변 값
         val RE = 6371.00877 // 지구 반경(km)
@@ -50,7 +50,7 @@ object CalculationHelper {
     }
 
     //위도, 경도를 기상청 격자 y값으로 바꿔주는 함수 (lat_X : 위도, lng_Y : 경도)
-    fun convertGRID_Y(lat_X: Double, lng_Y: Double) : Int {
+    fun convertGRID_Y (lat_X: Double, lng_Y: Double) : Int {
 
         //불변값
         val RE = 6371.00877 // 지구 반경(km)
@@ -91,7 +91,7 @@ object CalculationHelper {
     }
 
     //체감온도 계산하는 함수
-    fun convertFeelTemperature (T:Double, V:Double) : Int {
+    fun convertFeelTemperature (T: Double, V: Double) : Int {
         var result = 0.0
         if (V > 4.8 ) {
             result = 13.12+0.6215*T-11.37*(Math.pow(V, 0.16)) + 0.3965*(Math.pow(V, 0.16))*T
@@ -103,5 +103,4 @@ object CalculationHelper {
         }
         return result.toInt()
     }
-    
 }
