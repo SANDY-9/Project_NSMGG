@@ -7,6 +7,5 @@ package com.example.todayweather.model
  * @desc
  */
 class WeeklyWeather() {
-//선누 멍췅이
-    //선누 화내지마
+
 }
