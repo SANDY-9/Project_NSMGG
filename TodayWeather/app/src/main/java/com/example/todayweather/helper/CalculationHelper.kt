@@ -23,7 +23,6 @@ object CalculationHelper {
         val YO = 136.0 // 기1준점 Y좌표(GRID)
 
         val DEGRAD = Math.PI / 180.0      //Math.PI : 원주율(파이)값
-        val RADDEG = 180.0 / Math.PI
         val re = RE / GRID
         val slat1 = SLAT1 * DEGRAD
         val slat2 = SLAT2 * DEGRAD
@@ -63,7 +62,6 @@ object CalculationHelper {
         val YO = 136.0 // 기1준점 Y좌표(GRID)
 
         val DEGRAD = Math.PI / 180.0 //degree(도->라디안)   *Math.PI : 원주율(파이)값
-        val RADDEG = 180.0 / Math.PI //radian(라디안->도)
         val re = RE / GRID
         val slat1 = SLAT1 * DEGRAD
         val slat2 = SLAT2 * DEGRAD
