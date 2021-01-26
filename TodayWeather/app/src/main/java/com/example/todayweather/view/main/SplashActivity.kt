@@ -7,6 +7,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.example.todayweather.R
 import com.example.todayweather.databinding.ActivitySplashBinding
+import com.example.todayweather.helper.CalculationHelper
 import java.time.temporal.TemporalAdjusters.next
 
 class SplashActivity : AppCompatActivity() {
@@ -27,6 +28,4 @@ class SplashActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
-
-
 }

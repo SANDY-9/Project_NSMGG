@@ -90,7 +90,7 @@ object CalculationHelper {
         return Math.floor(ro - ra * Math.cos(theta) + YO + 0.5).toInt()
     }
 
-    //체감온도 계산하는 함수
+    //체감온도 계산하는 함수 T = 온도, V = 풍속
     fun convertFeelTemperature (T: Double, V: Double) : Int {
         var result = 0.0
         if (V > 4.8 ) {
