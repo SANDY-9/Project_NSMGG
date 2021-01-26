@@ -7,4 +7,5 @@ package com.example.todayweather.model
  * @desc
  */
 class WeeklyWeather() {
+
 }
