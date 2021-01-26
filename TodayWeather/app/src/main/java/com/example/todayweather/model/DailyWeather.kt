@@ -6,4 +6,4 @@ package com.example.todayweather.model
  * @created 2021-01-23
  * @desc
  */
-data class DailyWeather(var temperatuer : String)
+data class DailyWeather(var temperature : String)
