@@ -8,4 +8,6 @@ package com.example.todayweather.helper
  */
 class LocationCodeHelper {
 
+    //GPS 설정 관련
+
 }
