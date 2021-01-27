@@ -12,9 +12,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.room.*
 import com.example.todayweather.R
 import com.example.todayweather.databinding.ActivitySplashBinding
 import com.example.todayweather.helper.CalculationHelper
+import com.example.todayweather.model.CityWeatherTable
+import com.example.todayweather.model.NationalWeatherTable
+import com.example.todayweather.view.main.SplashActivity.AppDatabase.Companion.getInstance
 import java.util.*
 
 class SplashActivity : AppCompatActivity(), LocationListener {
@@ -28,6 +32,9 @@ class SplashActivity : AppCompatActivity(), LocationListener {
     lateinit var si : String
     lateinit var gu : String
     lateinit var dong : String
+
+    lateinit var NationalWeatherDB : AppDatabase // room db
+
     var realX : Double? = null
     var realY : Double? = null
 
@@ -35,9 +42,9 @@ class SplashActivity : AppCompatActivity(), LocationListener {
         super.onCreate(savedInstanceState)
         permissioncheck()
         binding = DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_splash)
-        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
         binding.activity = this
-
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
+        NationalWeatherDB = getInstance(this)!!
     }
 
     private fun registerLocationUpdates() {
@@ -86,7 +93,7 @@ class SplashActivity : AppCompatActivity(), LocationListener {
 
     override fun onPause() {
         super.onPause()
-        //프로그램 멈추면 위치 그만 탐색
+        //프로그램 멈추거나 인텐트 이동하면 위치 그만 탐색
         locationManager.removeUpdates(this)
     }
 
@@ -132,5 +139,67 @@ class SplashActivity : AppCompatActivity(), LocationListener {
         gu = address.split(" ")[2]
         dong = address.split(" ")[3]
         return address
+    }
+
+    @Dao
+    interface NationalWeatherInterface { // 동네예보
+        // db 전부 호출
+        @Query("SELECT * FROM dongnae")
+        suspend fun getAll(): List<NationalWeatherTable>
+
+        // 동 이름으로 데이터 찾기
+        @Query("SELECT * FROM dongnae WHERE name3 LIKE :dong")
+        suspend fun getChoice(dong : String): List<NationalWeatherTable>
+
+        // nx, ny 값으로 데이터 가져오기
+        @Query("SELECT * FROM dongnae WHERE x = :x AND y = :y")
+        suspend fun getXY(x : Int, y : Int): List<NationalWeatherTable>
+
+        @Insert
+        suspend fun insert(nationalWeatherTable: NationalWeatherTable)
+
+        @Query("DELETE FROM dongnae")
+        suspend fun deleteAll()
+    }
+
+    @Dao
+    interface CityWeatherInterface { // 중기예보
+        @Query("SELECT * FROM weekly")
+        suspend fun getAll(): List<CityWeatherTable>
+
+        // 도시, 지역 이름으로 코드 찾기
+        @Query("SELECT weeklyCode FROM weekly WHERE region LIKE :region1 AND city LIKE :city1")
+        suspend fun getRegId( region1: String, city1: String): String
+
+        // 지역 이름으로 코드 찾기
+        @Query("SELECT weeklyCode FROM weekly WHERE region LIKE :region1")
+        suspend fun getRegIdRegion( region1: String): String
+
+        // db insert
+        @Insert
+        suspend fun insert(cityWeatherTable: CityWeatherTable)
+
+        // delete db
+        @Query("DELETE FROM weekly")
+        suspend fun deleteAll()
+    }
+
+    @Database(entities = [NationalWeatherTable::class, CityWeatherTable::class], version = 1, exportSchema = false)
+    abstract class AppDatabase: RoomDatabase() {
+        abstract fun nationalWeatherInterface(): NationalWeatherInterface
+        abstract fun cityWeatherInterface(): CityWeatherInterface
+
+        companion object{
+            private var INSTANCE: AppDatabase? = null
+
+            fun getInstance(context: Context): AppDatabase? {
+                if (INSTANCE == null) {
+                    synchronized(AppDatabase::class) {
+                        INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "db").build()
+                    }
+                }
+                return INSTANCE
+            }
+        }
     }
 }

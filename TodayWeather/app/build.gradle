@@ -86,4 +86,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.8.0'          // Retrofit 라이브러리
+    implementation 'com.squareup.retrofit2:converter-gson:2.8.0'    // 서버에서 가져온 json객체를 gson으로 간단히 파싱
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'   // Retrofit을 Rx형태로 사용하도록 설정해주는 어댑터 라이브러리
 }
