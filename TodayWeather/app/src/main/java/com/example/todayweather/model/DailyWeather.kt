@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName
  * @created 2021-01-23
  * @desc
  */
+
 data class DailyWeather(var temperature : String)
 
 // 내장 db data class
@@ -21,7 +22,6 @@ data class NationalWeatherTable(
     val x: Int,
     val y: Int
 )
-
 
 // retrofit을 사용한 api 통신 data class(동네예보)
 data class ResponseDTONow (

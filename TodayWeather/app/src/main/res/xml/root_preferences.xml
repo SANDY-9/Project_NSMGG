@@ -7,7 +7,8 @@
 
         <PreferenceScreen
             android:summary="1.0"
-            app:title="버전정보"/>
+            app:title="버전정보"
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
