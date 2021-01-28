@@ -1,24 +1,42 @@
 package com.example.todayweather.view.main
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.res.AssetManager
 import android.location.*
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.pm.PackageInfoCompat
 import androidx.databinding.DataBindingUtil
 import androidx.room.*
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.todayweather.R
 import com.example.todayweather.databinding.ActivitySplashBinding
 import com.example.todayweather.helper.CalculationHelper
 import com.example.todayweather.model.CityWeatherTable
 import com.example.todayweather.model.NationalWeatherTable
 import com.example.todayweather.view.main.SplashActivity.AppDatabase.Companion.getInstance
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 import java.util.*
 
 class SplashActivity : AppCompatActivity(), LocationListener {
@@ -29,9 +47,9 @@ class SplashActivity : AppCompatActivity(), LocationListener {
     lateinit var locationManager: LocationManager
 
     lateinit var address : String
-    lateinit var si : String
-    lateinit var gu : String
-    lateinit var dong : String
+//    lateinit var si : String
+//    lateinit var gu : String
+//    lateinit var dong : String
 
     lateinit var NationalWeatherDB : AppDatabase // room db
 
@@ -43,10 +61,12 @@ class SplashActivity : AppCompatActivity(), LocationListener {
         permissioncheck()
         binding = DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_splash)
         binding.activity = this
-        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
         NationalWeatherDB = getInstance(this)!!
+        SharedPref()
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
     }
 
+    // 위치파악시 GPS, Network provider사용 구분 함수
     private fun registerLocationUpdates() {
         // LocationManager.GPS_PROVIDER 또는 LocationManager.NETWORK_PROVIDER 를 얻어온다.
         val provider = locationManager.getBestProvider(Criteria(), true)
@@ -68,7 +88,7 @@ class SplashActivity : AppCompatActivity(), LocationListener {
         Log.d("[test]",location.toString())
 
         if (location != null){
-            location.let { onLocationChanged(it!!) }
+            location.let { onLocationChanged(it) }
 
             // 위치 정보 취득 시작
             locationManager.requestLocationUpdates(provider, 400, 1f, this)
@@ -82,8 +102,46 @@ class SplashActivity : AppCompatActivity(), LocationListener {
 
     //  버튼 클릭 이벤트
     fun nextActivity(view : View) {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        firebaseRemoteConfig.fetch(0).addOnCompleteListener{task ->
+            if (task.isSuccessful){
+                firebaseRemoteConfig.fetchAndActivate()
+                fun_DialogDisplay(firebaseRemoteConfig)
+            }else{
+                AlertDialog.Builder(this)
+                        .setTitle("ERROR")
+                        .setMessage("앱을 실행하는데 오류가 발생하였습니다. 다시 시도해주시기 바랍니다.")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", DialogInterface.OnClickListener {
+                            dialogInterface, i -> this.finish()}).show()
+            }
+        }
+    }
+
+    fun fun_GetAppVersion() : String { // gradle(app)에서 설정한 versionName 읽어오는 것
+        val packageManager = this.packageManager
+        return packageManager.getPackageInfo(this.packageName, PackageManager.GET_ACTIVITIES).versionName
+    }
+    fun fun_DialogDisplay(firebaseRemoteConfig: FirebaseRemoteConfig){
+        val strVersionName = fun_GetAppVersion() // Version from gradle(app)
+        val strLatestVersion = firebaseRemoteConfig.getString("message_version") // Version from firebase (firebase에서 설정한 key을 가져옴)
+
+        if (strVersionName!=strLatestVersion){ // 앱 버전이 서로 다른 경우 끄기.
+            AlertDialog.Builder(this)
+                    .setTitle("Update")
+                    .setMessage("최신 버전의 앱을 설치 후 재실행 해주시기 바랍니다.")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", DialogInterface.OnClickListener {
+                        dialogInterface, i -> this.finish()
+                    }).show()
+        } else {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("address", address)
+            intent.putExtra("x", realX)
+            intent.putExtra("y", realY)// 앱 버전이 같으면 MainActivity로 이동
+            startActivity(intent)
+            this.finish()
+        }
     }
 
     override fun onResume() {
@@ -110,34 +168,25 @@ class SplashActivity : AppCompatActivity(), LocationListener {
 
     // 위치가 바뀌면 호출되는 함수
     override fun onLocationChanged(location: Location) {
-        if (location.provider == LocationManager.GPS_PROVIDER) {
-            // 위치 값 가져오는 것들
-            realX = location.latitude
-            realY = location.longitude
-            val convertX = CalculationHelper.convertGRID_X(realX!!, realY!!)
-            val convertY = CalculationHelper.convertGRID_Y(realX!!, realY!!)
-            Log.d("[test_gps]", "x = $convertX, y = $convertY")
-        } else {
-            //Network 위치제공자에 의한 위치변화
-            //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
-            // 위치 값 가져오는 것들
-            realX = location.latitude
-            realY = location.longitude
-            val convertX = CalculationHelper.convertGRID_X(realX!!, realY!!)
-            val convertY = CalculationHelper.convertGRID_Y(realX!!, realY!!)
-            Log.d("[test_network]", "x = $convertX, y = $convertY")
-        }
+        // 위치 값 가져오는 것들
+        realX = location.latitude
+        realY = location.longitude
+        val convertX = CalculationHelper.convertGRID_X(realX!!, realY!!)
+        val convertY = CalculationHelper.convertGRID_Y(realX!!, realY!!)
+        Log.d("[test_gps]", "x = $convertX, y = $convertY , location = $location")
+
         address = getAddress(realX!!,realY!!)
     }
 
     //  현재 주소 구하기
     private fun getAddress(lat: Double, lng: Double): String {
         val geocoder = Geocoder(this, Locale.getDefault()) //주소 구하기 객체
-        val address : String = geocoder.getFromLocation(lat, lng, 1)[0].getAddressLine(0)
+        val address : String = geocoder.getFromLocation(lat, lng, 1)[0].getAddressLine(0) // 현재 주소
         Log.e("[address]", address)
-        si = address.split(" ")[1]
-        gu = address.split(" ")[2]
-        dong = address.split(" ")[3]
+        // 시 구 동으로 나눔
+//        si = address.split(" ")[1]
+//        gu = address.split(" ")[2]
+//        dong = address.split(" ")[3]
         return address
     }
 
@@ -189,17 +238,85 @@ class SplashActivity : AppCompatActivity(), LocationListener {
         abstract fun nationalWeatherInterface(): NationalWeatherInterface
         abstract fun cityWeatherInterface(): CityWeatherInterface
 
-        companion object{
+        companion object {
             private var INSTANCE: AppDatabase? = null
 
             fun getInstance(context: Context): AppDatabase? {
                 if (INSTANCE == null) {
                     synchronized(AppDatabase::class) {
-                        INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "db").build()
+                        INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "weatherDB").build()
                     }
+                } else {
+                    Log.d("[test_instance]", "인스턴스 null 아님")
                 }
                 return INSTANCE
             }
+        }
+    }
+
+    // 최초 실행시 한 번만 실행하게 함
+    private fun SharedPref() {
+        var pref : SharedPreferences = getSharedPreferences("isDB", Activity.MODE_PRIVATE)
+        var download : Boolean = pref.getBoolean("isDB",false)
+        if (!download){
+            Log.d("Is first Time?", "firstD")
+
+            val editer : SharedPreferences.Editor = pref.edit()
+            editer.putBoolean("isDB",true)
+            editer.apply()
+            editer.commit()
+            DongnaeReadTxt()
+        }else{
+            Log.d("Is first Time?", "not firstD");
+        }
+    }
+
+    private fun DongnaeReadTxt(){
+
+        //val input = NationalWeatherTable(1114062500,"seoul", "jongrogu", "dasandong", 60, 126) // 임의로 써서 넣은 함수
+
+        val assetManager: AssetManager = resources.assets
+        val inputStream: InputStream = assetManager.open("dongnae.txt")
+
+        inputStream.bufferedReader().readLines().forEach {
+            var token = it.split("\t")
+            var input = NationalWeatherTable(token[0].toLong(), token[1], token[2], token[3], token[4].toInt(), token[5].toInt())
+            CoroutineScope(Dispatchers.Main).launch {
+                NationalWeatherDB!!.nationalWeatherInterface().insert(input)
+            }
+//             Log.d("file_test", token.toString())
+        }
+// 여기까지 db생성 코드
+
+        // db 확인하는 코드
+        CoroutineScope(Dispatchers.Main).launch {
+            //NationalWeatherDB.nationalWeatherInterface().deleteAll()
+            //NationalWeatherDB.nationalWeatherInterface().insert(input)
+            var output = NationalWeatherDB!!.nationalWeatherInterface().getAll()
+            Log.d("db_test", "$output")
+        }
+        WeeklyReadTxt()
+    }
+    private fun WeeklyReadTxt(){
+
+        val assetManager: AssetManager = resources.assets
+        val inputStream: InputStream = assetManager.open("weekly.txt")
+
+        inputStream.bufferedReader().readLines().forEach {
+            var token = it.split("\t")
+            var input = CityWeatherTable(token[0], token[1], token[2])
+            CoroutineScope(Dispatchers.Main).launch {
+                NationalWeatherDB!!.cityWeatherInterface().insert(input)
+            }
+//            Log.d("file_test", token.toString())
+        }
+// 여기까지 db생성 코드
+
+        CoroutineScope(Dispatchers.Main).launch {
+            //cityWeatherDB.cityWeatherInterface().deleteAll()
+            //cityWeatherDB.cityWeatherInterface().insert(input)
+            var output = NationalWeatherDB!!.cityWeatherInterface().getAll()
+            Log.d("db_test", "$output")
         }
     }
 }
