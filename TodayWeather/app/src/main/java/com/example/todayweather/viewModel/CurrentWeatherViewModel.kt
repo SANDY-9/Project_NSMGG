@@ -13,7 +13,7 @@ import com.example.todayweather.helper.ConvertWeatherHelper
  */
 class CurrentWeatherViewModel : ViewModel() {
 
-    val date : MutableLiveData<String> = MutableLiveData<String>()
+    val date : MutableLiveData<String> = MutableLiveData<String>() //
 
     init {
      //   date.value =
