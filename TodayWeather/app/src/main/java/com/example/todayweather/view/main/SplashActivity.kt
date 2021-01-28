@@ -28,6 +28,8 @@ import com.example.todayweather.databinding.ActivitySplashBinding
 import com.example.todayweather.helper.CalculationHelper
 import com.example.todayweather.model.CityWeatherTable
 import com.example.todayweather.model.NationalWeatherTable
+import com.example.todayweather.repository.retrofit.DailyRetrofit
+import com.example.todayweather.repository.retrofit.WeeklyRetrofit
 import com.example.todayweather.view.main.SplashActivity.AppDatabase.Companion.getInstance
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.CoroutineScope
@@ -55,6 +57,8 @@ class SplashActivity : AppCompatActivity(), LocationListener {
 
     var realX : Double? = null
     var realY : Double? = null
+    var convertX : Int? = null
+    var convertY : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +68,9 @@ class SplashActivity : AppCompatActivity(), LocationListener {
         NationalWeatherDB = getInstance(this)!!
         SharedPref()
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
+
+//        WeeklyRetrofit("경기도","성남시", 1).WeeklyRetrofit()
+//        DailyRetrofit(1).weather(convertX!!,convertY!!)
     }
 
     // 위치파악시 GPS, Network provider사용 구분 함수
@@ -172,8 +179,8 @@ class SplashActivity : AppCompatActivity(), LocationListener {
         // 위치 값 가져오는 것들
         realX = location.latitude
         realY = location.longitude
-        val convertX = CalculationHelper.convertGRID_X(realX!!, realY!!)
-        val convertY = CalculationHelper.convertGRID_Y(realX!!, realY!!)
+        convertX = CalculationHelper.convertGRID_X(realX!!, realY!!)
+        convertY = CalculationHelper.convertGRID_Y(realX!!, realY!!)
         Log.d("[test_gps]", "x = $convertX, y = $convertY , location = $location")
 
         address = getAddress(realX!!,realY!!)
@@ -257,8 +264,8 @@ class SplashActivity : AppCompatActivity(), LocationListener {
 
     // 최초 실행시 한 번만 실행하게 함
     private fun SharedPref() {
-        var pref : SharedPreferences = getSharedPreferences("isDB", Activity.MODE_PRIVATE)
-        var download : Boolean = pref.getBoolean("isDB",false)
+        val pref : SharedPreferences = getSharedPreferences("isDB", Activity.MODE_PRIVATE)
+        val download : Boolean = pref.getBoolean("isDB",false)
         if (!download){
             Log.d("Is first Time?", "firstD")
 
