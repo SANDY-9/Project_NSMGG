@@ -10,51 +10,51 @@ package com.example.todayweather.helper
 object ConvertWeatherHelper {
 
     // SKY : 하늘
-    fun convertSKY (SKY: Int) : String {
+    fun convertSKY (SKY: String) : String {
         var result = ""
         when (SKY) {
-            1 -> result = "맑음"
-            2 -> result = "구름조금"
-            3 -> result = "구름많음"
-            4 -> result = "흐림"
+            "1" -> result = "맑음"
+            "2" -> result = "구름조금"
+            "3" -> result = "구름많음"
+            "4" -> result = "흐림"
         }
         return result
     }
 
     // PTY : 강수형태
-    fun convertPTY (PTY: Int) : String {
+    fun convertPTY (PTY: String) : String {
         var result = ""
         when (PTY) {
-            0 -> result = "없음"
-            1 -> result = "비"
-            2 -> result = "진눈깨비"
-            3 -> result = "눈"
-            4 -> result = "소나기"
-            5 -> result = "비"
-            6 -> result = "진눈깨비"
-            7 -> result = "눈"
+            "0" -> result = "없음"
+            "1" -> result = "비"
+            "2" -> result = "진눈깨비"
+            "3" -> result = "눈"
+            "4" -> result = "소나기"
+            "5" -> result = "비"
+            "6" -> result = "진눈깨비"
+            "7" -> result = "눈"
         }
         return result
     }
 
     // SKY값이랑 PTY 둘다 있을 때(초단기실황(현재날씨) 제외한 거의 모든 경우 ) -> 날씨로 변환
-    fun convertWeather (SKY: Int, PTY: Int) : String {
+    fun convertWeather (SKY: String, PTY: String) : String {
         var result = ""
         when (PTY) {
-            0 ->
+            "0" ->
                 when (SKY) {
-                    1 -> result = "맑음"
-                    2 -> result = "구름조금"
-                    3 -> result = "구름많음"
-                    4 -> result = "흐림"
+                    "1" -> result = "맑음"
+                    "2" -> result = "구름조금"
+                    "3" -> result = "구름많음"
+                    "4" -> result = "흐림"
                 }
-            1 -> result = "비"
-            2 -> result = "진눈깨비"
-            3 -> result = "눈"
-            4 -> result = "소나기"
-            5 -> result = "비"
-            6 -> result = "진눈깨비"
-            7 -> result = "눈"
+            "1" -> result = "비"
+            "2" -> result = "진눈깨비"
+            "3" -> result = "눈"
+            "4" -> result = "소나기"
+            "5" -> result = "비"
+            "6" -> result = "진눈깨비"
+            "7" -> result = "눈"
         }
         return result
     }
@@ -82,13 +82,13 @@ object ConvertWeatherHelper {
     }
 
     //미세먼지 변환
-    fun convertDust (dustGrade: Int) : String {
+    fun convertDust (dustGrade: String) : String {
         var result = ""
         when(dustGrade) {
-            1 -> "좋음"
-            2 -> "보통"
-            3 -> "나쁨"
-            4 -> "매우나쁨"
+            "1" -> "좋음"
+            "2" -> "보통"
+            "3" -> "나쁨"
+            "4" -> "매우나쁨"
         }
         return result
     }

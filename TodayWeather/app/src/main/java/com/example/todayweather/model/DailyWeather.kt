@@ -2,46 +2,63 @@ package com.example.todayweather.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.todayweather.helper.ConvertDateHelper
+import com.example.todayweather.helper.ConvertWeatherHelper
 import com.google.gson.annotations.SerializedName
 /**
  * @author SANDY
  * @email nnal0256@naver.com
  * @created 2021-01-23
- * @desc
+ * @desc 오늘 날씨 조회하는 DataModel(초단기 예보조회, 동네예보 조회) -> 결과 JSON obsrValue값 전부 String. 용도 : 가로 리사이클러뷰
  */
 
-data class DailyWeather(var temperature : String)
+open class DailyWeather {
 
-// 내장 db data class
-@Entity(tableName = "dongnae")
-data class NationalWeatherTable(
-    @PrimaryKey val code: Long,
-    val name1: String,
-    val name2: String,
-    val name3: String,
-    val x: Int,
-    val y: Int
-)
+    //지역
+    var region: String
+        get() {
+            return region
+        }
+        set(value) {}
 
-// retrofit을 사용한 api 통신 data class(동네예보)
-data class ResponseDTONow (
-    @SerializedName("response")var response : BodyDTONow
-)
-data class BodyDTONow (
-    @SerializedName("body")var body : ItemsDTONow
-)
-data class ItemsDTONow (
-    @SerializedName("items")var items : ItemDTDNow
-)
-data class ItemDTDNow (
-    @SerializedName("item")var item : List<NowDTO>
-)
-data class NowDTO (
-//  @SerializedName 어노테이션을 사용하여 괄호 안에 Json 응답과 동일하게 써주고, 변수명을 다르게 지정해주시면 됩니다.
-    @SerializedName("baseDate") var baseDate: String,
-    @SerializedName("baseTime") var baseTime: String,
-    @SerializedName("category") var category: String,
-    @SerializedName("nx") var nx: Int,
-    @SerializedName("ny") var ny: Int,
-    @SerializedName("obsrValue") var obsrValue: String
-)
+    //시간
+    var fcstTime : String
+        get() {
+            return fcstTime
+        }
+        set(value) {
+            fcstTime = ConvertDateHelper.dateFormTime(value)
+        }
+
+    //기온
+    var temperature: String
+        get() {
+            return temperature
+        }
+        set(value) {
+            temperature = value
+        }
+
+    var SKY : String
+        get() {
+            return SKY
+        }
+        set(value) {
+            SKY = value
+        }
+
+    var PTY : String
+        get() {
+            return PTY
+        }
+        set(value) {
+            PTY = value
+        }
+
+    //날씨
+    var weather : String = ""
+        get() {
+            return ConvertWeatherHelper.convertWeather(SKY, PTY)
+        }
+}
+
