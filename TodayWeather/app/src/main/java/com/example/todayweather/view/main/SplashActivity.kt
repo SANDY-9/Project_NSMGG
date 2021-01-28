@@ -102,6 +102,7 @@ class SplashActivity : AppCompatActivity(), LocationListener {
 
     //  버튼 클릭 이벤트
     fun nextActivity(view : View) {
+        // 버전이 맞는지 확인
         val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
         firebaseRemoteConfig.fetch(0).addOnCompleteListener{task ->
             if (task.isSuccessful){
