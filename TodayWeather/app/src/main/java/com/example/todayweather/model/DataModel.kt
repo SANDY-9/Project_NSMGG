@@ -7,4 +7,11 @@ package com.example.todayweather.model
  * @desc
  */
 interface DataModel {
+    fun getData()
+}
+
+class DataModelImpl: DataModel {
+    override fun getData() {
+        return
+    }
 }

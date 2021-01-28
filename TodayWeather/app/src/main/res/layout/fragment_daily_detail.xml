@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
-            android:text="@={current.date}"
+            android:text="DATE"
             android:textColor="#FFFFFF"
             android:textSize="17dp"
             android:textStyle="bold"
