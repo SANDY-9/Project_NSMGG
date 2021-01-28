@@ -23,7 +23,6 @@ object CalculationHelper {
         val YO = 136.0 // 기1준점 Y좌표(GRID)
 
         val DEGRAD = Math.PI / 180.0      //Math.PI : 원주율(파이)값
-        val RADDEG = 180.0 / Math.PI
         val re = RE / GRID
         val slat1 = SLAT1 * DEGRAD
         val slat2 = SLAT2 * DEGRAD
@@ -63,7 +62,6 @@ object CalculationHelper {
         val YO = 136.0 // 기1준점 Y좌표(GRID)
 
         val DEGRAD = Math.PI / 180.0 //degree(도->라디안)   *Math.PI : 원주율(파이)값
-        val RADDEG = 180.0 / Math.PI //radian(라디안->도)
         val re = RE / GRID
         val slat1 = SLAT1 * DEGRAD
         val slat2 = SLAT2 * DEGRAD
@@ -91,16 +89,16 @@ object CalculationHelper {
     }
 
     //체감온도 계산하는 함수 T = 온도, V = 풍속
-    fun convertFeelTemperature (T: Double, V: Double) : Int {
-        var result = 0.0
+    fun convertFeelTemperature (T: Int, V: Double) : Int {
+        var result = 0
         if (V > 4.8 ) {
-            result = 13.12+0.6215*T-11.37*(Math.pow(V, 0.16)) + 0.3965*(Math.pow(V, 0.16))*T
+            result = (13.12+0.6215*T-11.37*(Math.pow(V, 0.16)) + 0.3965*(Math.pow(V, 0.16))*T).toInt()
             if(result > T) {
                 result = T
             }
         } else {
             result = T
         }
-        return result.toInt()
+        return result
     }
 }

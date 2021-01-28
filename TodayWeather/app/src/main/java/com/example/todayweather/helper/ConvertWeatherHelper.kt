@@ -68,7 +68,7 @@ object ConvertWeatherHelper {
         } else {
             val RN_i = RN_d.toInt()
             when (RN_i) {
-                0 -> result = "0mm"
+                0 -> result = "-"
                 // in 0.1..1.0 -> result = "1mm 미만"
                 in 1..5 -> result = "1~4mm"
                 in 5..10 -> result = "5~9mm"
@@ -77,6 +77,18 @@ object ConvertWeatherHelper {
                 in 40..70 -> result = "40~69mm"
                 else -> result = "70mm 이상"
             }
+        }
+        return result
+    }
+
+    //미세먼지 변환
+    fun convertDust (dustGrade: Int) : String {
+        var result = ""
+        when(dustGrade) {
+            1 -> "좋음"
+            2 -> "보통"
+            3 -> "나쁨"
+            4 -> "매우나쁨"
         }
         return result
     }

@@ -1,35 +1,45 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/messages_header">
+    <PreferenceCategory app:title="앱 버전정보"
+        app:iconSpaceReserved="false">
 
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
-
-        <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
+        <PreferenceScreen
+            android:summary="1.0"
+            app:title="버전정보"
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
+    <PreferenceCategory app:title="푸쉬알림 설정"
+        app:iconSpaceReserved="false">
 
         <SwitchPreferenceCompat
             app:key="sync"
-            app:title="@string/sync_title" />
+            app:title="푸쉬알림 허용"
+            app:summaryOff="푸쉬알림을 받지 않습니다."
+            app:summaryOn="매일 정해진 시각에 오늘 날씨 정보 알림을 받을 수 있습니다."
+            app:iconSpaceReserved="false"/>
 
-        <SwitchPreferenceCompat
+        <PreferenceScreen
             app:dependency="sync"
             app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
+            app:summary="매일 오전 7:00에 오늘 날씨에 대한 정보 알림을 받습니다."
+            app:title="알림시간 설정"
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
+
+        <PreferenceScreen
+            android:title="즐겨찾기 목록 관리"
+            app:iconSpaceReserved="false"
+            app:allowDividerAbove="true"/>
+
+        <PreferenceScreen
+            android:title="피드백"
+            app:iconSpaceReserved="false"
+            app:allowDividerAbove="true"
+            android:summary="더 좋은 앱을 만들기 위해 개발자에게 건의해주세요."/>
 
 </PreferenceScreen>

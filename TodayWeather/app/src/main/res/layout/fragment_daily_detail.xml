@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="current"
+            type="com.example.todayweather.viewModel.CurrentWeatherViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
-            android:text="2021년 01월 12일 화요일 오후 1시 13분"
+            android:text="@={current.date}"
             android:textColor="#FFFFFF"
             android:textSize="17dp"
             android:textStyle="bold"
@@ -92,7 +94,7 @@
             android:letterSpacing="-0.07"
             android:paddingEnd="10dp"
             android:singleLine="false"
-            android:text="서울특별시 성동구 성수1동"
+            android:text="@={current.region}"
             android:textColor="#FFFFFF"
             android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"

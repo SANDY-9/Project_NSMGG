@@ -3,28 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/dailyMainFragment">
-    <fragment
-        android:id="@+id/dailyMainFragment"
-        android:name="com.example.todayweather.view.main.MainFragment"
-        android:label="fragment_daily_main"
-        tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_dailyMainFragment_to_searchMainFragment"
-            app:destination="@id/searchMainFragment" />
-        <action
-            android:id="@+id/action_dailyMainFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-    </fragment>
+    app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/searchMainFragment"
         android:name="com.example.todayweather.view.search.SearchMainFragment"
         android:label="fragment_search_main"
-        tools:layout="@layout/fragment_search_main" >
-        <action
-            android:id="@+id/action_searchMainFragment_to_dailyMainFragment"
-            app:destination="@id/dailyMainFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_search_main" />
     <fragment
         android:id="@+id/dailyFragment"
         android:name="com.example.todayweather.view.basic.DailyFragment"
@@ -77,14 +61,6 @@
         android:label="fragment_search_success"
         tools:layout="@layout/fragment_search_success" />
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.example.todayweather.view.setting.SettingsFragment"
-        android:label="SettingsFragment" >
-        <action
-            android:id="@+id/action_settingsFragment_to_dailyMainFragment"
-            app:destination="@id/dailyMainFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/bookmarkWeeklyFragment"
         android:name="com.example.todayweather.view.bookmark.BookmarkWeeklyFragment"
         android:label="fragment_bookmark_weekly"
@@ -107,4 +83,22 @@
         android:name="com.example.todayweather.view.bookmark.BookmarkMainFragment"
         android:label="fragment_bookmark_main"
         tools:layout="@layout/fragment_bookmark_main" />
+    <fragment
+        android:id="@+id/settingMainFragment"
+        android:name="com.example.todayweather.view.setting.SettingMainFragment"
+        android:label="SettingMainFragment" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.todayweather.view.main.MainFragment"
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_settingMainFragment"
+            app:destination="@id/settingMainFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_searchMainFragment"
+            app:destination="@id/searchMainFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_bookmarkMainFragment"
+            app:destination="@id/bookmarkMainFragment" />
+    </fragment>
 </navigation>
