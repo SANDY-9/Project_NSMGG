@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentSearchSuccessBinding
+import com.example.todayweather.viewModel.CurrentWeatherViewModel
 
 class SearchSuccessFragment : Fragment() {
 
     lateinit var binding : FragmentSearchSuccessBinding
+    val currentWeatherViewModel : CurrentWeatherViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

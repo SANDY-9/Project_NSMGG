@@ -21,4 +21,11 @@ class BookmarkMainFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.imageButton.setOnClickListener {
+            //activity.supportFragmentManager.beginTransaction().remove(this).commit()
+        }
+    }
+
 }

@@ -89,16 +89,16 @@ object CalculationHelper {
     }
 
     //체감온도 계산하는 함수 T = 온도, V = 풍속
-    fun convertFeelTemperature (T: Double, V: Double) : Int {
-        var result = 0.0
+    fun convertFeelTemperature (T: Int, V: Double) : Int {
+        var result = 0
         if (V > 4.8 ) {
-            result = 13.12+0.6215*T-11.37*(Math.pow(V, 0.16)) + 0.3965*(Math.pow(V, 0.16))*T
+            result = (13.12+0.6215*T-11.37*(Math.pow(V, 0.16)) + 0.3965*(Math.pow(V, 0.16))*T).toInt()
             if(result > T) {
                 result = T
             }
         } else {
             result = T
         }
-        return result.toInt()
+        return result
     }
 }

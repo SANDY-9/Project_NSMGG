@@ -81,4 +81,16 @@ object ConvertWeatherHelper {
         return result
     }
 
+    //미세먼지 변환
+    fun convertDust (dustGrade: Int) : String {
+        var result = ""
+        when(dustGrade) {
+            1 -> "좋음"
+            2 -> "보통"
+            3 -> "나쁨"
+            4 -> "매우나쁨"
+        }
+        return result
+    }
+
 }
