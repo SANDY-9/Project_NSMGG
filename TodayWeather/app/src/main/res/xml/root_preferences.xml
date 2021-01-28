@@ -38,6 +38,7 @@
         <PreferenceScreen
             android:title="피드백"
             app:iconSpaceReserved="false"
-            app:allowDividerAbove="true"/>
+            app:allowDividerAbove="true"
+            android:summary="더 좋은 앱을 만들기 위해 개발자에게 건의해주세요."/>
 
 </PreferenceScreen>
