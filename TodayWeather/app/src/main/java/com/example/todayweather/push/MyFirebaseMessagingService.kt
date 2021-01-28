@@ -28,8 +28,6 @@ class MyFirebaseMessagingService  :  FirebaseMessagingService() {
 //        sendToken(token)
     }
 
-
-
     override fun onMessageReceived(remoteMessage: RemoteMessage) { //
         var msg = remoteMessage.notification?.title
         var title = remoteMessage.notification?.body
