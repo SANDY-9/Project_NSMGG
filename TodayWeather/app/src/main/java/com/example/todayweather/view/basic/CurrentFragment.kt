@@ -14,7 +14,7 @@ import com.example.todayweather.view.BaseFragment
 import com.example.todayweather.viewModel.DailyWeatherViewModel
 import com.example.todayweather.viewModel.MainFragmentViewModel
 
-class DailyDetailFragment : BaseFragment<FragmentDailyDetailBinding, DailyWeatherViewModel>() {
+class CurrentFragment : BaseFragment<FragmentDailyDetailBinding, DailyWeatherViewModel>() {
 
     override lateinit var binding: FragmentDailyDetailBinding
     override val layoutResourceId: Int

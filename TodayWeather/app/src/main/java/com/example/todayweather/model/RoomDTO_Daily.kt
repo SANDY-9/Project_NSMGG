@@ -42,5 +42,5 @@ data class NowDTO (
     @SerializedName("category") var category: String,
     @SerializedName("nx") var nx: Int,
     @SerializedName("ny") var ny: Int,
-    @SerializedName("obsrValue") var obsrValue: String
+    @SerializedName("obsrValue") var obsrValue: String,
 )

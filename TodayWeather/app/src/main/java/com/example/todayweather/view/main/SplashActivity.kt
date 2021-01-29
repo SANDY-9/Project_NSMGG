@@ -49,9 +49,6 @@ class SplashActivity : AppCompatActivity(), LocationListener {
     lateinit var locationManager: LocationManager
 
     lateinit var address : String
-//    lateinit var si : String
-//    lateinit var gu : String
-//    lateinit var dong : String
 
     lateinit var NationalWeatherDB : AppDatabase // room db
 
