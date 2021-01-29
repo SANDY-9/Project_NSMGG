@@ -17,25 +17,26 @@ import com.example.todayweather.viewModel.MainFragmentViewModel
 class DailyDetailFragment : BaseFragment<FragmentDailyDetailBinding, DailyWeatherViewModel>() {
 
     override lateinit var binding: FragmentDailyDetailBinding
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate<FragmentDailyDetailBinding>(inflater, layoutResourceId, container, false)
-        return binding.root
-    }
-
     override val layoutResourceId: Int
         get() = R.layout.fragment_daily_detail
 
     override val viewModel: DailyWeatherViewModel by activityViewModels()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate<FragmentDailyDetailBinding>(inflater, layoutResourceId, container, false)
+        initView()
+        initDataBinding()
+        initAfterBinding()
+        observerViewModel()
+        return binding.root
+    }
 
     override fun initView() {
         TODO("Not yet implemented")
     }
 
     override fun initDataBinding() {
-        TODO("Not yet implemented")
     }
 
     override fun initAfterBinding() {

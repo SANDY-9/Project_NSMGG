@@ -15,7 +15,7 @@ abstract class BaseActivity<T:ViewDataBinding, R:BaseViewModel> : AppCompatActiv
     //setContentView로 호출할 Layout의 리소스 Id.
     abstract val layoutResourceId: Int
 
-    //viewModel 변수
+    //viewModel 변수 : 초기화 방법 val viewModel : R by viewModels()
     abstract val viewModel: R
 
     //레이아웃을 띄운 직후 호출. 뷰나 액티비티의 속성 등을 초기화. ex) 리사이클러뷰, 툴바, 드로어뷰..

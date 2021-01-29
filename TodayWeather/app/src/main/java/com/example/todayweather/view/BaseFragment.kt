@@ -1,5 +1,6 @@
 package com.example.todayweather.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.example.todayweather.R
+import com.example.todayweather.view.main.MainActivity
 import com.example.todayweather.viewModel.BaseViewModel
 
 abstract class BaseFragment<T:ViewDataBinding, R:BaseViewModel> : Fragment() {
