@@ -4,7 +4,7 @@ package com.example.todayweather.helper
  * @author SANDY
  * @email nnal0256@naver.com
  * @created 2021-01-24
- * @desc 기상청 X, Y값 변환, 체감온도 등 변환해야 하는 값 계산
+ * @desc 기상청 X, Y값 변환, 체감온도, TM값 등 변환해야 하는 값 계산
  */
 
 object CalculationHelper {
@@ -88,8 +88,10 @@ object CalculationHelper {
         return Math.floor(ro - ra * Math.cos(theta) + YO + 0.5).toInt()
     }
 
-    //체감온도 계산하는 함수 T = 온도, V = 풍속
-    fun convertFeelTemperature (T: Int, V: Double) : Int {
+    //체감온도 계산하는 함수 temp = 온도, wind = 풍속
+    fun convertFeelTemperature (temp: String, wind: String) : String {
+        var V = wind.toDouble()
+        var T = temp.toInt()
         var result = 0
         if (V > 4.8 ) {
             result = (13.12+0.6215*T-11.37*(Math.pow(V, 0.16)) + 0.3965*(Math.pow(V, 0.16))*T).toInt()
@@ -99,6 +101,7 @@ object CalculationHelper {
         } else {
             result = T
         }
-        return result
+        return result.toString()
     }
+
 }

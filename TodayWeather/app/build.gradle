@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
+    id 'androidx.navigation.safeargs'
 }
 android {
     compileSdkVersion 30
@@ -54,6 +55,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
+    //Kodein
+    implementation 'org.kodein.di:kodein-di:7.2.0'
+
     //네비게이션 컨트롤러
     def nav_version = "2.3.2"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -95,20 +99,22 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.8.0'    // 서버에서 가져온 json객체를 gson으로 간단히 파싱
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'   // Retrofit을 Rx형태로 사용하도록 설정해주는 어댑터 라이브러리
 
-    // firebase messaging library
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:26.3.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
+    // firebase messaging library
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-    // firebase
-    implementation platform('com.google.firebase:firebase-bom:26.3.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     //설정화면 만들기
     implementation 'androidx.preference:preference:1.1.1'
 
     // remote config library
     implementation 'com.google.firebase:firebase-config-ktx:20.0.2'
+
+    //코틀린 코루틴
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 }

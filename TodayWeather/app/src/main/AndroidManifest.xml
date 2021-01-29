@@ -2,31 +2,32 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.todayweather">
 
-    <uses-permission android:name="android.permission.INTERNET"/>             <!--인터넷 접근-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /><!--네트워크 상태 접근-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /><!--위치정보 확인-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 인터넷 접근 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 네트워크 상태 접근 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TodayWeather">
+        android:theme="@style/Theme.TodayWeather"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".view.BaseActivity"></activity>
         <activity android:name=".view.main.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!--푸쉬알림기능-->
-        <service
-            android:name=".push.MyFirebaseMessagingService">
+        </activity> <!-- 푸쉬알림기능 -->
+        <service android:name=".push.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <activity android:name=".view.main.MainActivity" />
     </application>
 
