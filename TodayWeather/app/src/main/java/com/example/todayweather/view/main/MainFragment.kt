@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentMainBinding
 import com.example.todayweather.view.BaseFragment
@@ -14,6 +16,7 @@ import com.example.todayweather.viewModel.MainFragmentViewModel
 class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() {
 
     override lateinit var binding : FragmentMainBinding
+    lateinit var navController: NavController
 
     override val layoutResourceId: Int
         get() = R.layout.fragment_main
@@ -30,7 +33,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
     override val viewModel: MainFragmentViewModel by activityViewModels()
 
     override fun initView() {
-        TODO("Not yet implemented")
+        navController = Navigation.findNavController(binding.root)
     }
 
     override fun initDataBinding() {

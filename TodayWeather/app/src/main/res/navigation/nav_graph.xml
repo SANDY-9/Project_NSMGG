@@ -86,7 +86,14 @@
     <fragment
         android:id="@+id/settingMainFragment"
         android:name="com.example.todayweather.view.setting.SettingMainFragment"
-        android:label="SettingMainFragment" />
+        android:label="SettingMainFragment" >
+        <action
+            android:id="@+id/action_settingMainFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.todayweather.view.main.MainFragment"

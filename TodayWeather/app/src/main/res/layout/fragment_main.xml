@@ -15,7 +15,7 @@
 
         <fragment
             android:id="@+id/fragment"
-            android:name="com.example.todayweather.view.setting.SettingMainFragment"
+            android:name="com.example.todayweather.view.basic.DailyFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar2"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
