@@ -1,6 +1,8 @@
 package com.example.todayweather.repository.retrofit
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.example.todayweather.model.ResponseDTO
 import com.example.todayweather.model.ResponseDTO2
 import com.example.todayweather.model.SkyDTO
@@ -20,11 +22,8 @@ import java.util.*
  * @created 2021-01-28
  * @desc
  */
-class WeeklyRetrofit(region : String, city: String, cnt:Int) {
-    var region = region
-    var city = city
+class WeeklyRetrofit(var region : String, var city: String, var check:Int, val context: Context) {
     var regId = ""
-    var check = cnt
     var tempDTO : TempDTO? = null
     var skyDTO : SkyDTO? = null
 
@@ -119,6 +118,7 @@ class WeeklyRetrofit(region : String, city: String, cnt:Int) {
                 }
 
                 override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                    Toast.makeText(context, "데이터를 연결후 다시 시도해주시길 바랍니다.",Toast.LENGTH_SHORT).show()
                     Log.d("[test]", "실패 : $t")
                 }
             })
@@ -179,6 +179,7 @@ class WeeklyRetrofit(region : String, city: String, cnt:Int) {
                 }
 
                 override fun onFailure(call: Call<ResponseDTO2>, t: Throwable) {
+                    Toast.makeText(context, "데이터를 연결후 다시 시도해주시길 바랍니다.", Toast.LENGTH_SHORT).show()
                     Log.d("[test]", "실패 : $t")
                 }
             })

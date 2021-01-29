@@ -1,6 +1,8 @@
 package com.example.todayweather.repository.retrofit
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.example.todayweather.model.NowDTO
 import com.example.todayweather.model.ResponseDTONow
 import retrofit2.Call
@@ -19,9 +21,7 @@ import java.util.*
  * @desc
  */
 
-class DailyRetrofit( cnt :Int ) {
-
-    var check = cnt
+class DailyRetrofit(var check :Int, val context: Context) {
 
     var nowDTO : List<NowDTO>? = null
 
@@ -151,6 +151,7 @@ class DailyRetrofit( cnt :Int ) {
                 }
 
                 override fun onFailure(call: Call<ResponseDTONow>, t: Throwable) {
+                    Toast.makeText(context, "데이터를 연결후 다시 시도해주시길 바랍니다.",Toast.LENGTH_SHORT).show()
                     Log.d("[test]", "실패 : $t")
                 }
             })
