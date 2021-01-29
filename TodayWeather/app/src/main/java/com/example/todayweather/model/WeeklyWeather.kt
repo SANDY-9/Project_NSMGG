@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName
  * @created 2021-01-24
  * @desc 주간날씨 조회하는 DataModel
  */
-class WeeklyWeather() {
+open class WeeklyWeather() {
 
     //지역
     var region: String

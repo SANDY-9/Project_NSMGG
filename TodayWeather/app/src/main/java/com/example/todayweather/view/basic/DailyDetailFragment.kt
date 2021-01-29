@@ -6,17 +6,43 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentDailyDetailBinding
+import com.example.todayweather.databinding.FragmentMainBinding
+import com.example.todayweather.view.BaseFragment
+import com.example.todayweather.viewModel.DailyWeatherViewModel
+import com.example.todayweather.viewModel.MainFragmentViewModel
 
-class DailyDetailFragment : Fragment() {
+class DailyDetailFragment : BaseFragment<FragmentDailyDetailBinding, DailyWeatherViewModel>() {
 
-    lateinit var binding: FragmentDailyDetailBinding
+    override lateinit var binding: FragmentDailyDetailBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate<FragmentDailyDetailBinding>(inflater, R.layout.fragment_daily_detail, container, false)
+        binding = DataBindingUtil.inflate<FragmentDailyDetailBinding>(inflater, layoutResourceId, container, false)
         return binding.root
+    }
+
+    override val layoutResourceId: Int
+        get() = R.layout.fragment_daily_detail
+
+    override val viewModel: DailyWeatherViewModel by activityViewModels()
+
+    override fun initView() {
+        TODO("Not yet implemented")
+    }
+
+    override fun initDataBinding() {
+        TODO("Not yet implemented")
+    }
+
+    override fun initAfterBinding() {
+        TODO("Not yet implemented")
+    }
+
+    override fun observerViewModel() {
+        TODO("Not yet implemented")
     }
 }

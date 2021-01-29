@@ -15,7 +15,10 @@ import com.example.todayweather.viewModel.MainFragmentViewModel
 
 class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() {
 
-    lateinit var binding : FragmentMainBinding
+    override lateinit var binding : FragmentMainBinding
+
+    override val layoutResourceId: Int
+        get() = R.layout.fragment_main
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,9 +28,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
         binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         return binding.root
     }
-
-    override val layoutResourceId: Int
-        get() = R.layout.fragment_main
 
     override val viewModel: MainFragmentViewModel by activityViewModels()
 
@@ -40,6 +40,10 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
     }
 
     override fun initAfterBinding() {
+        TODO("Not yet implemented")
+    }
+
+    override fun observerViewModel() {
         TODO("Not yet implemented")
     }
 

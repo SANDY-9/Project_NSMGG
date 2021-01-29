@@ -13,7 +13,7 @@ import com.example.todayweather.viewModel.BaseViewModel
 abstract class BaseFragment<T:ViewDataBinding, R:BaseViewModel> : Fragment() {
 
     //데이터바인딩 클래스
-    lateinit var viewDataBinding: T
+    open lateinit var binding: T
 
     //setContentView로 호출할 Layout의 리소스 Id.
     abstract val layoutResourceId: Int
@@ -32,16 +32,20 @@ abstract class BaseFragment<T:ViewDataBinding, R:BaseViewModel> : Fragment() {
     //바인딩 이후에 할 일을 여기에 구현. 그 외에 설정할 것이 있으면 이곳에서 설정. 클릭 리스너도 이곳에서 설정.
     abstract fun initAfterBinding()
 
+    //뷰가 뷰모델의 라이브데이터를 옵저빙한다.
+    abstract fun observerViewModel()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        viewDataBinding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
+        binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         initView()
         initDataBinding()
         initAfterBinding()
-        return viewDataBinding.root
+        observerViewModel()
+        return binding.root
     }
 
 }
