@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.example.todayweather.R
+import com.example.todayweather.view.main.SplashActivity
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -19,6 +20,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             activity?.startActivity(intent)
             true
         }
+        val version : Preference? = findPreference("version")
+        version?.summary = SplashActivity().fun_GetAppVersion()
     }
 
 
