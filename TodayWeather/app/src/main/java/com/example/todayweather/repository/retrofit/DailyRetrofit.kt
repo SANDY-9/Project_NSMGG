@@ -69,6 +69,7 @@ class DailyRetrofit(val context: Context) {
                 response: Response<ResponseDTONow>
             ) {
                 if (response.body()!!.response.body.items.item == null){
+                    Toast.makeText(context, "데이터를 연결후 다시 시도해주시길 바랍니다.",Toast.LENGTH_SHORT).show()
                     Log.d("[test_response]", "null값 }")
                     return
                 }
