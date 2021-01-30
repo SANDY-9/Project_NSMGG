@@ -2,6 +2,7 @@ package com.example.todayweather.view.setting
 
 import android.content.Intent
 import android.content.Intent.ACTION_SENDTO
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
@@ -21,7 +22,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
         val version : Preference? = findPreference("version")
-        version?.summary = SplashActivity().fun_GetAppVersion()
+        // 버전 이름 함수로 가져오기
+        val packageManager = activity?.packageManager
+        version?.summary = packageManager?.getPackageInfo(context?.packageName.toString(), PackageManager.GET_ACTIVITIES)?.versionName
     }
 
 
