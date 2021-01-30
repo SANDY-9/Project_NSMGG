@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.search.SearchMainFragment">
+        tools:context=".ui.search.SearchMainFragment">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -60,7 +60,7 @@
 
         <fragment
             android:id="@+id/fragment2"
-            android:name="com.example.todayweather.view.search.SearchSuccessFragment"
+            android:name="com.example.todayweather.ui.search.SearchSuccessFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

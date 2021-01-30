@@ -14,8 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TodayWeather"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.BaseActivity"></activity>
-        <activity android:name=".view.main.SplashActivity">
+        <activity android:name=".ui.BaseActivity"></activity>
+        <activity android:name=".ui.main.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".view.main.MainActivity" />
+        <activity android:name=".ui.main.MainActivity" />
     </application>
 
 </manifest>

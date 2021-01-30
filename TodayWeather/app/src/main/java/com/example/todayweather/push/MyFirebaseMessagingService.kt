@@ -8,8 +8,7 @@ import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.todayweather.R
-import com.example.todayweather.view.main.MainActivity
-import com.example.todayweather.view.main.SplashActivity
+import com.example.todayweather.ui.main.SplashActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 

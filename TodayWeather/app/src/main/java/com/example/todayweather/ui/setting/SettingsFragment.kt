@@ -1,4 +1,4 @@
-package com.example.todayweather.view.setting
+package com.example.todayweather.ui.setting
 
 import android.content.Intent
 import android.content.Intent.ACTION_SENDTO

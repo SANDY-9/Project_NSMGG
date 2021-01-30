@@ -1,7 +1,6 @@
-package com.example.todayweather.view.basic
+package com.example.todayweather.ui.basic
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentDailyDetailBinding
-import com.example.todayweather.databinding.FragmentMainBinding
-import com.example.todayweather.view.BaseFragment
+import com.example.todayweather.ui.BaseFragment
 import com.example.todayweather.viewModel.DailyWeatherViewModel
-import com.example.todayweather.viewModel.MainFragmentViewModel
 
 class CurrentFragment : BaseFragment<FragmentDailyDetailBinding, DailyWeatherViewModel>() {
 

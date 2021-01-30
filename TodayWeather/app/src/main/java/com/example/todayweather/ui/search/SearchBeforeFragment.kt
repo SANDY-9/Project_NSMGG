@@ -1,4 +1,4 @@
-package com.example.todayweather.view.search
+package com.example.todayweather.ui.search
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,17 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.todayweather.R
-import com.example.todayweather.databinding.FragmentSearchMainBinding
+import com.example.todayweather.databinding.FragmentSearchBeforeBinding
 
-class SearchMainFragment : Fragment() {
+class SearchBeforeFragment : Fragment() {
 
-    lateinit var binding : FragmentSearchMainBinding
+    lateinit var binding : FragmentSearchBeforeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate<FragmentSearchMainBinding>(inflater, R.layout.fragment_search_main, container, false)
+        binding = DataBindingUtil.inflate<FragmentSearchBeforeBinding>(inflater, R.layout.fragment_search_before, container, false)
         return binding.root
     }
 

@@ -1,4 +1,4 @@
-package com.example.todayweather.view.main
+package com.example.todayweather.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,10 +10,10 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentMainBinding
-import com.example.todayweather.view.BaseFragment
-import com.example.todayweather.viewModel.MainFragmentViewModel
+import com.example.todayweather.ui.BaseFragment
+import com.example.todayweather.viewModel.BaseViewModel
 
-class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() {
+class MainFragment : BaseFragment<FragmentMainBinding, BaseViewModel>() {
 
     override lateinit var binding : FragmentMainBinding
     lateinit var navController: NavController
@@ -30,7 +30,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
         return binding.root
     }
 
-    override val viewModel: MainFragmentViewModel by activityViewModels()
+    override val viewModel: BaseViewModel by activityViewModels()
 
     override fun initView() {
         navController = Navigation.findNavController(binding.root)

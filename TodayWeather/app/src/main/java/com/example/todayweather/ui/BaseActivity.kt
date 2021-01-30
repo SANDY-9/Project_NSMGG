@@ -1,11 +1,11 @@
-package com.example.todayweather.view
+package com.example.todayweather.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.example.todayweather.R
 import com.example.todayweather.viewModel.BaseViewModel
+import com.example.todayweather.viewModel.LocationViewModel
 
 abstract class BaseActivity<T:ViewDataBinding, R:BaseViewModel> : AppCompatActivity() {
 

@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.main.MainActivity">
+        tools:context=".ui.main.MainActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -21,7 +21,7 @@
 
         <fragment
             android:id="@+id/fragment5"
-            android:name="com.example.todayweather.view.setting.SettingsFragment"
+            android:name="com.example.todayweather.ui.setting.SettingsFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

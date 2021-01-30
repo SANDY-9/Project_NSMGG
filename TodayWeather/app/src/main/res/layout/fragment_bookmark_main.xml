@@ -7,18 +7,18 @@
     <data>
         <variable
             name="mainfragment"
-            type="com.example.todayweather.view.bookmark.BookmarkMainFragment" />
+            type="com.example.todayweather.ui.bookmark.BookmarkMainFragment" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.bookmark.BookmarkMainFragment">
+        tools:context=".ui.bookmark.BookmarkMainFragment">
 
         <fragment
             android:id="@+id/fragment4"
-            android:name="com.example.todayweather.view.bookmark.BookmarkWeatherFragment"
+            android:name="com.example.todayweather.ui.bookmark.BookmarkWeatherFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

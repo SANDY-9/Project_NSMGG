@@ -6,12 +6,12 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/searchMainFragment"
-        android:name="com.example.todayweather.view.search.SearchMainFragment"
+        android:name="com.example.todayweather.ui.search.SearchMainFragment"
         android:label="fragment_search_main"
         tools:layout="@layout/fragment_search_main" />
     <fragment
         android:id="@+id/dailyFragment"
-        android:name="com.example.todayweather.view.basic.DailyFragment"
+        android:name="com.example.todayweather.ui.basic.DailyFragment"
         android:label="fragment_daily"
         tools:layout="@layout/fragment_daily" >
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/weeklyFragment"
-        android:name="com.example.todayweather.view.basic.WeeklyFragment"
+        android:name="com.example.todayweather.ui.basic.WeeklyFragment"
         android:label="fragment_weekly"
         tools:layout="@layout/fragment_weekly" >
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/dailyDetailFragment"
-        android:name="com.example.todayweather.view.basic.CurrentFragment"
+        android:name="com.example.todayweather.ui.basic.CurrentFragment"
         android:label="fragment_daily_detail"
         tools:layout="@layout/fragment_daily_detail" >
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchBeforeFragment"
-        android:name="com.example.todayweather.view.search.SearchBeforeFragment"
+        android:name="com.example.todayweather.ui.search.SearchBeforeFragment"
         android:label="SearchBeforeFragment" >
         <action
             android:id="@+id/action_searchBeforeFragment_to_searchFailFragment"
@@ -52,40 +52,22 @@
     </fragment>
     <fragment
         android:id="@+id/searchFailFragment"
-        android:name="com.example.todayweather.view.search.SearchFailFragment"
+        android:name="com.example.todayweather.ui.search.SearchFailFragment"
         android:label="fragment_search_fail"
         tools:layout="@layout/fragment_search_fail" />
     <fragment
         android:id="@+id/searchSuccessFragment"
-        android:name="com.example.todayweather.view.search.SearchSuccessFragment"
+        android:name="com.example.todayweather.ui.search.SearchSuccessFragment"
         android:label="fragment_search_success"
         tools:layout="@layout/fragment_search_success" />
     <fragment
-        android:id="@+id/bookmarkWeeklyFragment"
-        android:name="com.example.todayweather.view.bookmark.BookmarkWeeklyFragment"
-        android:label="fragment_bookmark_weekly"
-        tools:layout="@layout/fragment_bookmark_weekly" >
-        <action
-            android:id="@+id/action_bookmarkWeeklyFragment_to_bookmarkDailyFragment"
-            app:destination="@id/bookmarkDailyFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/bookmarkDailyFragment"
-        android:name="com.example.todayweather.view.bookmark.BookmarkDailyFragment"
-        android:label="fragment_bookmark_daily"
-        tools:layout="@layout/fragment_bookmark_daily" >
-        <action
-            android:id="@+id/action_bookmarkDailyFragment_to_bookmarkWeeklyFragment"
-            app:destination="@id/bookmarkWeeklyFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/bookmarkMainFragment"
-        android:name="com.example.todayweather.view.bookmark.BookmarkMainFragment"
+        android:name="com.example.todayweather.ui.bookmark.BookmarkMainFragment"
         android:label="fragment_bookmark_main"
         tools:layout="@layout/fragment_bookmark_main" />
     <fragment
         android:id="@+id/settingMainFragment"
-        android:name="com.example.todayweather.view.setting.SettingMainFragment"
+        android:name="com.example.todayweather.ui.setting.SettingMainFragment"
         android:label="SettingMainFragment" >
         <action
             android:id="@+id/action_settingMainFragment_to_mainFragment"
@@ -96,7 +78,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.todayweather.view.main.MainFragment"
+        android:name="com.example.todayweather.ui.main.MainFragment"
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_settingMainFragment"

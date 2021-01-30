@@ -1,4 +1,4 @@
-package com.example.todayweather.view.bookmark
+package com.example.todayweather.ui.bookmark
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

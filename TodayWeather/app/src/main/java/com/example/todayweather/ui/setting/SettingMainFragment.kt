@@ -1,4 +1,4 @@
-package com.example.todayweather.view.setting
+package com.example.todayweather.ui.setting
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentSettingMainBinding
-import com.example.todayweather.view.BaseFragment
-import com.example.todayweather.view.main.MainActivity
+import com.example.todayweather.ui.main.MainActivity
 
 class SettingMainFragment : Fragment() {
 
