@@ -11,15 +11,15 @@ import com.google.gson.annotations.SerializedName
 class Dust {
 }
 
-data class Response (
-    @SerializedName("response")var response : Body
+data class ResponseDust (
+    @SerializedName("response")var response : BodyDust
 )
 
-data class Body (
-        @SerializedName("body")var body : Items
+data class BodyDust (
+        @SerializedName("body")var body : ItemsDust
 )
 
-data class Items (
+data class ItemsDust (
         @SerializedName("items")var items : List<DustDTO>
 )
 

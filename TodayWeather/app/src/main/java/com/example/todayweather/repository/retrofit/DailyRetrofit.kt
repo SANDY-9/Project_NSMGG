@@ -3,6 +3,7 @@ package com.example.todayweather.repository.retrofit
 import android.util.Log
 import com.example.todayweather.model.NowDTO
 import com.example.todayweather.model.ResponseDTONow
+import com.example.todayweather.model.ResponseDust
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,6 +36,17 @@ class DailyRetrofit( cnt :Int ) {
             @retrofit2.http.Query("ny") ny : Int
         ): Call<ResponseDTONow>
     }
+
+    //최신 미세먼지 1개 정보조회
+    // 서비스키:선누 / 리턴타입:json / numOfRows & pageNo : 1 / dataTerm : DAILY / ver : 1.3
+    interface RetrofitDust {
+        @GET("/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?serviceKey=qVcayJVu5HI9ugEnsD8DMqMSvIaPsRkW4zOTbAYQkEgop3%2FHRG8WRp52RND8MUyG0r%2Fh6VZqDVsCkGk7o%2BWGgg%3D%3D&returnType=json&numOfRows=1&pageNo=1&dataTerm=DAILY&ver=1.3")
+        fun getRegId(
+                @retrofit2.http.Query("stationName") stationName: String,
+        ): Call<ResponseDust>
+    }
+
+
     // 기상청 API 호출
     fun weather(nx: Int, ny: Int) { // nx,ny = 기상청 api에서 제공하는 값을 도출한 값
         val date = Date()
@@ -53,10 +65,13 @@ class DailyRetrofit( cnt :Int ) {
             baseTime = format2.format(date)
         }
 
+        //http://apis.data.go.kr/
+        //여기까지만 똑같은듯
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://apis.data.go.kr/1360000/VilageFcstInfoService/")
+            .baseUrl("http://apis.data.go.kr/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
 
         if (check==1){
             val api = retrofit.create(RetrofitNowService::class.java)
@@ -156,6 +171,9 @@ class DailyRetrofit( cnt :Int ) {
             })
         }else if (check==2){
             // 여기에 똑같이 쓰면 됨
+            val api = retrofit.create(RetrofitDust::class.java)
+            //val callGetTemp = api.getRegId()
+
         }
     }
 }
