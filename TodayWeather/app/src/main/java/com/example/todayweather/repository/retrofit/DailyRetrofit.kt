@@ -22,7 +22,7 @@ import java.util.*
  * @desc
  */
 
-class DailyRetrofit(var check :Int, val context: Context) {
+class DailyRetrofit(val context: Context) {
 
     var nowDTO : List<NowDTO>? = null
 
@@ -35,15 +35,6 @@ class DailyRetrofit(var check :Int, val context: Context) {
             @retrofit2.http.Query("nx") nx : Int,
             @retrofit2.http.Query("ny") ny : Int
         ): Call<ResponseDTONow>
-    }
-
-    //최신 미세먼지 1개 정보조회
-    // 서비스키:선누 / 리턴타입:json / numOfRows & pageNo : 1 / dataTerm : DAILY / ver : 1.3
-    interface RetrofitDust {
-        @GET("/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?serviceKey=qVcayJVu5HI9ugEnsD8DMqMSvIaPsRkW4zOTbAYQkEgop3%2FHRG8WRp52RND8MUyG0r%2Fh6VZqDVsCkGk7o%2BWGgg%3D%3D&returnType=json&numOfRows=1&pageNo=1&dataTerm=DAILY&ver=1.3")
-        fun getRegId(
-                @retrofit2.http.Query("stationName") stationName: String,
-        ): Call<ResponseDust>
     }
 
 
@@ -65,116 +56,107 @@ class DailyRetrofit(var check :Int, val context: Context) {
             baseTime = format2.format(date)
         }
 
-        //http://apis.data.go.kr/
-        //여기까지만 똑같은듯
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("http://apis.data.go.kr/")
+            .baseUrl("http://apis.data.go.kr/1360000/VilageFcstInfoService/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
+        val api = retrofit.create(RetrofitNowService::class.java)
+        val callGetTemp = api.getRegId(baseTime!!, baseDate, nx, ny)
+        callGetTemp.enqueue(object : Callback<ResponseDTONow> {
+            override fun onResponse(
+                call: Call<ResponseDTONow>,
+                response: Response<ResponseDTONow>
+            ) {
+                if (response.body()!!.response.body.items.item == null){
+                    Log.d("[test_response]", "null값 }")
+                    return
+                }
+                nowDTO = response.body()!!.response.body.items.item
+                Log.d("[test_response]", "성공 : ${response.raw()}")
 
-        if (check==1){
-            val api = retrofit.create(RetrofitNowService::class.java)
-            val callGetTemp = api.getRegId(baseTime!!, baseDate, nx, ny)
-            callGetTemp.enqueue(object : Callback<ResponseDTONow> {
-                override fun onResponse(
-                    call: Call<ResponseDTONow>,
-                    response: Response<ResponseDTONow>
-                ) {
-                    if (response.body()!!.response.body.items.item == null){
-                        Log.d("[test_response]", "null값 }")
-                        return
-                    }
-                    nowDTO = response.body()!!.response.body.items.item
-                    Log.d("[test_response]", "성공 : ${response.raw()}")
+                var str : String? =  ""
 
-                    var str : String? =  ""
+                for (i in 0..nowDTO!!.size-1){
+                    if (nowDTO!![i].category ==  "PTY"){
 
-                    for (i in 0..nowDTO!!.size-1){
-                        if (nowDTO!![i].category ==  "PTY"){
-
-                            // 강수형태 : 없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4), 빗방울(5), 빗방울/눈날림(6), 눈날림(7)
-                            nowDTO!![i].category = "강수형태"
-                            if (nowDTO!![i].obsrValue == "0"){
-                                nowDTO!![i].obsrValue = "없음"
-                            } else if (nowDTO!![i].obsrValue == "1"){
-                                nowDTO!![i].obsrValue = "비"
-                            } else if (nowDTO!![i].obsrValue == "2"){
-                                nowDTO!![i].obsrValue = "진눈개비(비/눈)"
-                            } else if (nowDTO!![i].obsrValue == "3"){
-                                nowDTO!![i].obsrValue = "눈"
-                            } else if (nowDTO!![i].obsrValue == "4"){
-                                nowDTO!![i].obsrValue = "소나기"
-                            } else if (nowDTO!![i].obsrValue == "5"){
-                                nowDTO!![i].obsrValue = "빗방울"
-                            } else if (nowDTO!![i].obsrValue == "6"){
-                                nowDTO!![i].obsrValue = "빗방울/눈날림"
-                            } else if (nowDTO!![i].obsrValue == "7"){
-                                nowDTO!![i].obsrValue = "눈날림"
-                            }
-
-                        } else if(nowDTO!![i].category ==  "REH"){
-                            nowDTO!![i].category = "습도"
-                            nowDTO!![i].obsrValue += "%"
-                        } else if(nowDTO!![i].category ==  "RN1"){
-                            nowDTO!![i].category = "1시간 강수량"
-                            nowDTO!![i].obsrValue += "mm"
-                        } else if(nowDTO!![i].category ==  "T1H"){
-                            nowDTO!![i].category = "기온"
-                            nowDTO!![i].obsrValue += "℃"
-                        } else if(nowDTO!![i].category ==  "VEC"){
-
-                            // 풍향 값 바꾸기
-                            nowDTO!![i].category = "풍향"
-                            val value = Integer.parseInt(nowDTO!![i].obsrValue)
-                            if (value<45){
-                                nowDTO!![i].obsrValue = "북동북"
-                            }else if (value>=45||value<90){
-                                nowDTO!![i].obsrValue = "동북동"
-                            }else if (value>=90||value<135){
-                                nowDTO!![i].obsrValue = "동남동"
-                            }else if (value>=135||value<180){
-                                nowDTO!![i].obsrValue = "남동남"
-                            }else if (value>=180||value<225){
-                                nowDTO!![i].obsrValue = "남서남"
-                            }else if (value>=225||value<270){
-                                nowDTO!![i].obsrValue = "서남서"
-                            }else if (value>=270||value<315){
-                                nowDTO!![i].obsrValue = "서북서"
-                            }else if (value>=315||value<360){
-                                nowDTO!![i].obsrValue = "북서북"
-                            }
-
-                        } else if(nowDTO!![i].category ==  "WSD"){
-                            nowDTO!![i].category = "풍속"
-                            nowDTO!![i].obsrValue += "m/s"
-                        } else if(nowDTO!![i].category ==  "VVV"){
-//                        남북바람성분(VVV) : 북(+표기), 남(-표기)
-                            nowDTO!![i].category = "남북바람성분"
-                            nowDTO!![i].obsrValue += "m/s(북(+표기), 남(-표기))"
-
-                        } else if(nowDTO!![i].category ==  "UUU"){
-//                        동서바람성분(UUU) : 동(+표기), 서(-표기)
-                            nowDTO!![i].category = "동서바람성분"
-                            nowDTO!![i].obsrValue += "m/s(동(+표기), 서(-표기))"
+                        // 강수형태 : 없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4), 빗방울(5), 빗방울/눈날림(6), 눈날림(7)
+                        nowDTO!![i].category = "강수형태"
+                        if (nowDTO!![i].obsrValue == "0"){
+                            nowDTO!![i].obsrValue = "없음"
+                        } else if (nowDTO!![i].obsrValue == "1"){
+                            nowDTO!![i].obsrValue = "비"
+                        } else if (nowDTO!![i].obsrValue == "2"){
+                            nowDTO!![i].obsrValue = "진눈개비(비/눈)"
+                        } else if (nowDTO!![i].obsrValue == "3"){
+                            nowDTO!![i].obsrValue = "눈"
+                        } else if (nowDTO!![i].obsrValue == "4"){
+                            nowDTO!![i].obsrValue = "소나기"
+                        } else if (nowDTO!![i].obsrValue == "5"){
+                            nowDTO!![i].obsrValue = "빗방울"
+                        } else if (nowDTO!![i].obsrValue == "6"){
+                            nowDTO!![i].obsrValue = "빗방울/눈날림"
+                        } else if (nowDTO!![i].obsrValue == "7"){
+                            nowDTO!![i].obsrValue = "눈날림"
                         }
+
+                    } else if(nowDTO!![i].category ==  "REH"){
+                        nowDTO!![i].category = "습도"
+                        nowDTO!![i].obsrValue += "%"
+                    } else if(nowDTO!![i].category ==  "RN1"){
+                        nowDTO!![i].category = "1시간 강수량"
+                        nowDTO!![i].obsrValue += "mm"
+                    } else if(nowDTO!![i].category ==  "T1H"){
+                        nowDTO!![i].category = "기온"
+                        nowDTO!![i].obsrValue += "℃"
+                    } else if(nowDTO!![i].category ==  "VEC"){
+
+                        // 풍향 값 바꾸기
+                        nowDTO!![i].category = "풍향"
+                        val value = Integer.parseInt(nowDTO!![i].obsrValue)
+                        if (value<45){
+                            nowDTO!![i].obsrValue = "북동북"
+                        }else if (value>=45||value<90){
+                            nowDTO!![i].obsrValue = "동북동"
+                        }else if (value>=90||value<135){
+                            nowDTO!![i].obsrValue = "동남동"
+                        }else if (value>=135||value<180){
+                            nowDTO!![i].obsrValue = "남동남"
+                        }else if (value>=180||value<225){
+                            nowDTO!![i].obsrValue = "남서남"
+                        }else if (value>=225||value<270){
+                            nowDTO!![i].obsrValue = "서남서"
+                        }else if (value>=270||value<315){
+                            nowDTO!![i].obsrValue = "서북서"
+                        }else if (value>=315||value<360){
+                            nowDTO!![i].obsrValue = "북서북"
+                        }
+
+                    } else if(nowDTO!![i].category ==  "WSD"){
+                        nowDTO!![i].category = "풍속"
+                        nowDTO!![i].obsrValue += "m/s"
+                    } else if(nowDTO!![i].category ==  "VVV"){
+//                        남북바람성분(VVV) : 북(+표기), 남(-표기)
+                        nowDTO!![i].category = "남북바람성분"
+                        nowDTO!![i].obsrValue += "m/s(북(+표기), 남(-표기))"
+
+                    } else if(nowDTO!![i].category ==  "UUU"){
+//                        동서바람성분(UUU) : 동(+표기), 서(-표기)
+                        nowDTO!![i].category = "동서바람성분"
+                        nowDTO!![i].obsrValue += "m/s(동(+표기), 서(-표기))"
+                    }
 //                    str += "${nowDTO!![i].category}= ${nowDTO!![i].obsrValue}\n"
 
-                    }
-                    Log.d("[test]", "nowDTO : ${nowDTO.toString()}")
-
                 }
+                Log.d("[test]", "nowDTO : ${nowDTO.toString()}")
 
-                override fun onFailure(call: Call<ResponseDTONow>, t: Throwable) {
-                    Toast.makeText(context, "데이터를 연결후 다시 시도해주시길 바랍니다.",Toast.LENGTH_SHORT).show()
-                    Log.d("[test]", "실패 : $t")
-                }
-            })
-        }else if (check==2){
-            // 여기에 똑같이 쓰면 됨
-            val api = retrofit.create(RetrofitDust::class.java)
-            //val callGetTemp = api.getRegId()
+            }
 
-        }
+            override fun onFailure(call: Call<ResponseDTONow>, t: Throwable) {
+                Toast.makeText(context, "데이터를 연결후 다시 시도해주시길 바랍니다.",Toast.LENGTH_SHORT).show()
+                Log.d("[test]", "실패 : $t")
+            }
+        })
+
     }
 }
