@@ -3,7 +3,6 @@ package com.example.todayweather.repository.retrofit
 import android.util.Log
 import com.example.todayweather.model.NowDTO
 import com.example.todayweather.model.ResponseDTONow
-import com.example.todayweather.model.ResponseDust
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,14 +36,6 @@ class DailyRetrofit( cnt :Int ) {
         ): Call<ResponseDTONow>
     }
 
-    //최신 미세먼지 1개 정보조회
-    // 서비스키:선누 / 리턴타입:json / numOfRows & pageNo : 1 / dataTerm : DAILY / ver : 1.3
-    interface RetrofitDust {
-        @GET("/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?serviceKey=qVcayJVu5HI9ugEnsD8DMqMSvIaPsRkW4zOTbAYQkEgop3%2FHRG8WRp52RND8MUyG0r%2Fh6VZqDVsCkGk7o%2BWGgg%3D%3D&returnType=json&numOfRows=1&pageNo=1&dataTerm=DAILY&ver=1.3")
-        fun getRegId(
-                @retrofit2.http.Query("stationName") stationName: String,
-        ): Call<ResponseDust>
-    }
 
 
     // 기상청 API 호출
@@ -170,9 +161,7 @@ class DailyRetrofit( cnt :Int ) {
                 }
             })
         }else if (check==2){
-            // 여기에 똑같이 쓰면 됨
-            val api = retrofit.create(RetrofitDust::class.java)
-            //val callGetTemp = api.getRegId()
+
 
         }
     }
