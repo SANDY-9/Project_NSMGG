@@ -1,6 +1,9 @@
 package com.example.todayweather.repository.retrofit
 
 import android.content.Context
+import android.util.Log
+import com.example.todayweather.model.Dust
+import com.example.todayweather.model.DustDTO
 import com.example.todayweather.model.ResponseDust
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,7 +22,8 @@ import java.util.*
  */
 class DustRetrofit(val context: Context) {
 
-
+    var dustDTO : List<DustDTO>? = null
+    var TAG = "DustRetrofit"
 
     //최신 미세먼지 1개 정보조회
     // 서비스키:선누 / 리턴타입:json / numOfRows & pageNo : 1 / dataTerm : DAILY / ver : 1.3
@@ -32,20 +36,23 @@ class DustRetrofit(val context: Context) {
 
 
     fun dailyDust(stationName: String) {
+
         val retrofit: Retrofit = Retrofit.Builder()
                 .baseUrl("http://apis.data.go.kr/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
-        val api = retrofit.create(DustRetrofit.RetrofitDust::class.java)
-        val callGetTemp = api.getRegId(stationName = stationName)
+        val dustRetrofit = retrofit.create(DustRetrofit.RetrofitDust::class.java)
+        val callGetTemp = dustRetrofit.getRegId(stationName = stationName)
         callGetTemp.enqueue(object : Callback<ResponseDust> {
             override fun onResponse(call: Call<ResponseDust>, response: Response<ResponseDust>) {
-                TODO("Not yet implemented")
+                dustDTO = response.body()!!.response.body.items
+                Log.e(TAG, "onResponse: ", )
+                Log.e(TAG, ""+dustDTO)
             }
 
             override fun onFailure(call: Call<ResponseDust>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.e(TAG, "onFailure: ", )
             }
         })
 
