@@ -25,7 +25,6 @@
         <PreferenceScreen
             app:dependency="sync"
             app:key="attachment"
-            app:summary="매일 오전 7:00에 오늘 날씨에 대한 정보 알림을 받습니다."
             app:title="알림시간 설정"
             app:iconSpaceReserved="false"/>
 

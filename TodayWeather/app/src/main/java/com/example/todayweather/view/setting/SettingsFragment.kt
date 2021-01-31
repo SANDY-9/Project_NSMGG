@@ -1,12 +1,16 @@
 package com.example.todayweather.view.setting
 
+import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.Intent.ACTION_SENDTO
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.preference.DialogPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -34,6 +38,23 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         // 시간 수정 버튼 누를 때 dialog띄우기
         val attachment : Preference? = findPreference("attachment")
+        val pref : SharedPreferences? = activity?.getSharedPreferences("timeSetting", Activity.MODE_PRIVATE)
+        val timeSetting  = pref?.getBoolean("timeSetting",false)
+        val hourSetting  = pref?.getString("hourSetting", null)
+        val minSetting  = pref?.getString("minSetting", null)
+
+        val editer : SharedPreferences.Editor = pref!!.edit()
+
+        if (!timeSetting!!){
+            editer.putBoolean("timeSetting",true)
+            editer.apply()
+            editer.commit()
+
+            attachment?.summary = "알림 받을 시간을 설정해주세요."
+        }else{
+            attachment?.summary = "매일 ${hourSetting.toString()}:${minSetting.toString()}에 오늘 날씨에 대한 정보 알림을 받습니다."
+        }
+
         attachment?.setOnPreferenceClickListener {
             val time = Calendar.getInstance()
             val hour = time.get(Calendar.HOUR)
@@ -41,20 +62,26 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
             val timeListener =
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    var str_hour = "오후"
-                    var str_min = ""
+                    var str_hour = "오후 ${hourOfDay-12}"
+                    var str_min = "$minute"
 
                     if (hourOfDay<13){
-                        str_hour="오전"
+                        str_hour="오전 $hourOfDay"
+                        if (hourOfDay<10){
+                            str_hour = "오전 0$hourOfDay"
+                        }
                     }
-                    if (hourOfDay<10){
-                        str_hour += " 0$hourOfDay"
-                    }
+
                     if (minute < 10){
                         str_min = "0$minute"
                     }
                     attachment.summary = "매일 $str_hour:${str_min}에 오늘 날씨에 대한 정보 알림을 받습니다."
-                }
+                    Toast.makeText(context,"매일 $hourOfDay:${minute}에 오늘 날씨에 대한 정보 알림을 받습니다.",Toast.LENGTH_SHORT).show()
+                    editer.putString("hourSetting",str_hour)
+                    editer.putString("minSetting",str_min)
+                    editer.apply()
+                    editer.commit()
+            }
 
             val builder = TimePickerDialog(context, timeListener, hour, minute, false)
             builder.show()
