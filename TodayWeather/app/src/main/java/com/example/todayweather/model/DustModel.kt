@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  * @created 2021-01-28
  * @desc
  */
-class Dust {
+class DustModel {
 }
 
 data class ResponseDust (
@@ -23,10 +23,14 @@ data class ItemsDust (
         @SerializedName("items")var items : List<DustDTO>
 )
 
+
 data class DustDTO (
         @SerializedName("pm10Value") var pm10Value: String, // 미세먼지 농도
-        @SerializedName("pm10Grade") var pm10Grade: String, // 미세먼지 점수
-        @SerializedName("pm10Value") var pm25Value: String, // 초미세먼지 농도
-        @SerializedName("pm10Grade") var pm25Grade: String, // 초미세먼지 점수
+        @SerializedName("pm10Grade1h") var pm10Grade1h: String, // 미세먼지 점수
+        @SerializedName("pm10Flag") var pm10Flag: String, //
+        @SerializedName("pm25Value") var pm25Value: String, // 초미세먼지 농도
+        @SerializedName("pm25Grade1h") var pm25Grade1h: String, // 초미세먼지 점수
+        @SerializedName("pm25Flag") var pm25Flag: String, //
 )
+
 

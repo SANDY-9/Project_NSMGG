@@ -4,12 +4,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.AppCompatButton
 import com.example.todayweather.R
+import com.example.todayweather.model.DustDTO
+
+import com.example.todayweather.model.DustModel
+import com.example.todayweather.repository.retrofit.DustRetrofit
+
+
 
 class MainActivity : AppCompatActivity() {
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val dust = DustRetrofit(this)
+        dust.dailyDust("성동구")
 
     }
 }

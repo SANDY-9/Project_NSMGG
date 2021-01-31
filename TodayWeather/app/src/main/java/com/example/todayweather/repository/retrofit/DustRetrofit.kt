@@ -2,7 +2,6 @@ package com.example.todayweather.repository.retrofit
 
 import android.content.Context
 import android.util.Log
-import com.example.todayweather.model.Dust
 import com.example.todayweather.model.DustDTO
 import com.example.todayweather.model.ResponseDust
 import retrofit2.Call
@@ -25,6 +24,7 @@ class DustRetrofit(val context: Context) {
     var dustDTO : List<DustDTO>? = null
     var TAG = "DustRetrofit"
 
+
     //최신 미세먼지 1개 정보조회
     // 서비스키:선누 / 리턴타입:json / numOfRows & pageNo : 1 / dataTerm : DAILY / ver : 1.3
     interface RetrofitDust {
@@ -41,14 +41,46 @@ class DustRetrofit(val context: Context) {
                 .baseUrl("http://apis.data.go.kr/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
+        Log.e(TAG, "dailyDust: "+stationName )
 
         val dustRetrofit = retrofit.create(DustRetrofit.RetrofitDust::class.java)
         val callGetTemp = dustRetrofit.getRegId(stationName = stationName)
         callGetTemp.enqueue(object : Callback<ResponseDust> {
             override fun onResponse(call: Call<ResponseDust>, response: Response<ResponseDust>) {
                 dustDTO = response.body()!!.response.body.items
-                Log.e(TAG, "onResponse: ", )
-                Log.e(TAG, ""+dustDTO)
+                Log.e(TAG, "onResponse: "+dustDTO )
+
+                var pm10Value = dustDTO!![0].pm10Value  //미세먼지 농도
+                var pm10Grade1h = dustDTO!![0].pm10Grade1h  //미세먼지 점수(1시간)
+                var pm10Flag = dustDTO!![0].pm10Flag    //미세먼지 장비점검
+
+                var pm25Value = dustDTO!![0].pm25Value  //초미세먼지농도
+                var pm25Grade1h = dustDTO!![0].pm25Grade1h  //초미세먼지 점수(1시간)
+                var pm25Flag = dustDTO!![0].pm25Flag  //초미세먼지 장비점검
+
+
+
+
+                if(pm10Flag == null) {
+                    var test1 = "미세먼지"
+                    var test2 = dustGreade(Integer.parseInt(pm10Grade1h))
+
+                    Log.e(TAG, "onResponse: "+test1+test2)
+
+
+                } else if(pm25Flag == null) {
+                    var test3 = "초미세먼지"
+                    var test4 = dustGreade(Integer.parseInt(pm25Grade1h))
+                    Log.e(TAG, "onResponse: "+test3+test4)
+
+                } else {
+                    var test5 = "시스템 점검"
+                    Log.e(TAG, "onResponse: "+test5 )
+                }
+
+
+
+
             }
 
             override fun onFailure(call: Call<ResponseDust>, t: Throwable) {
@@ -58,5 +90,17 @@ class DustRetrofit(val context: Context) {
 
     }
 
+    //미세먼지 점수 매기는 함수
+    fun dustGreade(grade: Int): String {
+        var dust : String
+        when(grade){
+            1 -> dust = "좋음"
+            2 -> dust = "보통"
+            3 -> dust = "나쁨"
+            4 -> dust = "매우나쁨"
+            else -> dust = "값이 없음"
+        }
+        return dust
+    }
 
 }

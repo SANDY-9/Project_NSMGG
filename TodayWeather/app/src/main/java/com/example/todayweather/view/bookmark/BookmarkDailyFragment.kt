@@ -22,6 +22,7 @@ class BookmarkDailyFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate<FragmentBookmarkDailyBinding>(inflater, R.layout.fragment_bookmark_daily, container, false)
         return binding.root
+
     }
 
 }
