@@ -5,13 +5,15 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
+import android.os.Message
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.todayweather.R
-import com.example.todayweather.view.main.MainActivity
 import com.example.todayweather.view.main.SplashActivity
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+
 
 class MyFirebaseMessagingService  :  FirebaseMessagingService() {
 
@@ -29,11 +31,10 @@ class MyFirebaseMessagingService  :  FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) { //
-        var msg = remoteMessage.notification?.title
-        var title = remoteMessage.notification?.body
-        Log.d(TAG, "From: " + remoteMessage.from)
-
         if(remoteMessage.notification != null) {
+            var msg = remoteMessage.notification?.title
+            var title = remoteMessage.notification?.body
+            Log.d(TAG, "From: " + remoteMessage.from)
             Log.d(TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
             sendNotification(title, msg)
         }
@@ -48,7 +49,7 @@ class MyFirebaseMessagingService  :  FirebaseMessagingService() {
         var pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        var notificationBuilder = NotificationCompat.Builder(this,"Notification")
+        var notificationBuilder = NotificationCompat.Builder(this, "Notification")
             .setSmallIcon(R.drawable.icon_cloud)
             .setContentTitle(title)
             .setContentText(body)

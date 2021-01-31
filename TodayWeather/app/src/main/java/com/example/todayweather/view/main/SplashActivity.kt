@@ -6,11 +6,9 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
 import android.location.*
-import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,26 +16,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.core.content.pm.PackageInfoCompat
 import androidx.databinding.DataBindingUtil
 import androidx.room.*
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.todayweather.R
 import com.example.todayweather.databinding.ActivitySplashBinding
 import com.example.todayweather.helper.CalculationHelper
 import com.example.todayweather.model.CityWeatherTable
 import com.example.todayweather.model.NationalWeatherTable
-import com.example.todayweather.repository.retrofit.DailyRetrofit
-import com.example.todayweather.repository.retrofit.WeeklyRetrofit
 import com.example.todayweather.view.main.SplashActivity.AppDatabase.Companion.getInstance
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import java.io.InputStream
 import java.util.*
 
@@ -68,6 +58,7 @@ class SplashActivity : AppCompatActivity(), LocationListener {
         NationalWeatherDB = getInstance(this)!!
         SharedPref()
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
+
 
 //        WeeklyRetrofit("경기도","성남시", 1).WeeklyRetrofit()
 //        DailyRetrofit(1).weather(convertX!!,convertY!!)
