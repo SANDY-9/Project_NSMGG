@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModel
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentMainBinding
+import com.example.todayweather.repository.retrofit.DustRetrofit
 import com.example.todayweather.view.BaseFragment
 import com.example.todayweather.viewModel.MainFragmentViewModel
 
@@ -24,6 +25,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>() 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         return binding.root
+
     }
 
     override val layoutResourceId: Int

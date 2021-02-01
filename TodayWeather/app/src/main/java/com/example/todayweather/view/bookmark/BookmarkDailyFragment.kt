@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentBookmarkDailyBinding
+import com.example.todayweather.repository.retrofit.DustRetrofit
 import com.example.todayweather.viewModel.CurrentWeatherViewModel
 
 class BookmarkDailyFragment : Fragment() {
@@ -22,6 +23,8 @@ class BookmarkDailyFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate<FragmentBookmarkDailyBinding>(inflater, R.layout.fragment_bookmark_daily, container, false)
         return binding.root
+
+
 
     }
 

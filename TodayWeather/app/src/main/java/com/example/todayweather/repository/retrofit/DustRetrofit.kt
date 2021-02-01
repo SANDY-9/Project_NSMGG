@@ -2,8 +2,10 @@ package com.example.todayweather.repository.retrofit
 
 import android.content.Context
 import android.util.Log
+import com.example.todayweather.model.DustAddrDTO
 import com.example.todayweather.model.DustDTO
 import com.example.todayweather.model.ResponseDust
+import com.example.todayweather.model.ResponseDustAddr
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +25,7 @@ class DustRetrofit(val context: Context) {
 
     var dustDTO : List<DustDTO>? = null
     var TAG = "DustRetrofit"
+    var dustAddrDTO : List<DustAddrDTO>? = null
 
 
     //최신 미세먼지 1개 정보조회
@@ -34,23 +37,62 @@ class DustRetrofit(val context: Context) {
         ): Call<ResponseDust>
     }
 
+    // 미세먼지 측정소 1개 정보조회
+    // 서비스키:선누 / 리턴타입:json / numOfRows & pageNo : 1
+    interface RetrofitDustAddr {
+        @GET("B552584/MsrstnInfoInqireSvc/getMsrstnList?serviceKey=qVcayJVu5HI9ugEnsD8DMqMSvIaPsRkW4zOTbAYQkEgop3%2FHRG8WRp52RND8MUyG0r%2Fh6VZqDVsCkGk7o%2BWGgg%3D%3D&returnType=json&numOfRows=1&pageNo=1")
+        fun getRegId(
+                @retrofit2.http.Query("addr") addr: String,
+        ): Call<ResponseDustAddr>
+    }
 
+
+
+    //미세먼지 측정소 불러오는 함수 (미세먼지 측정소 스테이션네임 돌려줌 )
+    fun dustAddr(addr: String):String{
+        var stationName:String = "바껴라얍"
+        //레트로핏 선언언
+       val retrofit: Retrofit = Retrofit.Builder()
+                .baseUrl("http://apis.data.go.kr/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+        val dustAddrRetrofit = retrofit.create(DustRetrofit.RetrofitDustAddr::class.java)
+        val callGetTemp = dustAddrRetrofit.getRegId(addr = addr)
+        callGetTemp.enqueue(object : Callback<ResponseDustAddr> {
+
+            override fun onResponse(call: Call<ResponseDustAddr>, response: Response<ResponseDustAddr>) {
+                dustAddrDTO = response.body()!!.response.body.items
+                 stationName = dustAddrDTO!![0].stationName
+                Log.e(TAG, "onResponse: "+dustAddrDTO)
+            }
+
+            override fun onFailure(call: Call<ResponseDustAddr>, t: Throwable) {
+                Log.e(TAG, "onFailure: 미세먼지 측정소", )
+
+            }
+        })
+        return stationName
+    }
+
+    //미세먼지 불러오는 함수
     fun dailyDust(stationName: String) {
-
+        //레트로핏 선언
         val retrofit: Retrofit = Retrofit.Builder()
                 .baseUrl("http://apis.data.go.kr/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-        Log.e(TAG, "dailyDust: "+stationName )
 
         val dustRetrofit = retrofit.create(DustRetrofit.RetrofitDust::class.java)
         val callGetTemp = dustRetrofit.getRegId(stationName = stationName)
         callGetTemp.enqueue(object : Callback<ResponseDust> {
             override fun onResponse(call: Call<ResponseDust>, response: Response<ResponseDust>) {
-                dustDTO = response.body()!!.response.body.items
+
+
+
                 Log.e(TAG, "onResponse: "+dustDTO )
 
-                var pm10Value = dustDTO!![0].pm10Value  //미세먼지 농도
+
                 var pm10Grade1h = dustDTO!![0].pm10Grade1h  //미세먼지 점수(1시간)
                 var pm10Flag = dustDTO!![0].pm10Flag    //미세먼지 장비점검
 
@@ -58,9 +100,7 @@ class DustRetrofit(val context: Context) {
                 var pm25Grade1h = dustDTO!![0].pm25Grade1h  //초미세먼지 점수(1시간)
                 var pm25Flag = dustDTO!![0].pm25Flag  //초미세먼지 장비점검
 
-
-
-
+                //화면에 셋팅해야함!
                 if(pm10Flag == null) {
                     var test1 = "미세먼지"
                     var test2 = dustGreade(Integer.parseInt(pm10Grade1h))
@@ -77,10 +117,6 @@ class DustRetrofit(val context: Context) {
                     var test5 = "시스템 점검"
                     Log.e(TAG, "onResponse: "+test5 )
                 }
-
-
-
-
             }
 
             override fun onFailure(call: Call<ResponseDust>, t: Throwable) {
