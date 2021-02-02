@@ -47,7 +47,7 @@ class DustRetrofit(val context: Context) {
     }
 
     //미세먼지 측정소 불러오는 함수 (미세먼지 측정소 스테이션네임 돌려줌 )
-    fun dustAddr(addr: String):String{
+    fun dustAddr(addr: String, dustAddrDTO: List<DustAddrDTO>){
 
         //레트로핏 선언
        val retrofit: Retrofit = Retrofit.Builder()
@@ -58,16 +58,15 @@ class DustRetrofit(val context: Context) {
         val dustAddrRetrofit = retrofit.create(DustRetrofit.RetrofitDustAddr::class.java)
         val callGetTemp = dustAddrRetrofit.getRegId(addr = addr)
         callGetTemp.enqueue(object : Callback<ResponseDustAddr> {
-
             override fun onResponse(call: Call<ResponseDustAddr>, response: Response<ResponseDustAddr>) {
                 dustAddrDTO = response.body()!!.response.body.items
-                Log.e(TAG, "onResponse: "+dustAddrDTO)
+                dailyDust(dustAddrDTO!![0].stationName)
+                Log.e(TAG, "onResponse: "+ dustAddrDTO!![0].stationName)
             }
             override fun onFailure(call: Call<ResponseDustAddr>, t: Throwable) {
                 Log.e(TAG, "onFailure: 미세먼지 측정소", )
             }
         })
-        return 
     }
 
     //미세먼지 불러오는 함수
@@ -82,7 +81,7 @@ class DustRetrofit(val context: Context) {
         val callGetTemp = dustRetrofit.getRegId(stationName = stationName)
         callGetTemp.enqueue(object : Callback<ResponseDust> {
             override fun onResponse(call: Call<ResponseDust>, response: Response<ResponseDust>) {
-
+                dustDTO = response.body()!!.response.body.items
                 Log.e(TAG, "onResponse: "+dustDTO )
 
                 var pm10Grade1h = dustDTO!![0].pm10Grade1h  //미세먼지 점수(1시간)
