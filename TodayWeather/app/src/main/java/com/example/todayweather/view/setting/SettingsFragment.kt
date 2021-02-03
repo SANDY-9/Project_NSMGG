@@ -1,24 +1,22 @@
 package com.example.todayweather.view.setting
 
-import android.app.Activity
-import android.app.AlarmManager
-import android.app.AlertDialog
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_SENDTO
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.NumberPicker
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.example.todayweather.R
 import com.example.todayweather.push.AlarmReciver
-import com.example.todayweather.push.MyFirebaseMessagingService
 import java.util.*
 
 
@@ -87,12 +85,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         numberPickerH.value = 7
         val numberPickerM = dialogView.findViewById<NumberPicker>(R.id.numperPickerM)
         numberPickerM.minValue = 0
-        numberPickerM.maxValue = 5
-        numberPickerM.displayedValues = arrayOf("0", "10", "20", "30", "40", "50")
+        numberPickerM.maxValue = 59
+//        numberPickerM.displayedValues = arrayOf("0", "10", "20", "30", "40", "50")
 
         d.setPositiveButton("설정") { dialogInterface, i ->
             val result_hour = numberPickerH.value
-            val result_min = numberPickerM.value * 10
+            val result_min = numberPickerM.value
             //24시로 표시
             Log.d("[test]", "onClick: ${result_hour}, ${result_min}")
 
@@ -133,7 +131,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 //                    Log.d("[test]", msg)
 //                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
 //                }
-            Alarm(context,result_hour,result_min)
+//            Alarm(context, result_hour, result_min)
+            createNotificationChannel()
+            alarmBroadcastReceiver(result_hour,result_min)
         }
         d.setNegativeButton("취소") { dialogInterface, i -> }
         val alertDialog = d.create()
@@ -147,11 +147,41 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val calendar: Calendar = Calendar.getInstance()
 
         //알람시간 calendar에 set해주기
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DATE), result_hour, result_min, 0)
-        Log.d("[test]","${calendar.get(Calendar.YEAR)}, ${calendar.get(Calendar.MONTH)}, ${calendar.get(Calendar.DATE)}, $result_hour, $result_min")
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE), result_hour, result_min, 0)
+        Log.d("[test]", "${calendar.get(Calendar.YEAR)}, ${calendar.get(Calendar.MONTH)}, ${calendar.get(Calendar.DATE)}, $result_hour, $result_min")
 
         //알람 예약
         am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, sender)
+    }
+
+    fun alarmBroadcastReceiver(hour:Int, min:Int) {
+        val alarmBroadcastReceiverintent = Intent(context, AlarmReciver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context, 0, alarmBroadcastReceiverintent, PendingIntent.FLAG_CANCEL_CURRENT)
+        val alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val calendar: Calendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(Calendar.HOUR_OF_DAY, hour)
+            set(Calendar.MINUTE, min)
+        }
+        Log.d("[test]","${ calendar.timeInMillis}")
+        // With setInexactRepeating(), you have to use one of the AlarmManager interval
+        // constants--in this case, AlarmManager.INTERVAL_DAY.
+        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+    }
+
+    //    API26(Oreo)+ notification 작동을 위해서는 channel을 생성해야 함
+    fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name: CharSequence = "알림설정에서의 제목"
+            val description = "Oreo Version 이상을 위한 알림(알림설정에서의 설명)"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val notificationChannel = NotificationChannel("channel_id", name, importance)
+            notificationChannel.description = description
+            val notificationManager = context?.getSystemService(NotificationManager::class.java)
+            notificationManager?.createNotificationChannel(notificationChannel)
+            Log.d("[test]","createNotificationChannel")
+        }
     }
 
 }

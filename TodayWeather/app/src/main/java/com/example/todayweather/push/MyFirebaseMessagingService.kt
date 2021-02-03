@@ -43,13 +43,13 @@ class MyFirebaseMessagingService  :  FirebaseMessagingService() {
     fun sendNotification(title: String?, body: String?) {
         val intent = Intent(this, SplashActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            putExtra("Notification", body)
+            putExtra("channel_id", body)
         }
 
         var pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        var notificationBuilder = NotificationCompat.Builder(this, "Notification")
+        var notificationBuilder = NotificationCompat.Builder(this, "channel_id")
             .setSmallIcon(R.drawable.icon_cloud)
             .setContentTitle(title)
             .setContentText(body)

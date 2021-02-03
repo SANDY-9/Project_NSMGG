@@ -28,12 +28,13 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <receiver android:name=".push.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.test.alarmtestous.ALARM_START" />
-            </intent-filter>
+        <receiver
+            android:name=".push.AlarmReciver"
+            android:enabled="true">
         </receiver>
-
+        <service
+            android:name=".push.AlarmIntentService"
+            android:exported="false" />
         <activity android:name=".view.main.MainActivity" />
 
         <meta-data
