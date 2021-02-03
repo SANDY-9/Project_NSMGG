@@ -1,5 +1,7 @@
 package com.example.todayweather.model
 
+import android.location.Address
+
 /**
  * @author SANDY
  * @email nnal0256@naver.com
@@ -7,6 +9,7 @@ package com.example.todayweather.model
  * @desc 북마크 정보 저장(필요한 정보 : 주소, nx, ny, 미세먼지 측정소 주소, 육상예보구역 코드(최저최고기온찾기), 예보지역행정코드(강수확률찾기))
  */
 class Bookmark {
+
     var region : String
         get() {
             return region
