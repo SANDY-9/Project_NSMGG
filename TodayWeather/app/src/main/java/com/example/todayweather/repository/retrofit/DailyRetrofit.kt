@@ -3,8 +3,8 @@ package com.example.todayweather.repository.retrofit
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.example.todayweather.model.NowDTO
-import com.example.todayweather.model.ResponseDTONow
+import com.example.todayweather.repository.model.NowDTO
+import com.example.todayweather.repository.model.ResponseDTONow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

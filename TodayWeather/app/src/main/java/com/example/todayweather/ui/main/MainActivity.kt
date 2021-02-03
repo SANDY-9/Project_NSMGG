@@ -2,21 +2,14 @@ package com.example.todayweather.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-<<<<<<< HEAD:TodayWeather/app/src/main/java/com/example/todayweather/ui/main/MainActivity.kt
-=======
-import android.util.Log
-import androidx.appcompat.widget.AppCompatButton
->>>>>>> feature-Kang:TodayWeather/app/src/main/java/com/example/todayweather/view/main/MainActivity.kt
 import com.example.todayweather.R
-import com.example.todayweather.model.*
+import com.example.todayweather.repository.model.DustAddrDTO
 
 import com.example.todayweather.repository.retrofit.DustRetrofit
 
 
 
 class MainActivity : AppCompatActivity() {
-
-    var dustAddrDTO : List<DustAddrDTO>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         // 3. 측정소 조회 구,시,군(addr) 넣어 보내서  측정소(stationName) 가져오기 했음 검사받기
         // 4. 선누 아프디마
         // 5. 더스트 레트로핏 클래스에 dustaddr함수 리턴값 받아오는법 물어보기
-        val asdf = DustRetrofit(this)
-        asdf.dustAddr("서초구", dustAddrDTO)
+       // val asdf = DustRetrofit(this)
+        //asdf.dustAddr("서초구", dustAddrDTO)
 
 
 

@@ -1,4 +1,4 @@
-package com.example.todayweather.push
+package com.example.todayweather.repository.push
 
 import android.app.NotificationManager
 import android.app.PendingIntent

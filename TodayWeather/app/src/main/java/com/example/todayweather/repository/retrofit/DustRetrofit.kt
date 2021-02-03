@@ -2,10 +2,10 @@ package com.example.todayweather.repository.retrofit
 
 import android.content.Context
 import android.util.Log
-import com.example.todayweather.model.DustAddrDTO
-import com.example.todayweather.model.DustDTO
-import com.example.todayweather.model.ResponseDust
-import com.example.todayweather.model.ResponseDustAddr
+import com.example.todayweather.repository.model.DustAddrDTO
+import com.example.todayweather.repository.model.DustDTO
+import com.example.todayweather.repository.model.ResponseDust
+import com.example.todayweather.repository.model.ResponseDustAddr
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

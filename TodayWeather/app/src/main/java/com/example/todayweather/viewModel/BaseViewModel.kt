@@ -1,7 +1,6 @@
 package com.example.todayweather.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.example.todayweather.model.ResponseDTO
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 

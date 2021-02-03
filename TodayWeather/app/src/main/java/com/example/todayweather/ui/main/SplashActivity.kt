@@ -21,8 +21,8 @@ import androidx.room.*
 import com.example.todayweather.R
 import com.example.todayweather.databinding.ActivitySplashBinding
 import com.example.todayweather.helper.CalculationHelper
-import com.example.todayweather.model.CityWeatherTable
-import com.example.todayweather.model.NationalWeatherTable
+import com.example.todayweather.repository.model.CityWeatherTable
+import com.example.todayweather.repository.model.NationalWeatherTable
 import com.example.todayweather.ui.main.SplashActivity.AppDatabase.Companion.getInstance
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.CoroutineScope

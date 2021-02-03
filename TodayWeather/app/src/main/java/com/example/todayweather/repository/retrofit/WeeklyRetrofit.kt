@@ -3,10 +3,10 @@ package com.example.todayweather.repository.retrofit
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.example.todayweather.model.ResponseDTO
-import com.example.todayweather.model.ResponseDTO2
-import com.example.todayweather.model.SkyDTO
-import com.example.todayweather.model.TempDTO
+import com.example.todayweather.repository.model.ResponseDTO
+import com.example.todayweather.repository.model.ResponseDTO2
+import com.example.todayweather.repository.model.SkyDTO
+import com.example.todayweather.repository.model.TempDTO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

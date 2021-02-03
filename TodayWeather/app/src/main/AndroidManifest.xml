@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- 푸쉬알림기능 -->
-        <service android:name=".push.MyFirebaseMessagingService">
+        <service android:name="com.example.todayweather.repository.push.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

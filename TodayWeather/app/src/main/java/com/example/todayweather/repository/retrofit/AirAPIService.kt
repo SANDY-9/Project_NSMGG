@@ -1,5 +1,6 @@
 package com.example.todayweather.repository.retrofit
 
+import android.util.Log
 import com.example.todayweather.repository.retrofit.response.DustFindStationResponse
 import com.example.todayweather.repository.retrofit.response.DustLocalResponse
 import com.example.todayweather.repository.retrofit.response.DustStationResponse
@@ -30,10 +31,10 @@ interface AirAPIService {
     ) : Deferred<Response<DustFindStationResponse>>
 
     //측정소로 미세먼지 검색
-    @GET("ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?numOfRows=1&pageNo=1&dataTerm=DAILY&ver=1.3&returnType=JSON")
+    @GET("ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?numOfRows=1&pageNo=1&dataTerm=DAILY&ver=1.3&returnType=JSON&" +
+            "serviceKey=qVcayJVu5HI9ugEnsD8DMqMSvIaPsRkW4zOTbAYQkEgop3%2FHRG8WRp52RND8MUyG0r%2Fh6VZqDVsCkGk7o%2BWGgg%3D%3D")
     fun getDustStation (
-            @Query("stationNam") stationName : String,       // 측정소이름
-            @Query("serviceKey") serviceKey : String
+            @Query("stationNam") stationName : String       // 측정소이름
     ) : Deferred<Response<DustStationResponse>>
 
 
@@ -56,6 +57,7 @@ interface AirAPIService {
                     .newBuilder()
                     .url(url)
                     .build()
+                Log.e("[요청 URL]", url.toString())
                 return@Interceptor chain.proceed(request)
             }
 
