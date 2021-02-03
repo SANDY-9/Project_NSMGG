@@ -6,6 +6,7 @@ import android.location.LocationManager
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.todayweather.data.model.Location
 
 /**
  * @author SANDY
@@ -15,20 +16,6 @@ import androidx.lifecycle.ViewModel
  */
 class LocationViewModel() : ViewModel() {
 
-    var lat : Double = 0.0
-    var lng : Double = 0.0
-    var address : Address? = null
-
-    constructor(lat:Double, lng:Double, address : Address) : this() {
-        this.lat = lat
-        this.lng = lng
-        this.address = address
-    }
-
-    fun onGPS() {
-
-    }
-
-
+    val location : MutableLiveData<Location> = MutableLiveData<Location>()
 
 }

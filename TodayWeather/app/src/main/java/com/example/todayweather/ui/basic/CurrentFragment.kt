@@ -1,7 +1,6 @@
 package com.example.todayweather.ui.basic
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentDailyDetailBinding
-import com.example.todayweather.repository.retrofit.AirAPIService
-import com.example.todayweather.repository.retrofit.WeatherAPIService
-import com.example.todayweather.repository.retrofit.response.DustStationResponse
 import com.example.todayweather.viewModel.DailyWeatherViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class CurrentFragment : Fragment() {
 

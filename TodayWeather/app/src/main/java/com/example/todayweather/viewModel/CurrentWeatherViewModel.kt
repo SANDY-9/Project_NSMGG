@@ -1,7 +1,8 @@
 package com.example.todayweather.viewModel
 
 import androidx.lifecycle.MutableLiveData
-import com.example.todayweather.repository.model.CurrentWeather
+import androidx.lifecycle.ViewModel
+import com.example.todayweather.data.model.CurrentWeather
 
 /**
  * @author SANDY
@@ -9,7 +10,7 @@ import com.example.todayweather.repository.model.CurrentWeather
  * @created 2021-01-25
  * @desc 현재 날씨 데이터
  */
-class CurrentWeatherViewModel : BaseViewModel() {
+class CurrentWeatherViewModel : ViewModel() {
 
     //라이브 데이터
     val currentWeather : MutableLiveData<CurrentWeather> = MutableLiveData<CurrentWeather>()

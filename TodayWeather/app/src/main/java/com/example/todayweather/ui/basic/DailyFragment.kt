@@ -10,16 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentDailyBinding
-import com.example.todayweather.repository.retrofit.AirAPIService
-import com.example.todayweather.repository.retrofit.DailyRetrofit
-import com.example.todayweather.repository.retrofit.WeatherAPIService
-import com.example.todayweather.repository.retrofit.response.CurrentWeatherResponse
+import com.example.todayweather.data.network.WeatherAPIService
 import com.example.todayweather.viewModel.CurrentWeatherViewModel
 import com.example.todayweather.viewModel.DailyWeatherViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 class DailyFragment : Fragment() {
 
@@ -45,7 +41,7 @@ class DailyFragment : Fragment() {
                 "20210203", "1930", 61, 126
             )
             Log.e("[TEST]", "3")
-            binding.region.text = currentWeatherResponse.body().toString()
+            binding.region.text = currentWeatherResponse.toString()
             Log.e("[TEST]", currentWeatherResponse.toString())
         }
     }

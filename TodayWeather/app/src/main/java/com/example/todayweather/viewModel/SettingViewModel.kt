@@ -9,4 +9,5 @@ import androidx.lifecycle.ViewModel
  * @desc 설정관리
  */
 class SettingViewModel: ViewModel() {
+
 }

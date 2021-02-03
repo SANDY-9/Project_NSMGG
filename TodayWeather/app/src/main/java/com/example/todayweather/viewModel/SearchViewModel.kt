@@ -1,5 +1,6 @@
 package com.example.todayweather.viewModel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 /**
@@ -9,4 +10,7 @@ import androidx.lifecycle.ViewModel
  * @desc 검색관리 (검색요청, 자동완성, 검색어 저장)
  */
 class SearchViewModel : ViewModel() {
+
+    val searchWord : MutableLiveData<String> = MutableLiveData<String>()
+
 }

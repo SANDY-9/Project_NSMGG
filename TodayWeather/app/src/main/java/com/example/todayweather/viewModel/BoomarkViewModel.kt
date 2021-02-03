@@ -1,6 +1,8 @@
 package com.example.todayweather.viewModel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.todayweather.data.model.Bookmark
 
 /**
  * @author SANDY
@@ -9,4 +11,7 @@ import androidx.lifecycle.ViewModel
  * @desc 북마크관리
  */
 class BoomarkViewModel : ViewModel() {
+
+    val bookmark : MutableLiveData<Bookmark> = MutableLiveData<Bookmark>()
+
 }

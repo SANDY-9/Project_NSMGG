@@ -3,10 +3,6 @@ package com.example.todayweather.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.todayweather.R
-import com.example.todayweather.repository.model.DustAddrDTO
-
-import com.example.todayweather.repository.retrofit.DustRetrofit
-
 
 
 class MainActivity : AppCompatActivity() {
