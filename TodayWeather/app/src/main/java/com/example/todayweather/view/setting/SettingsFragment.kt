@@ -121,37 +121,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             editer.apply()
             editer.commit()
 
-//            // 푸쉬 알림 채널 만들기
-//            Firebase.messaging.subscribeToTopic("weather${str_hour.split(" ")[1]}${result_min}")
-//                .addOnCompleteListener { task ->
-//                    var msg = getString(R.string.msg_subscribed)
-//                    if (!task.isSuccessful) {
-//                        msg = getString(R.string.msg_subscribe_failed)
-//                    }
-//                    Log.d("[test]", msg)
-//                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-//                }
-//            Alarm(context, result_hour, result_min)
             createNotificationChannel()
             alarmBroadcastReceiver(result_hour,result_min)
         }
         d.setNegativeButton("취소") { dialogInterface, i -> }
         val alertDialog = d.create()
         alertDialog.show()
-    }
-
-    private fun Alarm(context: Context?, result_hour: Int, result_min: Int) {
-        val am = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, AlarmReciver::class.java)
-        val sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-        val calendar: Calendar = Calendar.getInstance()
-
-        //알람시간 calendar에 set해주기
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE), result_hour, result_min, 0)
-        Log.d("[test]", "${calendar.get(Calendar.YEAR)}, ${calendar.get(Calendar.MONTH)}, ${calendar.get(Calendar.DATE)}, $result_hour, $result_min")
-
-        //알람 예약
-        am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, sender)
     }
 
     fun alarmBroadcastReceiver(hour:Int, min:Int) {
