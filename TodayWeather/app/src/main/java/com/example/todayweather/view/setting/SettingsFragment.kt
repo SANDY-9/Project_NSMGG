@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.NumberPicker
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.example.todayweather.R
@@ -41,6 +40,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 PackageManager.GET_ACTIVITIES
         )?.versionName
 
+
         // 시간 수정 버튼 누를 때 dialog띄우기
         val attachment : Preference? = findPreference("attachment")
         val pref : SharedPreferences? = activity?.getSharedPreferences(
@@ -48,8 +48,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 Activity.MODE_PRIVATE
         )
         val timeSetting  = pref?.getBoolean("timeSetting", false)
-        val hourSetting  = pref?.getString("hourSetting", null)
-        val minSetting  = pref?.getString("minSetting", null)
+        val hourSetting  = pref?.getString("hourSetting", "오전 07")
+        val minSetting  = pref?.getString("minSetting", "00")
 
         val editer : SharedPreferences.Editor = pref!!.edit()
 
@@ -64,14 +64,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
         // 클릭시
         attachment?.setOnPreferenceClickListener {
-            numberPickerCustom(attachment, editer)
+            if (hourSetting!!.toString() != null && minSetting.toString() != null) {
+                numberPickerCustom(attachment, editer, hourSetting!!.split(" ")[1].toInt(), minSetting!!.toInt())
+                Log.d("[test]","${hourSetting!!.split(" ")[1].toInt()}, ${minSetting!!.toInt()}")
+            }
             true
         }
 
     }
 
 
-    fun numberPickerCustom(attachment: Preference, editer: SharedPreferences.Editor) {
+    fun numberPickerCustom(attachment: Preference, editer: SharedPreferences.Editor, base_hour: Int, base_min: Int) {
         val d = AlertDialog.Builder(context)
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.number_picker_dialog, null)
@@ -82,10 +85,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val numberPickerH = dialogView.findViewById<NumberPicker>(R.id.numperPickerH)
         numberPickerH.minValue = 0
         numberPickerH.maxValue = 23
-        numberPickerH.value = 7
+        numberPickerH.value = base_hour
         val numberPickerM = dialogView.findViewById<NumberPicker>(R.id.numperPickerM)
         numberPickerM.minValue = 0
         numberPickerM.maxValue = 59
+        numberPickerM.value = base_min
 //        numberPickerM.displayedValues = arrayOf("0", "10", "20", "30", "40", "50")
 
         d.setPositiveButton("설정") { dialogInterface, i ->
@@ -123,6 +127,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
             createNotificationChannel()
             alarmBroadcastReceiver(result_hour,result_min)
+            Log.d("[test]","re h : ${ result_hour}, re m : ${result_min}")
         }
         d.setNegativeButton("취소") { dialogInterface, i -> }
         val alertDialog = d.create()
@@ -139,7 +144,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             set(Calendar.HOUR_OF_DAY, hour)
             set(Calendar.MINUTE, min)
         }
-        Log.d("[test]","${ calendar.timeInMillis}")
+        if (calendar.before(Calendar.getInstance())) {
+            calendar.add(Calendar.DATE, 1);
+        }
+        Log.d("[test]","cal  : ${calendar.time}")
         // With setInexactRepeating(), you have to use one of the AlarmManager interval
         // constants--in this case, AlarmManager.INTERVAL_DAY.
         alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)

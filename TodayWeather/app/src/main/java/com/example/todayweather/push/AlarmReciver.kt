@@ -44,11 +44,11 @@ class AlarmIntentService : IntentService("AlarmIntentService") {
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
             Log.d("[test]","버전이 맞고 builder함")
+            val notificationManager = NotificationManagerCompat.from(this)
+            // notificationId is a unique int for each notification that you must define
+            notificationManager.notify(NOTIFICATION_ID, builder.build())
         }else{
             Log.d("[test]","버전이 안 맞아유")
         }
-        val notificationManager = NotificationManagerCompat.from(this)
-        // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(NOTIFICATION_ID, builder.build())
     }
 }
