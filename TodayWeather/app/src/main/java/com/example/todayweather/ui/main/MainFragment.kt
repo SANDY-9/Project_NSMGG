@@ -10,8 +10,14 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentMainBinding
+<<<<<<< HEAD:TodayWeather/app/src/main/java/com/example/todayweather/ui/main/MainFragment.kt
 import com.example.todayweather.ui.BaseFragment
 import com.example.todayweather.viewModel.BaseViewModel
+=======
+import com.example.todayweather.repository.retrofit.DustRetrofit
+import com.example.todayweather.view.BaseFragment
+import com.example.todayweather.viewModel.MainFragmentViewModel
+>>>>>>> feature-Kang:TodayWeather/app/src/main/java/com/example/todayweather/view/main/MainFragment.kt
 
 class MainFragment : BaseFragment<FragmentMainBinding, BaseViewModel>() {
 
@@ -28,6 +34,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, BaseViewModel>() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         return binding.root
+
     }
 
     override val viewModel: BaseViewModel by activityViewModels()
