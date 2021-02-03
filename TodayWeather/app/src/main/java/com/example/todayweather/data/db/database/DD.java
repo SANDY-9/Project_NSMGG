@@ -1,5 +1,8 @@
 package com.example.todayweather.data.db.database;
 
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+
 /**
  * @author SANDY
  * @email nnal0256@naver.com
