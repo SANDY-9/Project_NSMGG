@@ -36,11 +36,6 @@ class DailyRetrofit(val context: Context) {
         ): Call<ResponseDTONow>
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> feature-Kang
-
     // 기상청 API 호출
     fun weather(nx: Int, ny: Int) { // nx,ny = 기상청 api에서 제공하는 값을 도출한 값
         val date = Date()
@@ -154,7 +149,6 @@ class DailyRetrofit(val context: Context) {
                 }
                 Log.d("[test]", "nowDTO : ${nowDTO.toString()}")
 
-<<<<<<< HEAD
             }
 
             override fun onFailure(call: Call<ResponseDTONow>, t: Throwable) {
@@ -162,14 +156,6 @@ class DailyRetrofit(val context: Context) {
                 Log.d("[test]", "실패 : $t")
             }
         })
-=======
-                override fun onFailure(call: Call<ResponseDTONow>, t: Throwable) {
-                    Log.d("[test]", "실패 : $t")
-                }
-            })
-        }else if (check==2){
-
->>>>>>> feature-Kang
 
     }
 }

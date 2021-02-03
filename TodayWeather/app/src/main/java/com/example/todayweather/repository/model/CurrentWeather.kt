@@ -1,4 +1,4 @@
-package com.example.todayweather.model
+package com.example.todayweather.repository.model
 
 import com.example.todayweather.helper.ConvertDateHelper
 import com.example.todayweather.helper.ConvertWeatherHelper

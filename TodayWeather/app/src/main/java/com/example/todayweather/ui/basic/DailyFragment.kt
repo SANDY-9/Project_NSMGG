@@ -10,12 +10,14 @@ import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentDailyBinding
 import com.example.todayweather.viewModel.CurrentWeatherViewModel
+import com.example.todayweather.viewModel.DailyWeatherViewModel
 
 class DailyFragment : Fragment() {
 
     lateinit var binding: FragmentDailyBinding
     //뷰모델 초기화-프래그먼트 : by activityViewModels() 이용, 변수는 무조건 val변수=>lateinit var 불가능
     val currentWeatherViewModel: CurrentWeatherViewModel by activityViewModels()
+    val dailyWeatherViewModel : DailyWeatherViewModel by activityViewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,

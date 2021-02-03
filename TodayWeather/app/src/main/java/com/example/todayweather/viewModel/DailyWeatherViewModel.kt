@@ -1,9 +1,7 @@
 package com.example.todayweather.viewModel
 
 import androidx.lifecycle.MutableLiveData
-import com.example.todayweather.model.CurrentWeather
-import com.example.todayweather.model.DailyWeather
-import com.example.todayweather.model.DataModel
+import com.example.todayweather.repository.model.DailyWeather
 
 /**
  * @author SANDY

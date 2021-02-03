@@ -59,7 +59,7 @@ class DustRetrofit(val context: Context) {
         val callGetTemp = dustAddrRetrofit.getRegId(addr = addr)
         callGetTemp.enqueue(object : Callback<ResponseDustAddr> {
             override fun onResponse(call: Call<ResponseDustAddr>, response: Response<ResponseDustAddr>) {
-                dustAddrDTO = response.body()!!.response.body.items
+                //dustAddrDTO = response.body()!!.response.body.items
                 dailyDust(dustAddrDTO!![0].stationName)
                 Log.e(TAG, "onResponse: "+ dustAddrDTO!![0].stationName)
             }

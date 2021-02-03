@@ -1,9 +1,9 @@
-package com.example.todayweather.model.response
+package com.example.todayweather.repository.retrofit.response
 
 
 import com.google.gson.annotations.SerializedName
 
-data class TodayWeatherTimeResponse(
+data class TodayWeatherDayResponse(
     @SerializedName("response")
     val response: Response
 ) {
@@ -43,12 +43,16 @@ data class TodayWeatherTimeResponse(
                     val baseTime: String,
                     @SerializedName("category")
                     val category: String,
+                    @SerializedName("fcstDate")
+                    val fcstDate: String,
+                    @SerializedName("fcstTime")
+                    val fcstTime: String,
+                    @SerializedName("fcstValue")
+                    val fcstValue: String,
                     @SerializedName("nx")
                     val nx: Int,
                     @SerializedName("ny")
-                    val ny: Int,
-                    @SerializedName("obsrValue")
-                    val obsrValue: String
+                    val ny: Int
                 )
             }
         }

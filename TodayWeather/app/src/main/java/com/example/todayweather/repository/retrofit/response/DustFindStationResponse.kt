@@ -1,4 +1,4 @@
-package com.example.todayweather.model.response
+package com.example.todayweather.repository.retrofit.response
 
 
 import com.google.gson.annotations.SerializedName

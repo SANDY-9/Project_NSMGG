@@ -1,6 +1,4 @@
-package com.example.todayweather.model
-
-import android.location.Address
+package com.example.todayweather.repository.model
 
 /**
  * @author SANDY

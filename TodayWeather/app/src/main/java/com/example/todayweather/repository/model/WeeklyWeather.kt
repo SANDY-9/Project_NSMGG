@@ -1,9 +1,4 @@
-package com.example.todayweather.model
-
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.example.todayweather.helper.ConvertDateHelper
-import com.google.gson.annotations.SerializedName
+package com.example.todayweather.repository.model
 
 /**
  * @author SANDY
