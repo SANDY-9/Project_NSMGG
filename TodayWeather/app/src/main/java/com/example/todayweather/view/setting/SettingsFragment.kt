@@ -14,16 +14,23 @@ import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
 import com.example.todayweather.R
 import com.example.todayweather.push.AlarmReciver
 import java.util.*
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
-
+    lateinit var alarmMgr : AlarmManager
+    lateinit var pendingIntent : PendingIntent
+    lateinit var alarmBroadcastReceiverintent : Intent
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
+        alarmBroadcastReceiverintent = Intent(context, AlarmReciver::class.java)
+        pendingIntent = PendingIntent.getBroadcast(context, 0, alarmBroadcastReceiverintent, PendingIntent.FLAG_CANCEL_CURRENT)
+        alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         // 버튼 누르면 이메일 보내기로 가기
         val peedback : Preference? = findPreference("peedback")
         peedback?.setOnPreferenceClickListener {
@@ -32,7 +39,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
-        // 버전 이름 함수로 가져오기
+// 버전 이름 함수로 가져오기
         val version : Preference? = findPreference("version")
         val packageManager = activity?.packageManager
         version?.summary = packageManager?.getPackageInfo(
@@ -41,8 +48,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
         )?.versionName
 
 
-        // 시간 수정 버튼 누를 때 dialog띄우기
-        val attachment : Preference? = findPreference("attachment")
+
+// 시간 수정 버튼 누를 때 dialog띄우기
+        val attachment : Preference = findPreference("attachment")!!
         val pref : SharedPreferences? = activity?.getSharedPreferences(
                 "timeSetting",
                 Activity.MODE_PRIVATE
@@ -58,12 +66,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             editer.apply()
             editer.commit()
 
-            attachment?.summary = "알림 받을 시간을 설정해주세요."
+            attachment.summary = "알림 받을 시간을 설정해주세요."
         }else{
-            attachment?.summary = "매일 ${hourSetting.toString()}:${minSetting.toString()}에 오늘 날씨에 대한 정보 알림을 받습니다."
+            attachment.summary = "매일 ${hourSetting.toString()}:${minSetting.toString()}에 오늘 날씨에 대한 정보 알림을 받습니다."
         }
-        // 클릭시
-        attachment?.setOnPreferenceClickListener {
+// 알림 시간 설정 클릭시
+        attachment.setOnPreferenceClickListener {
             if (hourSetting!!.split(" ")[0]=="오후"){
                 numberPickerCustom(attachment, editer, hourSetting.split(" ")[1].toInt()+12, minSetting!!.toInt())
             }else{
@@ -73,6 +81,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
+// 알림 받기 유무
+        val sync : SwitchPreferenceCompat? = findPreference("sync")
+        sync?.setOnPreferenceChangeListener { preference, newValue ->
+            if (sync.isChecked){
+                alarmMgr.cancel(pendingIntent)
+                Log.d("[test]","체크 되어있을 때")
+            }else{
+                numberPickerCustom(attachment, editer, hourSetting!!.split(" ")[1].toInt(), minSetting!!.toInt())
+            }
+            true
+        }
     }
 
 
@@ -137,9 +156,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     fun alarmBroadcastReceiver(hour:Int, min:Int) {
-        val alarmBroadcastReceiverintent = Intent(context, AlarmReciver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, alarmBroadcastReceiverintent, PendingIntent.FLAG_CANCEL_CURRENT)
-        val alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        pendingIntent = PendingIntent.getBroadcast(context, 0, alarmBroadcastReceiverintent, PendingIntent.FLAG_CANCEL_CURRENT)
 
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
