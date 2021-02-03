@@ -64,10 +64,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
         // 클릭시
         attachment?.setOnPreferenceClickListener {
-            if (hourSetting!!.toString() != null && minSetting.toString() != null) {
-                numberPickerCustom(attachment, editer, hourSetting!!.split(" ")[1].toInt(), minSetting!!.toInt())
-                Log.d("[test]","${hourSetting!!.split(" ")[1].toInt()}, ${minSetting!!.toInt()}")
+            if (hourSetting!!.split(" ")[0]=="오후"){
+                numberPickerCustom(attachment, editer, hourSetting.split(" ")[1].toInt()+12, minSetting!!.toInt())
+            }else{
+                numberPickerCustom(attachment, editer, hourSetting.split(" ")[1].toInt(), minSetting!!.toInt())
             }
+            Log.d("[test]","${hourSetting.split(" ")[1].toInt()}, ${minSetting.toInt()}")
             true
         }
 
@@ -79,7 +81,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.number_picker_dialog, null)
         d.setTitle("알림 시간 설정")
-        d.setMessage("30분 단위로 설정 가능합니다.")
+        d.setMessage("알림 받을 시간을 설정해주세요.")
         d.setView(dialogView)
 
         val numberPickerH = dialogView.findViewById<NumberPicker>(R.id.numperPickerH)
@@ -145,9 +147,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             set(Calendar.MINUTE, min)
         }
         if (calendar.before(Calendar.getInstance())) {
-            calendar.add(Calendar.DATE, 1);
+            Log.d("[test]","내일 알람")
+            calendar.add(Calendar.DATE, 1)
         }
-        Log.d("[test]","cal  : ${calendar.time}")
+        Log.d("[test]","cal : ${calendar.time}, Cal : ${Calendar.getInstance().time}")
         // With setInexactRepeating(), you have to use one of the AlarmManager interval
         // constants--in this case, AlarmManager.INTERVAL_DAY.
         alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
