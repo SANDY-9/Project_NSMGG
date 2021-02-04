@@ -23,9 +23,7 @@ import com.example.todayweather.data.network.CityWeatherTable
 import com.example.todayweather.data.network.NationalWeatherTable
 import com.example.todayweather.databinding.ActivitySplashBinding
 import com.example.todayweather.helper.CalculationHelper
-import com.example.todayweather.model.CityWeatherTable
-import com.example.todayweather.model.NationalWeatherTable
-import com.example.todayweather.view.main.SplashActivity.AppDatabase.Companion.getInstance
+import com.example.todayweather.ui.main.SplashActivity.AppDatabase.Companion.getInstance
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

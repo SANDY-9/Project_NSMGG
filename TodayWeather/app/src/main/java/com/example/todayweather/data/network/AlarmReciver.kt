@@ -11,7 +11,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.example.todayweather.R
-import com.example.todayweather.view.main.SplashActivity
+import com.example.todayweather.ui.main.SplashActivity
 
 /**
  * @author seungwon

@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- 푸쉬알림기능 -->
-        <service android:name="com.example.todayweather.repository.push.MyFirebaseMessagingService">
+        <service android:name=".data.network.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -34,7 +34,7 @@
         <service
             android:name=".push.AlarmIntentService"
             android:exported="false" />
-        <activity android:name=".view.main.MainActivity" />
+        <activity android:name=".ui.main.MainActivity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
