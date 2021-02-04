@@ -17,7 +17,7 @@ interface RetrofitNetWork {
     val downloadDailyWeather : LiveData<DailyWeather>
     val downloadWeeklyWeather : LiveData<WeeklyWeather>
 
-    suspend fun fetchCurrentWeather(nx : Int, ny : Int)
+    suspend fun fetchCurrentWeather(nx : Int, ny : Int, addr: String)
     suspend fun fetchDailyWeather(nx : Int, ny : Int)
     suspend fun fetchDownloadWeather(nx : Int, ny : Int, addr : String)
 
