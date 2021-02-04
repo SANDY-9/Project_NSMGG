@@ -34,16 +34,6 @@ class DailyFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val weatherAPIService = WeatherAPIService()
-        Log.e("[TEST]", "2")
-        GlobalScope.launch (Dispatchers.Main){
-            val currentWeatherResponse = weatherAPIService.getCurrentWeather(
-                "20210203", "1930", 61, 126
-            )
-            Log.e("[TEST]", "3")
-            binding.region.text = currentWeatherResponse.toString()
-            Log.e("[TEST]", currentWeatherResponse.toString())
-        }
     }
 
     //뷰가 뷰모델의 라이브데이터를 옵저빙한다.

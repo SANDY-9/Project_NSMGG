@@ -13,7 +13,7 @@ import com.example.todayweather.helper.ConvertWeatherHelper
 open class CurrentWeather {
 
     //현재시각
-    var date: String = ""
+    val date: String
         get() {
             return ConvertDateHelper.dateFormToday()
         }
@@ -32,6 +32,15 @@ open class CurrentWeather {
         }
         set(value) {
             temperature = value
+        }
+
+    //체감온도
+    var feeltemperature : String
+        get() {
+            return feeltemperature
+        }
+        set(value) {
+            feeltemperature = value
         }
 
     //강수량

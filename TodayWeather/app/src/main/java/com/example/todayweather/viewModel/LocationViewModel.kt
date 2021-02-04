@@ -27,4 +27,6 @@ class LocationViewModel() : ViewModel() {
         Y.value = 0
     }
 
+
+
 }

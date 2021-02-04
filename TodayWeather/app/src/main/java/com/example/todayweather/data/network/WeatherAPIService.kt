@@ -73,7 +73,9 @@ interface WeatherAPIService {
 
 
     companion object {
-        operator fun invoke() : WeatherAPIService {
+        operator fun invoke(
+                connectivityInterceptor: ConnectivityInterceptor    //인터넷연결상태 확인하는 intercepter 사용을 위해.
+        ) : WeatherAPIService {
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
                         .url()
@@ -89,6 +91,7 @@ interface WeatherAPIService {
 
             val okHttpClient = OkHttpClient.Builder()
                     .addInterceptor(requestInterceptor)
+                    .addInterceptor(connectivityInterceptor)
                     .build()
 
             val gson = GsonBuilder()
