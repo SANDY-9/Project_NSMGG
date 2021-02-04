@@ -23,7 +23,9 @@ import com.example.todayweather.data.network.CityWeatherTable
 import com.example.todayweather.data.network.NationalWeatherTable
 import com.example.todayweather.databinding.ActivitySplashBinding
 import com.example.todayweather.helper.CalculationHelper
-import com.example.todayweather.ui.main.SplashActivity.AppDatabase.Companion.getInstance
+import com.example.todayweather.model.CityWeatherTable
+import com.example.todayweather.model.NationalWeatherTable
+import com.example.todayweather.view.main.SplashActivity.AppDatabase.Companion.getInstance
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -55,6 +57,7 @@ class SplashActivity : AppCompatActivity(), LocationListener {
         NationalWeatherDB = getInstance(this)!!
         SharedPref()
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
+
 
 //        WeeklyRetrofit("경기도","성남시", 1).WeeklyRetrofit()
 //        DailyRetrofit(1).weather(convertX!!,convertY!!)
@@ -120,23 +123,24 @@ class SplashActivity : AppCompatActivity(), LocationListener {
     fun fun_DialogDisplay(firebaseRemoteConfig: FirebaseRemoteConfig){
         val strVersionName = fun_GetAppVersion() // Version from gradle(app)
         val strLatestVersion = firebaseRemoteConfig.getString("message_version") // Version from firebase (firebase에서 설정한 key을 가져옴)
+        Log.d("[test]","strLatestVersion : ${strLatestVersion}, strVersionName : ${strVersionName}")
 
-        if (strVersionName!=strLatestVersion){ // 앱 버전이 서로 다른 경우 끄기.
-            AlertDialog.Builder(this)
-                    .setTitle("Update")
-                    .setMessage("최신 버전의 앱을 설치 후 재실행 해주시기 바랍니다.")
-                    .setCancelable(false)
-                    .setPositiveButton("OK", DialogInterface.OnClickListener {
-                        dialogInterface, i -> this.finish()
-                    }).show()
-        } else {
+        if (strVersionName==strLatestVersion || strLatestVersion.isBlank()) {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("address", address)
             intent.putExtra("x", realX)
             intent.putExtra("y", realY)// 앱 버전이 같으면 MainActivity로 이동
             startActivity(intent)
             this.finish()
-        }
+        } else if (strVersionName!=strLatestVersion) { // 앱 버전이 서로 다른 경우 끄기.
+                AlertDialog.Builder(this)
+                .setTitle("Update")
+                .setMessage("최신 버전의 앱을 설치 후 재실행 해주시기 바랍니다.")
+                .setCancelable(false)
+                .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+                    this.finish()
+                }).show()
+         }
     }
 
     override fun onResume() {
