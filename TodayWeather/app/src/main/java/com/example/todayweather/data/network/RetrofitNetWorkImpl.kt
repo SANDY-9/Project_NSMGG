@@ -33,10 +33,12 @@ class RetrofitNetWorkImpl(
             //현재 날씨 요청
             val fetchCurrentWeather = weatherAPIService
                     .getCurrentWeather(base_date, base_time, nx, ny)
-            val currentWeather = CurrentWeather()
-            val item : List<Item> = fetchCurrentWeather.body()!!.response.body.items.item
             //미세먼지 요청
-
+            val dustStationSearch = airAPIService.getDustFindStation(
+                    addr).await()
+            val dustCurrent = airAPIService.getDustStation(
+                    dustStationSearch.response!!.body.items[0].stationName
+            ).await()
 
         } catch (e : ConnectivityInterceptorImpl.NoConnectivityException) {
             Log.e("[ERROR]", "네트워크 연결이 되어 있지 않음")

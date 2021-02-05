@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentSearchSuccessBinding
-import com.example.todayweather.viewModel.CurrentWeatherViewModel
 
 class SearchSuccessFragment : Fragment() {
 

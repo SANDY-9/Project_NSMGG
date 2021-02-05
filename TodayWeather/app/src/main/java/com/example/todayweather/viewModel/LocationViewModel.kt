@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
  * @author SANDY
  * @email nnal0256@naver.com
  * @created 2021-01-30
- * @desc 위치정보 관련 라이브데이터 관리
+ * @desc 위치정보 관련 모든 처리 뷰모델(지역 이름, 위도, 경도, x,y 등)
  */
 class LocationViewModel() : ViewModel() {
 

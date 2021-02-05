@@ -91,7 +91,7 @@ interface WeatherAPIService {
 
             val okHttpClient = OkHttpClient.Builder()
                     .addInterceptor(requestInterceptor)
-                    .addInterceptor(connectivityInterceptor)
+                   // .addInterceptor(connectivityInterceptor)
                     .build()
 
             val gson = GsonBuilder()

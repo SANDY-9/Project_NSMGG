@@ -23,7 +23,9 @@ open class CurrentWeather {
         get() {
            return region
         }
-        set(value) {}
+        set(value) {
+            region = value
+        }
 
     //기온
     var temperature: String
@@ -46,10 +48,10 @@ open class CurrentWeather {
     //강수량
     var rainfall: String
         get() {
-            return rainfall
+            return ConvertWeatherHelper.convertRainfall(rainfall)
         }
         set(value) {
-            rainfall = ConvertWeatherHelper.convertRainfall(value)
+            rainfall = value
         }
 
     //습도
@@ -64,10 +66,10 @@ open class CurrentWeather {
     //강수 형태
     var rain: String
         get() {
-            return rain
+            return ConvertWeatherHelper.convertPTY(rain)
         }
         set(value) {
-            rain = ConvertWeatherHelper.convertPTY(value)
+            rain = value
         }
 
     //풍속
@@ -76,15 +78,15 @@ open class CurrentWeather {
             return wind
         }
         set(value) {
-
+            wind = value
         }
 
     //미세먼지
     var dust: String
         get() {
-            return dust
+            return ConvertWeatherHelper.convertDust(dust)
         }
         set(value) {
-            dust = ConvertWeatherHelper.convertDust(value)
+            dust = value
         }
 }

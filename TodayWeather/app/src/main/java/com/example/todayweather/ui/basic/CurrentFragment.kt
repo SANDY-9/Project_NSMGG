@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentDailyDetailBinding
-import com.example.todayweather.viewModel.DailyWeatherViewModel
 
 class CurrentFragment : Fragment() {
 
