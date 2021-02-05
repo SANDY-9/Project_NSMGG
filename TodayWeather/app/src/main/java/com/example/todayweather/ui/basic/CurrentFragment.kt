@@ -13,8 +13,6 @@ import com.example.todayweather.databinding.FragmentDailyDetailBinding
 class CurrentFragment : Fragment() {
 
     lateinit var binding : FragmentDailyDetailBinding
-    val currentWeatherViewModel: DailyWeatherViewModel by activityViewModels()
-    val dailyWeatherViewModel: DailyWeatherViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

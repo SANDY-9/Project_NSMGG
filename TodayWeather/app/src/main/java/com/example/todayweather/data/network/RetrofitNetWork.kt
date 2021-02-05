@@ -19,6 +19,6 @@ interface RetrofitNetWork {
 
     suspend fun fetchCurrentWeather(nx : Int, ny : Int, addr: String)
     suspend fun fetchDailyWeather(nx : Int, ny : Int)
-    suspend fun fetchDownloadWeather(nx : Int, ny : Int, addr : String)
+    suspend fun fetchWeeklyWeather(nx : Int, ny : Int, addr : String)
 
 }

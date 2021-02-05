@@ -49,7 +49,7 @@ class RetrofitNetWorkImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun fetchDownloadWeather(nx: Int, ny: Int, addr: String) {
+    override suspend fun fetchWeeklyWeather(nx: Int, ny: Int, addr: String) {
         TODO("Not yet implemented")
     }
 }

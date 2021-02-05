@@ -13,7 +13,6 @@ import com.example.todayweather.databinding.FragmentSearchSuccessBinding
 class SearchSuccessFragment : Fragment() {
 
     lateinit var binding : FragmentSearchSuccessBinding
-    val currentWeatherViewModel : CurrentWeatherViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
