@@ -1,13 +1,10 @@
 package com.example.todayweather.ui.main
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.content.res.AssetManager
 import android.location.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,18 +14,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.room.*
 import com.example.todayweather.R
-import com.example.todayweather.data.network.CityWeatherTable
-import com.example.todayweather.data.network.NationalWeatherTable
 import com.example.todayweather.databinding.ActivitySplashBinding
 import com.example.todayweather.helper.CalculationHelper
-import com.example.todayweather.ui.main.SplashActivity.AppDatabase.Companion.getInstance
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.InputStream
 import java.util.*
 
 class SplashActivity : AppCompatActivity(), LocationListener {
@@ -40,7 +29,7 @@ class SplashActivity : AppCompatActivity(), LocationListener {
 
     lateinit var address : String
 
-    lateinit var NationalWeatherDB : AppDatabase // room db
+//    lateinit var NationalWeatherDB : AppDatabase // room db
 
     var realX : Double? = null
     var realY : Double? = null
@@ -52,8 +41,8 @@ class SplashActivity : AppCompatActivity(), LocationListener {
         permissioncheck()
         binding = DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_splash)
         binding.activity = this
-        NationalWeatherDB = getInstance(this)!!
-        SharedPref()
+//        NationalWeatherDB = getInstance(this)!!
+//        SharedPref()
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
 
 
@@ -185,135 +174,5 @@ class SplashActivity : AppCompatActivity(), LocationListener {
 //        gu = address.split(" ")[2]
 //        dong = address.split(" ")[3]
         return address
-    }
-
-    @Dao
-    interface NationalWeatherInterface { // 동네예보
-        // db 전부 호출
-        @Query("SELECT * FROM dongnae")
-        suspend fun getAll(): List<NationalWeatherTable>
-
-        // 동 이름으로 데이터 찾기
-        @Query("SELECT * FROM dongnae WHERE name3 LIKE :dong")
-        suspend fun getChoice(dong : String): List<NationalWeatherTable>
-
-        // nx, ny 값으로 데이터 가져오기
-        @Query("SELECT * FROM dongnae WHERE x = :x AND y = :y")
-        suspend fun getXY(x : Int, y : Int): List<NationalWeatherTable>
-
-        @Insert
-        suspend fun insert(nationalWeatherTable: NationalWeatherTable)
-
-        @Query("DELETE FROM dongnae")
-        suspend fun deleteAll()
-    }
-
-    @Dao
-    interface CityWeatherInterface { // 중기예보
-        @Query("SELECT * FROM weekly")
-        suspend fun getAll(): List<CityWeatherTable>
-
-        // 도시, 지역 이름으로 코드 찾기
-        @Query("SELECT weeklyCode FROM weekly WHERE region LIKE :region1 AND city LIKE :city1")
-        suspend fun getRegId( region1: String, city1: String): String
-
-        // 지역 이름으로 코드 찾기
-        @Query("SELECT weeklyCode FROM weekly WHERE region LIKE :region1")
-        suspend fun getRegIdRegion( region1: String): String
-
-        // db insert
-        @Insert
-        suspend fun insert(cityWeatherTable: CityWeatherTable)
-
-        // delete db
-        @Query("DELETE FROM weekly")
-        suspend fun deleteAll()
-    }
-
-    @Database(entities = [NationalWeatherTable::class, CityWeatherTable::class], version = 1, exportSchema = false)
-    abstract class AppDatabase: RoomDatabase() {
-        abstract fun nationalWeatherInterface(): NationalWeatherInterface
-        abstract fun cityWeatherInterface(): CityWeatherInterface
-
-        companion object {
-            private var INSTANCE: AppDatabase? = null
-
-            fun getInstance(context: Context): AppDatabase? {
-                if (INSTANCE == null) {
-                    synchronized(AppDatabase::class) {
-                        INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "weatherDB").build()
-                    }
-                } else {
-                    Log.d("[test_instance]", "인스턴스 null 아님")
-                }
-                return INSTANCE
-            }
-        }
-    }
-
-    // 최초 실행시 한 번만 실행하게 함
-    private fun SharedPref() {
-        val pref : SharedPreferences = getSharedPreferences("isDB", Activity.MODE_PRIVATE)
-        val download : Boolean = pref.getBoolean("isDB",false)
-        if (!download){
-            Log.d("Is first Time?", "firstD")
-
-            val editer : SharedPreferences.Editor = pref.edit()
-            editer.putBoolean("isDB",true)
-            editer.apply()
-            editer.commit()
-            DongnaeReadTxt()
-        }else{
-            Log.d("Is first Time?", "not firstD");
-        }
-    }
-
-    private fun DongnaeReadTxt(){
-
-        //val input = NationalWeatherTable(1114062500,"seoul", "jongrogu", "dasandong", 60, 126) // 임의로 써서 넣은 함수
-
-        val assetManager: AssetManager = resources.assets
-        val inputStream: InputStream = assetManager.open("dongnae.txt")
-
-        inputStream.bufferedReader().readLines().forEach {
-            var token = it.split("\t")
-            var input = NationalWeatherTable(token[0].toLong(), token[1], token[2], token[3], token[4].toInt(), token[5].toInt())
-            CoroutineScope(Dispatchers.Main).launch {
-                NationalWeatherDB!!.nationalWeatherInterface().insert(input)
-            }
-//             Log.d("file_test", token.toString())
-        }
-// 여기까지 db생성 코드
-
-        // db 확인하는 코드
-        CoroutineScope(Dispatchers.Main).launch {
-            //NationalWeatherDB.nationalWeatherInterface().deleteAll()
-            //NationalWeatherDB.nationalWeatherInterface().insert(input)
-            var output = NationalWeatherDB!!.nationalWeatherInterface().getAll()
-            Log.d("db_test", "$output")
-        }
-        WeeklyReadTxt()
-    }
-    private fun WeeklyReadTxt(){
-
-        val assetManager: AssetManager = resources.assets
-        val inputStream: InputStream = assetManager.open("weekly.txt")
-
-        inputStream.bufferedReader().readLines().forEach {
-            var token = it.split("\t")
-            var input = CityWeatherTable(token[0], token[1], token[2])
-            CoroutineScope(Dispatchers.Main).launch {
-                NationalWeatherDB!!.cityWeatherInterface().insert(input)
-            }
-//            Log.d("file_test", token.toString())
-        }
-// 여기까지 db생성 코드
-
-        CoroutineScope(Dispatchers.Main).launch {
-            //cityWeatherDB.cityWeatherInterface().deleteAll()
-            //cityWeatherDB.cityWeatherInterface().insert(input)
-            var output = NationalWeatherDB!!.cityWeatherInterface().getAll()
-            Log.d("db_test", "$output")
-        }
     }
 }
