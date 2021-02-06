@@ -4,6 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="weather"
+            type="com.example.todayweather.viewModel.WeatherViewModel" />
+
+    </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

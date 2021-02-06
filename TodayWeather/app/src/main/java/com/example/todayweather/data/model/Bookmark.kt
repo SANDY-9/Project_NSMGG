@@ -6,5 +6,6 @@ package com.example.todayweather.data.model
  * @created 2021-02-07
  * @desc 모델2: 북마크
  */
-class Bookmark {
-}
+data class Bookmark (
+        var region : String
+        )
