@@ -44,13 +44,13 @@ interface WeatherAPIService {
     ) : Response<TodayWeatherTimeResponse>
 
     //동네예보 조회 : 오늘-내일-모레까지 날씨 정보(base_time 기준+4시간부터 제공)
-    @GET("VilageFcstInfoService/getVilageFcst?numOfRows=225&pageNo=1&dataType=JSON")
+    @GET("VilageFcstInfoService/getVilageFcst?numOfRows=225&pageNo=1&dataType=JSON&" +
+            "qVcayJVu5HI9ugEnsD8DMqMSvIaPsRkW4zOTbAYQkEgop3%2FHRG8WRp52RND8MUyG0r%2Fh6VZqDVsCkGk7o%2BWGgg%3D%3D")
     suspend fun getTodayWeather_day(
         @Query("base_date") base_date: String,  //현재날짜
         @Query("base_time") base_time: String,  //0200 0500 0800 1100 1400 1700 2000 2300
         @Query("nx") nx: Int,                  //날씨요청위치 x격자값
         @Query("ny") ny: Int,                  //날씨요청위치 y격자값
-        @Query("serviceKey") serviceKey: String
     ) : Response<TodayWeatherDayResponse>
 
 

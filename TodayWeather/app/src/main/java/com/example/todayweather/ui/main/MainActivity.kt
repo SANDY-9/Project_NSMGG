@@ -2,27 +2,67 @@ package com.example.todayweather.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.todayweather.R
+import com.example.todayweather.data.network.RetrofitNetWork
+import com.example.todayweather.data.network.RetrofitNetWorkImpl
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+    val TAG = "메인"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+
+    override suspend fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
-        //미세먼지 조회
-        // 1. 프래그먼트에서 컨텍스트 어케 넣는지 모르겠당
-        // 2. 라이브러리 데이터 어캐 불러오는거임? 모르겠음
-        // 3. 측정소 조회 구,시,군(addr) 넣어 보내서  측정소(stationName) 가져오기 했음 검사받기
-        // 4. 선누 아프디마
-        // 5. 더스트 레트로핏 클래스에 dustaddr함수 리턴값 받아오는법 물어보기
-       // val asdf = DustRetrofit(this)
-        //asdf.dustAddr("서초구", dustAddrDTO)
+
+        /*
+
+        동네 예보조회 요청가능 시간으로부터 3시간까지의
+        요청할수 있는 시간
+        0200 0500 0800 1100 1400 1700 2000 2300
+
+        전날을 요청할수 있는 조건
+        1. 현재시각으로부터 24시간 전은 요청할수있다
+        예: 현재 = 날짜 210206 / 시간 1600
+            요청 가능시간 = 날짜 210205 / 시간 1700 / 2000 / 2300 요청가능
+
+        2300~0159 : 전날 2300 요청하기
+
+         */
 
 
 
+
+
+        //var base_time = SimpleDateFormat("HH").format(Date())
+
+        val df: DateFormat = SimpleDateFormat("HH")
+        var time:Date = df.parse("24")
+
+        var str: String ="${df.format(time)}"
+
+        Log.e(TAG, "onCreate: "+str )
+
+
+
+
+        val retrofitNetWork : RetrofitNetWork
+
+        //retrofitNetWork.fetchDailyWeather(61,126)
+
+
+
+        //var yesterday_date = yesterday()
 
     }
+
+
 }
