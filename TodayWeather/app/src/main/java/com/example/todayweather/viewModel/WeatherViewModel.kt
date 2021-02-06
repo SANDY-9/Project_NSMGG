@@ -2,11 +2,6 @@ package com.example.todayweather.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.todayweather.data.model.CurrentWeather
-import com.example.todayweather.data.network.AirAPIService
-import com.example.todayweather.data.network.RetrofitNetWork
-import com.example.todayweather.data.network.RetrofitNetWorkImpl
-import com.example.todayweather.data.network.WeatherAPIService
 
 /**
  * @author SANDY
@@ -16,10 +11,4 @@ import com.example.todayweather.data.network.WeatherAPIService
  */
 class WeatherViewModel : ViewModel(){
 
-    val currentWeather : MutableLiveData<CurrentWeather> = MutableLiveData<CurrentWeather>()
-
-    val retrofitNetWork : RetrofitNetWork = RetrofitNetWorkImpl(WeatherAPIService.invoke(), AirAPIService.invoke())
-
-    fun getCurrentWeather(nx:Double, ny:Double, addr:String) {
-    }
 }

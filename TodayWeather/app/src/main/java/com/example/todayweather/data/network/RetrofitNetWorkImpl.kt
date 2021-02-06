@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.todayweather.data.model.CurrentWeather
 import com.example.todayweather.data.model.DailyWeather
 import com.example.todayweather.data.model.WeeklyWeather
-import com.example.todayweather.data.network.response.CurrentWeatherResponse
-import com.example.todayweather.data.network.response.CurrentWeatherResponse.Response.Body.Items.Item
 import java.text.SimpleDateFormat
 import java.util.*
 
