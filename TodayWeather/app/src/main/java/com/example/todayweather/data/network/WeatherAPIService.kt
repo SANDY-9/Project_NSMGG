@@ -38,8 +38,8 @@ interface WeatherAPIService {
     suspend fun getTodayWeather_time(
         @Query("base_date") base_date: String,  //현재날짜
         @Query("base_time") base_time: String,  //현재시각으로 요청
-        @Query("nx") nx: Int,                  //날씨요청위치 x격자값
-        @Query("ny") ny: Int,                  //날씨요청위치 y격자값
+        @Query("nx") nx: Int,                   //날씨요청위치 x격자값
+        @Query("ny") ny: Int,                   //날씨요청위치 y격자값
         @Query("serviceKey") serviceKey: String
     ) : Response<TodayWeatherTimeResponse>
 
@@ -74,7 +74,7 @@ interface WeatherAPIService {
 
     companion object {
         operator fun invoke(
-                connectivityInterceptor: ConnectivityInterceptor    //인터넷연결상태 확인하는 intercepter 사용을 위해.
+                //connectivityInterceptor: ConnectivityInterceptor    //인터넷연결상태 확인하는 intercepter 사용을 위해.
         ) : WeatherAPIService {
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
