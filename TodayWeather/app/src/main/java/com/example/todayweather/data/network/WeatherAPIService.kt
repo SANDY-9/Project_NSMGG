@@ -53,6 +53,14 @@ interface WeatherAPIService {
         @Query("ny") ny: Int,                  //날씨요청위치 y격자값
     ) : Response<TodayWeatherDayResponse>
 
+    //지상 일자료 조회
+    @GET("AsosDalyInfoService/getWthrDataList?dateCd=DAY&dataCd=ASOS&numOfRows=10&pageNo=1&dataType=json&"+
+            "serviceKey=t1uVDu2qW09XOkvxKCDdhD%2FsgeRsWUNv4sGSNDdoZKNHlcW4rqlJEXBnV8a3lLNx9yAsTJReQ%2BlbDoOhkKFeZA%3D%3D")
+    suspend fun getWthrDataList_yesterday(
+            @Query("startDt") startDt: String,  //조회 시작 날짜
+            @Query("endDt") endDt: String,  //조회 종료 날짜
+            @Query("stnIds") stnIds: Int,   //지점번호
+    ) : Response<TodayWeatherDayResponse>
 
     //주간 날씨 요청샤ㅡ
     //강수확률, 날씨(하늘상태) 조회
