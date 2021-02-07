@@ -10,6 +10,7 @@ import com.example.todayweather.databinding.ActivityMainBinding
 import com.example.todayweather.helper.ConvertDateHelper
 import com.example.todayweather.viewModel.LocationViewModel
 import com.example.todayweather.viewModel.WeatherViewModel
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        Log.e("[TEST]", Calendar.HOUR_OF_DAY.toString())
 
     }
 }

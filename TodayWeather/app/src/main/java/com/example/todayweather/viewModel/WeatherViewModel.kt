@@ -16,8 +16,7 @@ import com.example.todayweather.helper.ConvertDateHelper
  */
 class WeatherViewModel : ViewModel() {
 
-    val currentWeather
-    = MutableLiveData<CurrentWeather>()
+    val currentWeather = MutableLiveData<CurrentWeather>()
     val dailyWeather = MutableLiveData<DailyWeather>()
     val weeklyWeather = MutableLiveData<WeeklyWeather>()
 
