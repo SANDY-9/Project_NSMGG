@@ -16,12 +16,14 @@ import com.example.todayweather.helper.ConvertDateHelper
  */
 class WeatherViewModel : ViewModel() {
 
-    val currentWeather  = MutableLiveData<CurrentWeather>()
+    val currentWeather
+    = MutableLiveData<CurrentWeather>()
     val dailyWeather = MutableLiveData<DailyWeather>()
     val weeklyWeather = MutableLiveData<WeeklyWeather>()
 
     fun test() {
-        currentWeather.value?.date = ConvertDateHelper.dateFormToday()
+        currentWeather.value = CurrentWeather(ConvertDateHelper.dateFormToday(), "성수동", "-21",
+                "", "" ,"","","", "")
     }
 
 }

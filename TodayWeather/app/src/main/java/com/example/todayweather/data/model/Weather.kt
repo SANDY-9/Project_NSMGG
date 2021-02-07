@@ -1,5 +1,8 @@
 package com.example.todayweather.data.model
 
+import com.example.todayweather.helper.ConvertDateHelper
+import com.example.todayweather.helper.ConvertWeatherHelper
+
 /**
  * @author SANDY
  * @email nnal0256@naver.com
@@ -21,5 +24,19 @@ data class CurrentWeather (
 )
 
 data class DailyWeather (
+        var region: String,                 //지역
+        var fcstTime : String,              //시간
+        var temperature: String,            //온도
+        var weather : String,               //날씨
+        var wind: String,                   //풍속
+        var rainfall : String              //강수량
+)
 
-        )
+data class WeeklyWeather(
+        var region: String,                 //지역
+        var date: String,                   //날짜
+        var rainPossible : Int,             //강수확률
+        var weather : String,               //날씨
+        var tempMin : Int,                  //최저기온
+        var tempMax : Int                   //최고기온
+)
