@@ -86,6 +86,7 @@ class DustRetrofit(val context: Context) {
                 var pm25Grade1h = dustDTO!![0].pm25Grade1h  //초미세먼지 점수(1시간)
                 var pm25Flag = dustDTO!![0].pm25Flag  //초미세먼지 장비점검
 
+
                 //화면에 셋팅해야함!
                 if(pm10Flag == null) {
                     var test1 = "미세먼지"
