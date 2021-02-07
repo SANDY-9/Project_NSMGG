@@ -60,7 +60,7 @@ interface WeatherAPIService {
             @Query("startDt") startDt: String,  //조회 시작 날짜
             @Query("endDt") endDt: String,  //조회 종료 날짜
             @Query("stnIds") stnIds: Int,   //지점번호
-    ) : Response<TodayWeatherDayResponse>
+    ) : Response<YesterdayWeatherResponse>
 
     //주간 날씨 요청샤ㅡ
     //강수확률, 날씨(하늘상태) 조회

@@ -8,6 +8,7 @@ import com.example.todayweather.data.model.DailyWeather
 import com.example.todayweather.data.model.WeeklyWeather
 import com.example.todayweather.data.network.response.CurrentWeatherResponse
 import com.example.todayweather.data.network.response.CurrentWeatherResponse.Response.Body.Items.Item
+import com.google.android.datatransport.cct.internal.LogEvent
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -62,7 +63,7 @@ class RetrofitNetWorkImpl(
      */
 
     //오늘 날씨 요청
-    override suspend fun fetchDailyWeather(nx: Int, ny: Int) {
+    override suspend fun fetchDailyWeather(nx: Int, ny: Int, stnIds: Int) {
         //현재시간
         var now_timeHH = SimpleDateFormat("HH").format(Date())
         var now_timeMM = SimpleDateFormat("mm").format(Date())
@@ -74,6 +75,9 @@ class RetrofitNetWorkImpl(
         //초단기예보 변수
         var time_date = base_date
         var time_time = base_time
+
+        //지상 일자료조회 (어제 날씨 조회) 변수
+        var yesterday = date_Change()
 
         //동네예보
         // 00시 ~ 01시면 전날로 변경
@@ -97,6 +101,11 @@ class RetrofitNetWorkImpl(
 
             //초단기예보조회
             val todayWeather_time = weatherAPIService.getTodayWeather_time(time_date, time_time, nx, ny)
+
+            //지상 일자료조회 (어제 날씨 조회)
+            val yesterdayWeather_day = weatherAPIService.getWthrDataList_yesterday(yesterday,yesterday,stnIds)
+
+            //Log.e(TAG, ""+yesterdayWeather_day.body()!!.response.body.items.item[0])
 
         } catch (e : ConnectivityInterceptorImpl.NoConnectivityException) {
             Log.e("[ERROR]", "네트워크 연결이 되어 있지 않음")

@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         val retrofitNetWork = RetrofitNetWorkImpl(WeatherAPIService.invoke(), AirAPIService.invoke())
 
         GlobalScope.launch(Dispatchers.Main) {
-            retrofitNetWork.fetchDailyWeather(61,126)
+            retrofitNetWork.fetchDailyWeather(61,126,108)
         }
 
 
