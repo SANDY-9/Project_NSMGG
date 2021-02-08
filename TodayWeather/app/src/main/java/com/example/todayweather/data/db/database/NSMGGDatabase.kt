@@ -36,7 +36,7 @@ abstract class NSMGGDatabase : RoomDatabase() {
             if (INSTANCE == null) {
                 synchronized(NSMGGDatabase::class) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext, NSMGGDatabase::class.java, "weatherDB")
-                            .createFromAsset("assets/weatherdb")//여긴 그냥 써봄 좀 있다가 테스트해봐야함
+//                            .createFromAsset("weatherdb")//여긴 그냥 써봄 좀 있다가 테스트해봐야함
                             .build()
                 }
             } else {
@@ -178,6 +178,7 @@ private fun WeeklyReadTxt(context: Context, WeatherDB: NSMGGDatabase) {
         //cityWeatherDB.cityWeatherInterface().deleteAll()
         //cityWeatherDB.cityWeatherInterface().insert(input)
         var output = WeatherDB.cityWeatherInterface().getAll()
+
         Log.d("db_test", "$output")
     }
 }
@@ -216,3 +217,15 @@ fun DeleteBookMarker(WeatherDB: NSMGGDatabase,region : String){
     }
 }
 
+fun AddressList( WeatherDB: NSMGGDatabase) {
+
+    CoroutineScope(Dispatchers.Main).launch {
+        val output = WeatherDB.nationalWeatherInterface().getAll()
+        val address = ArrayList<String>()
+        Log.d("db_test", "${output.size}")
+        for (i in output.indices){
+            address.add("${output[i].name1} ${output[i].name2} ${output[i].name3}")
+        }
+        Log.d("db_test", address.toString())
+    }
+}

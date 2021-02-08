@@ -22,6 +22,7 @@ data class NationalWeatherTable(
     val y: Int
 )
 
+
 // retrofit을 사용한 api 통신 data class(동네예보)
 data class ResponseDTONow (
     @SerializedName("response")var response : BodyDTONow
