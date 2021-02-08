@@ -11,22 +11,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.example.todayweather.R
-import com.example.todayweather.databinding.ActivitySplashBinding
+import com.example.todayweather.databinding.ActivityStartBinding
 import com.example.todayweather.helper.CalculationHelper
-import com.example.todayweather.viewModel.LocationViewModel
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import java.util.*
 
-class SplashActivity : AppCompatActivity(), LocationListener {
+class StartActivity : AppCompatActivity(), LocationListener {
     /*
-    * 위치와 위치로 가져온 데이터들 이곳에서 불러오고 인텐트로 넘기기
-    * */
-    lateinit var binding : ActivitySplashBinding
+* 위치와 위치로 가져온 데이터들 이곳에서 불러오고 인텐트로 넘기기
+* */
+    lateinit var binding : ActivityStartBinding
     lateinit var locationManager: LocationManager
     lateinit var address : String
 
@@ -40,7 +38,7 @@ class SplashActivity : AppCompatActivity(), LocationListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         permissioncheck()
-        binding = DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_splash)
+        binding = DataBindingUtil.setContentView<ActivityStartBinding>(this, R.layout.activity_start)
         binding.activity = this
 //        NationalWeatherDB = getInstance(this)!!
 //        SharedPref()
@@ -61,10 +59,10 @@ class SplashActivity : AppCompatActivity(), LocationListener {
             return
         }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED) {
             return
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1f, this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1f, this)
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1f, this);
 
         //1000은 1초마다, 1은 1미터마다 해당 값을 갱신한다는 뜻으로, 딜레이마다 호출하기도 하지만
@@ -115,20 +113,20 @@ class SplashActivity : AppCompatActivity(), LocationListener {
 
         if (strVersionName==strLatestVersion || strLatestVersion.isBlank()) {
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("address", address)
-            intent.putExtra("x", realX)
-            intent.putExtra("y", realY)// 앱 버전이 같으면 MainActivity로 이동
+//            intent.putExtra("address", address)
+//            intent.putExtra("x", realX)
+//            intent.putExtra("y", realY)// 앱 버전이 같으면 MainActivity로 이동
             startActivity(intent)
             this.finish()
         } else if (strVersionName!=strLatestVersion) { // 앱 버전이 서로 다른 경우 끄기.
-                AlertDialog.Builder(this)
-                .setTitle("Update")
-                .setMessage("최신 버전의 앱을 설치 후 재실행 해주시기 바랍니다.")
-                .setCancelable(false)
-                .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
-                    this.finish()
-                }).show()
-         }
+            AlertDialog.Builder(this)
+                    .setTitle("Update")
+                    .setMessage("최신 버전의 앱을 설치 후 재실행 해주시기 바랍니다.")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+                        this.finish()
+                    }).show()
+        }
     }
 
     override fun onResume() {
@@ -145,7 +143,7 @@ class SplashActivity : AppCompatActivity(), LocationListener {
     // 퍼미션 체크
     private fun permissioncheck() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 100)
@@ -176,5 +174,4 @@ class SplashActivity : AppCompatActivity(), LocationListener {
 //        dong = address.split(" ")[3]
         return address
     }
-
 }

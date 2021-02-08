@@ -7,14 +7,14 @@
     <data>
         <variable
             name="activity"
-            type="com.example.todayweather.ui.main.SplashActivity" />
+            type="com.example.todayweather.ui.main.StartActivity" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.main.SplashActivity">
+        tools:context=".ui.main.StartActivity">
 
         <Button
             android:id="@+id/button"
