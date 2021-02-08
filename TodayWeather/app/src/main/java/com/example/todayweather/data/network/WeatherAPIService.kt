@@ -2,12 +2,14 @@ package com.example.todayweather.data.network
 
 import android.util.Log
 import com.example.todayweather.data.network.response.*
+import com.google.firebase.inject.Deferred
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import io.reactivex.Observable
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,6 +25,15 @@ import retrofit2.http.Query
  */
 
 interface WeatherAPIService {
+
+    @GET("VilageFcstInfoService/getUltraSrtNcst?numOfRows=8&pageNo=1&dataType=json&" +
+            "serviceKey=qVcayJVu5HI9ugEnsD8DMqMSvIaPsRkW4zOTbAYQkEgop3%2FHRG8WRp52RND8MUyG0r%2Fh6VZqDVsCkGk7o%2BWGgg%3D%3D")
+    suspend fun test(
+        @Query("base_date") base_date: String,  //현재날짜
+        @Query("base_time") base_time: String,  //현재시각으로 요청
+        @Query("nx") nx: Int,                  //날씨요청위치 x격자값
+        @Query("ny") ny: Int,                  //날씨요청위치 y격자값
+    ) : Response<CurrentWeatherResponse>
 
     //현재 날씨 요청
     //초단기실황 조회
@@ -88,7 +99,7 @@ interface WeatherAPIService {
 
     companion object {
         operator fun invoke(
-                //connectivityInterceptor: ConnectivityInterceptor    //인터넷연결상태 확인하는 intercepter 사용을 위해.
+                connectivityInterceptor: ConnectivityInterceptor    //인터넷연결상태 확인하는 intercepter 사용을 위해.
         ) : WeatherAPIService {
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
@@ -105,7 +116,7 @@ interface WeatherAPIService {
 
             val okHttpClient = OkHttpClient.Builder()
                     .addInterceptor(requestInterceptor)
-                   // .addInterceptor(connectivityInterceptor)
+                    .addInterceptor(connectivityInterceptor)
                     .build()
 
             val gson = GsonBuilder()

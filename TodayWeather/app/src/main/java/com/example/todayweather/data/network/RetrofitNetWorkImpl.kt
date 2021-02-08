@@ -1,5 +1,8 @@
 package com.example.todayweather.data.network
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import com.example.todayweather.data.network.response.CurrentWeatherResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
@@ -10,9 +13,17 @@ class RetrofitNetWorkImpl(
     private val airAPIService: AirAPIService
     ) : RetrofitNetWork {
 
-    var base_time = SimpleDateFormat("hhmm").format(Date())
+    var base_time = SimpleDateFormat("HHmm").format(Date())
     var base_date = SimpleDateFormat("yyyyMMdd").format(Date())
     val calendar = Calendar.getInstance()
+    var test = MutableLiveData<CurrentWeatherResponse>()
+
+    suspend fun test () {
+        val response = weatherAPIService
+            .test(base_date, base_time, 61, 126)
+        Log.e("[TEST]", base_date+"/"+base_time)
+        test.value = response.body()
+    }
 
     override fun fetchCurrentWeather(nx: Int, ny: Int) {
         weatherAPIService.getCurrentWeather(base_date, base_time, nx, ny)

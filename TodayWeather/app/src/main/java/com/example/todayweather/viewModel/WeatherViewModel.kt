@@ -21,8 +21,6 @@ class WeatherViewModel : ViewModel() {
     val weeklyWeather = MutableLiveData<WeeklyWeather>()
 
     fun test() {
-        currentWeather.value = CurrentWeather(ConvertDateHelper.dateFormToday(), "성수동", "-21",
-                "", "" ,"","","", "")
     }
 
 }

@@ -13,12 +13,14 @@ import java.lang.Exception
  * @desc 네트워크 연결 상태 체크
  */
 
-class ConnectivityInterceptor(
-        context: Context ) {
+interface ConnectivityInterceptor : Interceptor
+
+class ConnectivityInterceptorImpl(
+    context: Context ) : ConnectivityInterceptor {
 
     private val appContext = context.applicationContext
 
-    fun intercept(chain: Interceptor.Chain): Response {
+    override fun intercept(chain: Interceptor.Chain): Response {
         if(!isOnline())
         throw NoConnectivityException()
         return chain.proceed(chain.request())

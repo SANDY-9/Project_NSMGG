@@ -29,7 +29,9 @@ interface AirAPIService {
 
 
     companion object {
-        operator fun invoke() : AirAPIService {
+        operator fun invoke(
+            connectivityInterceptor: ConnectivityInterceptor
+        ) : AirAPIService {
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
                     .url()
@@ -45,6 +47,7 @@ interface AirAPIService {
 
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
+                .addInterceptor(connectivityInterceptor)
                 .build()
 
             return Retrofit.Builder()
