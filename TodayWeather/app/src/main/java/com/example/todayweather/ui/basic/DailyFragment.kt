@@ -13,6 +13,7 @@ import com.example.todayweather.R
 import com.example.todayweather.data.model.CurrentWeather
 import com.example.todayweather.data.network.*
 import com.example.todayweather.databinding.FragmentDailyBinding
+import com.example.todayweather.viewModel.LocationViewModel
 import com.example.todayweather.viewModel.WeatherViewModel
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,7 @@ class DailyFragment : Fragment() {
 
     lateinit var binding: FragmentDailyBinding
     val weatherViewmodel : WeatherViewModel by activityViewModels()
+    val locationViewModel : LocationViewModel by activityViewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
