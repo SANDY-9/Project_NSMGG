@@ -20,7 +20,13 @@ class WeatherViewModel : ViewModel() {
     val dailyWeather = MutableLiveData<DailyWeather>()
     val weeklyWeather = MutableLiveData<WeeklyWeather>()
 
-    fun test() {
+    init {
+        currentWeather.value = CurrentWeather()
+        dailyWeather.value = DailyWeather()
+        weeklyWeather.value = WeeklyWeather()
     }
 
+    fun setCurrentWeather () {
+        
+    }
 }
