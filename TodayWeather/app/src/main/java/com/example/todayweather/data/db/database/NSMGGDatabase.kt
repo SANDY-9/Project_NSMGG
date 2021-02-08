@@ -5,12 +5,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.util.Log
-import android.widget.Toast
 import androidx.room.*
 import com.example.todayweather.data.db.entity.BOOKMARK_ID
 import com.example.todayweather.data.db.entity.BookmarkTable
-import com.example.todayweather.data.network.CityWeatherTable
-import com.example.todayweather.data.network.NationalWeatherTable
+import com.example.todayweather.data.network.temporary.CityWeatherTable
+import com.example.todayweather.data.network.temporary.NationalWeatherTable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

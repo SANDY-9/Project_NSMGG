@@ -9,13 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentDailyDetailBinding
-import com.example.todayweather.viewModel.DailyWeatherViewModel
+import com.example.todayweather.viewModel.LocationViewModel
 
 class CurrentFragment : Fragment() {
 
     lateinit var binding : FragmentDailyDetailBinding
-    val currentWeatherViewModel: DailyWeatherViewModel by activityViewModels()
-    val dailyWeatherViewModel: DailyWeatherViewModel by activityViewModels()
+    val locationViewModel : LocationViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -23,7 +22,4 @@ class CurrentFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 }

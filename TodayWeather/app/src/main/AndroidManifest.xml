@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 네트워크 상태 접근 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 제공되는 위치보다 더 정확한 위치 제공 -->
     <uses-permission android:name="android.permission.VIBRATE"/>               <!-- 알림 진동 접근 -->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,8 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TodayWeather"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.BaseActivity"></activity>
-        <activity android:name=".ui.main.SplashActivity">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +35,7 @@
         <service
             android:name=".push.AlarmIntentService"
             android:exported="false" />
-        <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.main.SplashActivity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

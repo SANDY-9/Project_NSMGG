@@ -1,4 +1,4 @@
-package com.example.todayweather.data.network
+package com.example.todayweather.data.network.temporary
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

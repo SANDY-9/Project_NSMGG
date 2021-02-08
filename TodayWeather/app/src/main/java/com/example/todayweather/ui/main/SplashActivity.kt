@@ -11,12 +11,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.example.todayweather.R
 import com.example.todayweather.databinding.ActivitySplashBinding
 import com.example.todayweather.helper.CalculationHelper
+import com.example.todayweather.viewModel.LocationViewModel
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import java.util.*
 
@@ -26,7 +28,6 @@ class SplashActivity : AppCompatActivity(), LocationListener {
     * */
     lateinit var binding : ActivitySplashBinding
     lateinit var locationManager: LocationManager
-
     lateinit var address : String
 
 //    lateinit var NationalWeatherDB : AppDatabase // room db
@@ -85,7 +86,7 @@ class SplashActivity : AppCompatActivity(), LocationListener {
     }
 
     //  버튼 클릭 이벤트
-    fun nextActivity(view : View) {
+    fun onStartButtonClick(view : View) {
         // 버전이 맞는지 확인
         val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
         firebaseRemoteConfig.fetch(0).addOnCompleteListener{task ->
@@ -175,4 +176,5 @@ class SplashActivity : AppCompatActivity(), LocationListener {
 //        dong = address.split(" ")[3]
         return address
     }
+
 }

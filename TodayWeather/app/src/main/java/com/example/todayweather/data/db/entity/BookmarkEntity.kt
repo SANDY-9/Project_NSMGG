@@ -20,10 +20,8 @@ const val BOOKMARK_ID = 0
 @Entity(tableName = "my_Bookmark", primaryKeys = arrayOf("BOOKMARK_ID","region"))
 data class BookmarkTable (
         // SQLite의 테이블 이름은 대소문자를 구분하지 않습니다.
-        @PrimaryKey(autoGenerate = true)
         var BOOKMARK_ID : Int,
 
-        @PrimaryKey
         val region : String,
 
         //column 이름을 다르게 하고 싶다면 @ColumnInfo 어노테이션을 추가하면 된다.
