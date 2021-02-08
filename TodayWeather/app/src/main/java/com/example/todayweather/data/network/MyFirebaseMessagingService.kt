@@ -8,7 +8,7 @@ import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.todayweather.R
-import com.example.todayweather.ui.main.SplashActivity
+import com.example.todayweather.ui.main.StartActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -39,7 +39,7 @@ class MyFirebaseMessagingService  :  FirebaseMessagingService() {
     }
 
     fun sendNotification(title: String?, body: String?) {
-        val intent = Intent(this, SplashActivity::class.java).apply {
+        val intent = Intent(this, StartActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("channel_id", body)
         }

@@ -25,9 +25,11 @@ class RetrofitNetWorkImpl(
             if(calendar.get(Calendar.HOUR_OF_DAY) == 0) {
                 calendar.add(Calendar.DATE, -1)
                 base_date = SimpleDateFormat("yyyyMMdd").format(calendar.time)
+                base_time = "2330"
+            } else {
+                calendar.add(Calendar.HOUR_OF_DAY, -1)
+                base_time = SimpleDateFormat("HH").format(calendar.time)+"30"
             }
-            calendar.add(Calendar.HOUR_OF_DAY, -1)
-            base_time = SimpleDateFormat("HH").format(calendar.time)+"30"
         }
         weatherAPIService.getCurrentWeather(base_date, base_time, nx, ny)
             .subscribeOn(Schedulers.io())
@@ -36,7 +38,6 @@ class RetrofitNetWorkImpl(
 
     //초단기예보
     override suspend fun fetchShortermTimeWeather(nx: Int, ny: Int) {
-
         shortTimeWeather.value = weatherAPIService.getShortermWeather_time(base_date, base_time, nx, ny).body()
     }
 

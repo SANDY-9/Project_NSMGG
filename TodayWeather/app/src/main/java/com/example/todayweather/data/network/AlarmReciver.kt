@@ -11,7 +11,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.example.todayweather.R
-import com.example.todayweather.ui.main.SplashActivity
+import com.example.todayweather.ui.main.StartActivity
 
 /**
  * @author seungwon
@@ -30,8 +30,8 @@ class AlarmIntentService : IntentService("AlarmIntentService") {
     val NOTIFICATION_ID = 1001
     override fun onHandleIntent(intent: Intent?) {
         Log.d("[test]","AlarmIntentService")
-        Intent(this, SplashActivity::class.java).flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val pendingIntent = PendingIntent.getActivity(this, 0, Intent(this, SplashActivity::class.java), 0)
+        Intent(this, StartActivity::class.java).flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val pendingIntent = PendingIntent.getActivity(this, 0, Intent(this, StartActivity::class.java), 0)
         val mLargeIconForNoti = BitmapFactory.decodeResource(this.resources, R.drawable.cloud)
 
         lateinit var builder :Notification.Builder
