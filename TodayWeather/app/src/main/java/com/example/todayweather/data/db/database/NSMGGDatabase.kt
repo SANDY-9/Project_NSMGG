@@ -35,7 +35,9 @@ abstract class NSMGGDatabase : RoomDatabase() {
         fun getInstance(context: Context): NSMGGDatabase? {
             if (INSTANCE == null) {
                 synchronized(NSMGGDatabase::class) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext, NSMGGDatabase::class.java, "weatherDB").build()
+                    INSTANCE = Room.databaseBuilder(context.applicationContext, NSMGGDatabase::class.java, "weatherDB")
+                            .createFromAsset("assets/weatherdb")
+                            .build()
                 }
             } else {
                 Log.d("[test_instance]", "인스턴스 null 아님")
@@ -107,7 +109,6 @@ interface BookMarkerInterface { // 즐겨찾기
     suspend fun deleteAll()
 
     // delete db select one
-
     @Query("DELETE FROM my_Bookmark Where region like :region")
     suspend fun deleteOne(region: String)
 }
