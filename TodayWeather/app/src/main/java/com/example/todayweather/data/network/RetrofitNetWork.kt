@@ -20,4 +20,5 @@ interface RetrofitNetWork {
     fun fetchYesterdayWeather(stnIds : Int)                            //어제날씨조회(과거날씨조회)
     fun fetchFineDust(sidoName : String)                               //미세먼지조회(대기오염조회)
 
+
 }
