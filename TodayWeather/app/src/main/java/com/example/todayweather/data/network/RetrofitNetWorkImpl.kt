@@ -20,6 +20,15 @@ class RetrofitNetWorkImpl(
     var shortDayWeather = MutableLiveData<ShortDayWeatherResponse>()
 
     override fun fetchCurrentWeather(nx: Int, ny: Int) {
+        val minute = calendar.get(Calendar.MINUTE)
+        if(minute>=0 && minute<30) {
+            if(calendar.get(Calendar.HOUR_OF_DAY) == 0) {
+                calendar.add(Calendar.DATE, -1)
+                base_date = SimpleDateFormat("yyyyMMdd").format(calendar.time)
+            }
+            calendar.add(Calendar.HOUR_OF_DAY, -1)
+            base_time = SimpleDateFormat("HH").format(calendar.time)+"30"
+        }
         weatherAPIService.getCurrentWeather(base_date, base_time, nx, ny)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -27,6 +36,7 @@ class RetrofitNetWorkImpl(
 
     //초단기예보
     override suspend fun fetchShortermTimeWeather(nx: Int, ny: Int) {
+
         shortTimeWeather.value = weatherAPIService.getShortermWeather_time(base_date, base_time, nx, ny).body()
     }
 
@@ -35,7 +45,7 @@ class RetrofitNetWorkImpl(
         val current_hour = calendar.get(Calendar.HOUR_OF_DAY)
         if(current_hour == 0 || current_hour ==1) {
             calendar.add(Calendar.DATE, -1)
-            base_date = SimpleDateFormat("yyyyMMdd").format(calendar.time)	// 전역변수로 선언된 base_date, base_tiem이 val이므로 var로 바꿔줘야한다.
+            base_date = SimpleDateFormat("yyyyMMdd").format(calendar.time)
             base_time = "2300"
         } else {
             base_time = basetimeShortTerm(current_hour.toString())
