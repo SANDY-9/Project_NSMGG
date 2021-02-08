@@ -38,11 +38,11 @@ class DailyFragment : Fragment() {
         val weatherAPIService = WeatherAPIService(ConnectivityInterceptorImpl(requireActivity()))
         val airAPIService = AirAPIService(ConnectivityInterceptorImpl(requireActivity()))
         val retrofit = RetrofitNetWorkImpl(weatherAPIService, airAPIService)
-        retrofit.test.observe(viewLifecycleOwner, Observer {
+        retrofit.shortTimeWeather.observe(viewLifecycleOwner, Observer {
             binding.date.text = it.response.toString()
         })
         binding.buttonGps.setOnClickListener { GlobalScope.launch (Dispatchers.Main) {
-            val response = retrofit.test()
+            val response = retrofit.fetchShortermTimeWeather(61, 126)
         } }
     }
 

@@ -2,7 +2,7 @@ package com.example.todayweather.data.network
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.todayweather.data.network.response.CurrentWeatherResponse
+import com.example.todayweather.data.network.response.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
@@ -16,14 +16,8 @@ class RetrofitNetWorkImpl(
     var base_time = SimpleDateFormat("HHmm").format(Date())
     var base_date = SimpleDateFormat("yyyyMMdd").format(Date())
     val calendar = Calendar.getInstance()
-    var test = MutableLiveData<CurrentWeatherResponse>()
-
-    suspend fun test () {
-        val response = weatherAPIService
-            .test(base_date, base_time, 61, 126)
-        Log.e("[TEST]", base_date+"/"+base_time)
-        test.value = response.body()
-    }
+    var shortTimeWeather = MutableLiveData<ShortTimeWeatherResponse>()
+    var shortDayWeather = MutableLiveData<ShortDayWeatherResponse>()
 
     override fun fetchCurrentWeather(nx: Int, ny: Int) {
         weatherAPIService.getCurrentWeather(base_date, base_time, nx, ny)
@@ -33,13 +27,11 @@ class RetrofitNetWorkImpl(
 
     //초단기예보
     override suspend fun fetchShortermTimeWeather(nx: Int, ny: Int) {
-        weatherAPIService.getShortermWeather_time(base_date, base_time, nx, ny)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        shortTimeWeather.value = weatherAPIService.getShortermWeather_time(base_date, base_time, nx, ny).body()
     }
 
     //동네예보
-    override fun fetchShortermDayWeather(nx: Int, ny: Int) {
+    override suspend fun fetchShortermDayWeather(nx: Int, ny: Int) {
         val current_hour = calendar.get(Calendar.HOUR_OF_DAY)
         if(current_hour == 0 || current_hour ==1) {
             calendar.add(Calendar.DATE, -1)
@@ -48,9 +40,7 @@ class RetrofitNetWorkImpl(
         } else {
             base_time = basetimeShortTerm(current_hour.toString())
         }
-        weatherAPIService.getShortermWeather_day(base_date, base_time, nx, ny)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        shortDayWeather.value = weatherAPIService.getShortermWeather_day(base_date, base_time, nx, ny).body()
     }
 
     override fun fetchWeeklyWeather(regionCode:String, tempCode:String) {

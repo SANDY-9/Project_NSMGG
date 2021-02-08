@@ -26,15 +26,6 @@ import retrofit2.http.Query
 
 interface WeatherAPIService {
 
-    @GET("VilageFcstInfoService/getUltraSrtNcst?numOfRows=8&pageNo=1&dataType=json&" +
-            "serviceKey=qVcayJVu5HI9ugEnsD8DMqMSvIaPsRkW4zOTbAYQkEgop3%2FHRG8WRp52RND8MUyG0r%2Fh6VZqDVsCkGk7o%2BWGgg%3D%3D")
-    suspend fun test(
-        @Query("base_date") base_date: String,  //현재날짜
-        @Query("base_time") base_time: String,  //현재시각으로 요청
-        @Query("nx") nx: Int,                  //날씨요청위치 x격자값
-        @Query("ny") ny: Int,                  //날씨요청위치 y격자값
-    ) : Response<CurrentWeatherResponse>
-
     //현재 날씨 요청
     //초단기실황 조회
     @GET("VilageFcstInfoService/getUltraSrtNcst?numOfRows=8&pageNo=1&dataType=json&" +
@@ -51,22 +42,22 @@ interface WeatherAPIService {
     //초단기예보 조회 : 앞으로의 6시간 요청.
     @GET("VilageFcstInfoService/getUltraSrtFcst?numOfRows=25&pageNo=1&dataType=JSON&" +
             "serviceKey=qVcayJVu5HI9ugEnsD8DMqMSvIaPsRkW4zOTbAYQkEgop3%2FHRG8WRp52RND8MUyG0r%2Fh6VZqDVsCkGk7o%2BWGgg%3D%3D")
-    fun getShortermWeather_time(
+    suspend fun getShortermWeather_time(
         @Query("base_date") base_date: String,  //현재날짜
         @Query("base_time") base_time: String,  //현재시각으로 요청
         @Query("nx") nx: Int,                  //날씨요청위치 x격자값
         @Query("ny") ny: Int,                  //날씨요청위치 y격자값
-    ) : Observable<ShortermWeatherTimeResponse>
+    ) : Response<ShortTimeWeatherResponse>
 
     //동네예보 조회 : 오늘-내일-모레까지 날씨 정보(base_time 기준+4시간부터 제공)
     @GET("VilageFcstInfoService/getVilageFcst?numOfRows=225&pageNo=1&dataType=JSON&" +
             "serviceKey=qVcayJVu5HI9ugEnsD8DMqMSvIaPsRkW4zOTbAYQkEgop3%2FHRG8WRp52RND8MUyG0r%2Fh6VZqDVsCkGk7o%2BWGgg%3D%3D")
-    fun getShortermWeather_day(
+    suspend fun getShortermWeather_day(
         @Query("base_date") base_date: String,  //현재날짜
         @Query("base_time") base_time: String,  //0200 0500 0800 1100 1400 1700 2000 2300
         @Query("nx") nx: Int,                  //날씨요청위치 x격자값
         @Query("ny") ny: Int,                  //날씨요청위치 y격자값
-    ) : Observable<ShortermWeatherDayResponse>
+    ) : Response<ShortDayWeatherResponse>
 
 
     //어제자료조회

@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  * @created 2021-02-08
  * @desc
  */
-data class ShortermWeatherDayResponse(
+data class ShortDayWeatherResponse(
     @SerializedName("response")
     val response: Response
 ) {
@@ -64,7 +64,7 @@ data class ShortermWeatherDayResponse(
     }
 }
 
-data class ShortermWeatherTimeResponse(
+data class ShortTimeWeatherResponse(
     @SerializedName("response")
     val response: Response
 ) {
