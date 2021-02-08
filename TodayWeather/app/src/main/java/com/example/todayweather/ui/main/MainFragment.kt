@@ -1,12 +1,13 @@
 package com.example.todayweather.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentMainBinding
 
@@ -17,14 +18,33 @@ class MainFragment : Fragment() {
     lateinit var navController: NavController
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         return binding.root
-
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
+        binding.toolbar.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.search -> {
+                    navController.navigate(R.id.action_mainFragment_to_searchMainFragment)
+                    true
+                }
+                R.id.menu -> {
+                    binding.menuLayout.visibility = VISIBLE
+                    true
+                }
+                else -> false
+            }
+        }
+        binding.closeButton.setOnClickListener { binding.menuLayout.visibility = GONE }
+        binding.goSetting.setOnClickListener {
+            navController.navigate(R.id.action_mainFragment_to_settingMainFragment)
+        }
+    }
 
 }

@@ -8,7 +8,13 @@
         android:id="@+id/searchMainFragment"
         android:name="com.example.todayweather.ui.search.SearchMainFragment"
         android:label="fragment_search_main"
-        tools:layout="@layout/fragment_search_main" />
+        tools:layout="@layout/fragment_search_main" >
+        <action
+            android:id="@+id/action_searchMainFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/dailyFragment"
         android:name="com.example.todayweather.ui.basic.DailyFragment"
