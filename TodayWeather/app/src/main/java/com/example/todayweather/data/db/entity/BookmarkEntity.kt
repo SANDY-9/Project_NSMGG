@@ -17,7 +17,7 @@ const val BOOKMARK_ID = 0
 // 이거는 즐겨찾기를 누르면 room db에 저장하게 하는 클래스 만들기
 
 // Entity: Room으로 작업할 때 데이터베이스 테이블을 묘사하는 annotated 클래스이다.
-@Entity(tableName = "my_Bookmark")
+@Entity(tableName = "my_Bookmark", primaryKeys = arrayOf("BOOKMARK_ID","region"))
 data class BookmarkTable (
         // SQLite의 테이블 이름은 대소문자를 구분하지 않습니다.
         @PrimaryKey(autoGenerate = true)
