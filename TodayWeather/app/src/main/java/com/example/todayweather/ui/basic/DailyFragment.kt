@@ -7,17 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
-import com.example.todayweather.data.network.AirAPIService
-import com.example.todayweather.data.network.RetrofitNetWork
-import com.example.todayweather.data.network.RetrofitNetWorkImpl
-import com.example.todayweather.data.network.WeatherAPIService
+import com.example.todayweather.data.model.CurrentWeather
+import com.example.todayweather.data.network.*
 import com.example.todayweather.databinding.FragmentDailyBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import io.reactivex.schedulers.Schedulers
 
 class DailyFragment : Fragment() {
 
@@ -29,16 +23,14 @@ class DailyFragment : Fragment() {
     ): View? {
         //데이터 바인딩 초기화
         binding = DataBindingUtil.inflate<FragmentDailyBinding>(inflater, R.layout.fragment_daily, container, false)
+
+        observerViewModel()
+
         return binding.root
     }
 
     //뷰가 뷰모델의 라이브데이터를 옵저빙한다.
     private fun observerViewModel() {
-       val retrofitNetWork = RetrofitNetWorkImpl(WeatherAPIService.invoke(), AirAPIService.invoke())
-        GlobalScope.launch(Dispatchers.Main) {
-            retrofitNetWork.fetchDailyWeather(61, 126)
-        }
     }
-
 
 }

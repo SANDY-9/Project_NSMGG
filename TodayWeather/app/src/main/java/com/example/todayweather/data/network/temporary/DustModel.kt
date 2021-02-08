@@ -1,4 +1,4 @@
-package com.example.todayweather.data.network
+package com.example.todayweather.data.network.temporary
 
 import com.google.gson.annotations.SerializedName
 

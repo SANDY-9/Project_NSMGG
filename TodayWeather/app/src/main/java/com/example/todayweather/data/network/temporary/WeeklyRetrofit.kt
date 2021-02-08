@@ -1,4 +1,4 @@
-package com.example.todayweather.data.network
+package com.example.todayweather.data.network.temporary
 
 import android.content.Context
 import android.util.Log
