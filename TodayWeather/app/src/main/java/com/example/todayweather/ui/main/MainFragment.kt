@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -16,6 +18,7 @@ class MainFragment : Fragment() {
 
     lateinit var binding : FragmentMainBinding
     lateinit var navController: NavController
+    lateinit var menu_Animation : Animation
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +26,7 @@ class MainFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,6 +40,11 @@ class MainFragment : Fragment() {
                 }
                 R.id.menu -> {
                     binding.menuLayout.visibility = VISIBLE
+                    true
+
+                    //에니메이션
+                    menu_Animation = AnimationUtils.loadAnimation(context, R.anim.menu_anim)
+                    binding.menuLayout.startAnimation(menu_Animation)
                     true
                 }
                 else -> false
