@@ -16,7 +16,7 @@ object ConvertDateHelper {
     fun dateFormToday() : String {
 
         val simpleDateFormat1 : SimpleDateFormat = SimpleDateFormat("yyyy년 M월 d일")
-        val simpleDateFormat2 : SimpleDateFormat = SimpleDateFormat("aa h시 mm분")
+        val simpleDateFormat2 : SimpleDateFormat = SimpleDateFormat("aa HH시 mm분")
         val date : Date = Date()
         val weekDay = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
         val cal : Calendar = Calendar.getInstance()
