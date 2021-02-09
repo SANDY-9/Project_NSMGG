@@ -6,6 +6,9 @@ import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.util.Log
 import androidx.room.*
+import com.example.todayweather.data.db.database.repository.BookMarkerInterface
+import com.example.todayweather.data.db.database.repository.CityWeatherInterface
+import com.example.todayweather.data.db.database.repository.NationalWeatherInterface
 import com.example.todayweather.data.db.entity.BOOKMARK_ID
 import com.example.todayweather.data.db.entity.BookmarkTable
 import com.example.todayweather.data.network.temporary.CityWeatherTable
@@ -47,7 +50,6 @@ abstract class NSMGGDatabase : RoomDatabase() {
     }
 }
 
-
 // 기상청 제공 데이터들은 최초 실행시 한 번만 저장하게 함
 // reason : (primary key이기에 접속시 중복 저장시 runtime error)
 fun SharedPref(context: Context, WeatherDB : NSMGGDatabase) {
@@ -65,6 +67,7 @@ fun SharedPref(context: Context, WeatherDB : NSMGGDatabase) {
         Log.d("Is first Time?", "not firstD");
     }
 }
+
 
 private fun DongnaeReadTxt(context: Context, WeatherDB: NSMGGDatabase) {
 

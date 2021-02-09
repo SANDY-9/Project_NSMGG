@@ -14,6 +14,15 @@
         android:background="#CDDC39"
         tools:context=".ui.main.MainFragment">
 
+        <include
+            layout="@layout/day"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/viewPager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/viewPager" />
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
@@ -44,10 +53,8 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/menuLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,6 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="#80000000"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="parent"
@@ -80,10 +88,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/menuView"
+                android:id="@+id/menuLayout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/today"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"

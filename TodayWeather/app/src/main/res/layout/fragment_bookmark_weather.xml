@@ -23,29 +23,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <include
-            android:id="@+id/include3"
-            layout="@layout/day"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <include
-            layout="@layout/sunset"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <include
-            layout="@layout/night"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
         <LinearLayout
+            android:id="@+id/linearLayout10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#80000000"
@@ -109,9 +88,8 @@
             android:fillViewport="true"
             android:paddingTop="12dp"
             app:layout_constrainedHeight="true"
-            app:layout_constraintBottom_toBottomOf="@+id/include3"
-            app:layout_constraintEnd_toEndOf="@+id/include3"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout10"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button5">
 

@@ -86,7 +86,11 @@ class MainFragment : Fragment() {
                     binding.menuLayout.visibility = VISIBLE
                     //애니메이션
                     binding.menuLayout.startAnimation(menu_Animation)
-                    binding.backlayout.startAnimation(menu_back_Animation)
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        binding.backlayout.visibility = VISIBLE
+                        binding.backlayout.startAnimation(menu_back_Animation)
+                    },500)
 
                     true
                 }
@@ -95,6 +99,7 @@ class MainFragment : Fragment() {
         }
         binding.closeButton.setOnClickListener {
             binding.menuLayout.visibility = GONE
+            binding.backlayout.visibility = GONE
 
         }
         binding.goSetting.setOnClickListener {
@@ -102,6 +107,7 @@ class MainFragment : Fragment() {
         }
         binding.backlayout.setOnClickListener {
             binding.menuLayout.visibility = GONE
+            binding.backlayout.visibility = GONE
 
         }
     }
