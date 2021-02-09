@@ -26,9 +26,7 @@ class DailyFragment : Fragment() {
     val weatherViewmodel : WeatherViewModel by activityViewModels()
     val locationViewModel : LocationViewModel by activityViewModels()
 
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         //데이터 바인딩 초기화
         binding = DataBindingUtil.inflate<FragmentDailyBinding>(inflater, R.layout.fragment_daily, container, false)
