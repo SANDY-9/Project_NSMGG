@@ -17,6 +17,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation":
+                                      "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -34,6 +40,10 @@ android {
     //데이터 바인딩 활성화
     dataBinding {
         enabled = true
+    }
+    sourceSets {
+        // Adds exported schema location as test app assets.
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
 
 }
@@ -121,5 +131,8 @@ dependencies {
 
     //뷰페이저 인디케이터
     implementation 'me.relex:circleindicator:2.1.4'
+
+    testImplementation "androidx.room:room-testing:2.2.5"
+    implementation 'com.facebook.stetho:stetho:1.5.1'
 
 }
