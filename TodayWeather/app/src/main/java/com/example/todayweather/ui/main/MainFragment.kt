@@ -27,6 +27,7 @@ class MainFragment : Fragment() {
     lateinit var binding : FragmentMainBinding
     lateinit var navController: NavController
     lateinit var menu_Animation : Animation
+    lateinit var menu_back_Animation : Animation
     lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun onCreateView(
@@ -48,6 +49,7 @@ class MainFragment : Fragment() {
     private fun initComponent(view: View) {
         navController = Navigation.findNavController(view)
         menu_Animation = AnimationUtils.loadAnimation(context, R.anim.menu_anim)
+        menu_back_Animation = AnimationUtils.loadAnimation(context, R.anim.menu_back_anim)
         viewPagerAdapter = ViewPagerAdapter(this)
     }
 
@@ -83,13 +85,7 @@ class MainFragment : Fragment() {
                     binding.menuLayout.visibility = VISIBLE
                     //애니메이션
                     binding.menuLayout.startAnimation(menu_Animation)
-
-                    //백그라운드 어둡게
-                    Handler().postDelayed({
-                        binding.backlayout.visibility = VISIBLE
-                    },500)
-
-
+                    binding.backlayout.startAnimation(menu_back_Animation)
 
                     true
                 }
@@ -98,14 +94,14 @@ class MainFragment : Fragment() {
         }
         binding.closeButton.setOnClickListener {
             binding.menuLayout.visibility = GONE
-            binding.backlayout.visibility = GONE
+
         }
         binding.goSetting.setOnClickListener {
             navController.navigate(R.id.action_mainFragment_to_settingMainFragment)
         }
         binding.backlayout.setOnClickListener {
             binding.menuLayout.visibility = GONE
-            binding.backlayout.visibility = GONE
+
         }
     }
 
