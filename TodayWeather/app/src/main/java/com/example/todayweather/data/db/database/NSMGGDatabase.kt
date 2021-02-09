@@ -35,7 +35,8 @@ abstract class NSMGGDatabase : RoomDatabase() {
             if (INSTANCE == null) {
                 synchronized(NSMGGDatabase::class) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext, NSMGGDatabase::class.java, "weatherDB")
-//                            .createFromAsset("weatherdb")//여긴 그냥 써봄 좀 있다가 테스트해봐야함
+                            .createFromAsset("database/test.db")//여긴 그냥 써봄 좀 있다가 테스트해봐야함
+                            .fallbackToDestructiveMigration()
                             .build()
                 }
             } else {

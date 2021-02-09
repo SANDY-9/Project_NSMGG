@@ -11,7 +11,7 @@ import com.example.todayweather.data.network.temporary.NationalWeatherTable
  * @author SANDY
  * @email nnal0256@naver.com
  * @created 2021-02-09
- * @desc SQL문 매핑
+ * @desc 사용할 DAO들
  */
 @Dao
 interface NationalWeatherInterface { // 동네예보
