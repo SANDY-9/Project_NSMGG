@@ -15,7 +15,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.example.todayweather.R
-import com.example.todayweather.data.db.database.AddressList
 import com.example.todayweather.data.db.database.NSMGGDatabase
 import com.example.todayweather.data.db.database.NSMGGDatabase.Companion.getInstance
 import com.example.todayweather.data.db.database.SharedPref
@@ -120,7 +119,7 @@ class StartActivity : AppCompatActivity(), LocationListener {
 //            intent.putExtra("address", address)
 //            intent.putExtra("x", realX)
 //            intent.putExtra("y", realY)// 앱 버전이 같으면 MainActivity로 이동
-            AddressList(NationalWeatherDB)
+            //AddressList(NationalWeatherDB)
             startActivity(intent)
             this.finish()
         } else if (strVersionName!=strLatestVersion) { // 앱 버전이 서로 다른 경우 끄기.

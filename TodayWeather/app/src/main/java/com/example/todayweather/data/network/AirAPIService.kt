@@ -27,7 +27,6 @@ interface AirAPIService {
             @Query("sidoName") sidoName : String           // 시군구 이름
     ) : Observable<FineDustResponse>
 
-
     companion object {
         operator fun invoke(
             connectivityInterceptor: ConnectivityInterceptor

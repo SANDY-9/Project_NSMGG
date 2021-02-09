@@ -56,8 +56,6 @@ class MainFragment : Fragment() {
         binding.viewPager.adapter = viewPagerAdapter
         binding.viewPager.currentItem = 0
         binding.viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-            val pageMargin = resources.getDimensionPixelOffset(R.dimen.pageMargin).toFloat()
-            val pageOffset = resources.getDimensionPixelOffset(R.dimen.offset).toFloat()
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 if (positionOffsetPixels == 0) {
@@ -90,6 +88,9 @@ class MainFragment : Fragment() {
         binding.closeButton.setOnClickListener { binding.menuLayout.visibility = GONE }
         binding.goSetting.setOnClickListener {
             navController.navigate(R.id.action_mainFragment_to_settingMainFragment)
+        }
+        binding.backlayout.setOnClickListener {
+            binding.menuLayout.visibility = GONE
         }
     }
 
