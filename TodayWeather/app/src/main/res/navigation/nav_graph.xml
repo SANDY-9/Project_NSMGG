@@ -74,10 +74,10 @@
         tools:layout="@layout/fragment_bookmark_main" >
         <action
             android:id="@+id/action_bookmarkMainFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_bookmarkMainFragment_to_mainFragment2"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingMainFragment"
@@ -85,21 +85,18 @@
         android:label="SettingMainFragment" >
         <action
             android:id="@+id/action_settingMainFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.todayweather.ui.main.MainFragment"
         android:label="MainFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_settingMainFragment"
-            app:destination="@id/settingMainFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_searchMainFragment"
             app:destination="@id/searchMainFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingMainFragment"
+            app:destination="@id/settingMainFragment" />
         <action
             android:id="@+id/action_mainFragment_to_bookmarkMainFragment"
             app:destination="@id/bookmarkMainFragment" />
