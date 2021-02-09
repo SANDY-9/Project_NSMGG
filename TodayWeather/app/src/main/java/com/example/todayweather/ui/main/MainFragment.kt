@@ -1,6 +1,7 @@
 package com.example.todayweather.ui.main
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -17,6 +18,8 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.todayweather.R
 import com.example.todayweather.adapter.ViewPagerAdapter
 import com.example.todayweather.databinding.FragmentMainBinding
+import java.util.*
+import kotlin.concurrent.timer
 
 
 class MainFragment : Fragment() {
@@ -80,17 +83,29 @@ class MainFragment : Fragment() {
                     binding.menuLayout.visibility = VISIBLE
                     //애니메이션
                     binding.menuLayout.startAnimation(menu_Animation)
+
+                    //백그라운드 어둡게
+                    Handler().postDelayed({
+                        binding.backlayout.visibility = VISIBLE
+                    },500)
+
+
+
                     true
                 }
                 else -> false
             }
         }
-        binding.closeButton.setOnClickListener { binding.menuLayout.visibility = GONE }
+        binding.closeButton.setOnClickListener {
+            binding.menuLayout.visibility = GONE
+            binding.backlayout.visibility = GONE
+        }
         binding.goSetting.setOnClickListener {
             navController.navigate(R.id.action_mainFragment_to_settingMainFragment)
         }
         binding.backlayout.setOnClickListener {
             binding.menuLayout.visibility = GONE
+            binding.backlayout.visibility = GONE
         }
     }
 
