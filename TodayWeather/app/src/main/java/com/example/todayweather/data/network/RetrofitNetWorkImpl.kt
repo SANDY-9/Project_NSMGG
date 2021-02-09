@@ -49,7 +49,7 @@ class RetrofitNetWorkImpl(
             base_date = SimpleDateFormat("yyyyMMdd").format(calendar.time)
             base_time = "2300"
         } else {
-            base_time = basetimeShortTerm(current_hour.toString())
+            base_time = basetimeShortTerm(current_hour)
         }
         shortDayWeather.value = weatherAPIService.getShortermWeather_day(base_date, base_time, nx, ny).body()
     }
@@ -87,26 +87,19 @@ class RetrofitNetWorkImpl(
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun basetimeShortTerm(now_timeHH : String) : String {
-        var result_time= ""
-        //0200 0500 0800 1100 1400 1700 2000 2300
-        if(now_timeHH == "02" || now_timeHH == "03" || now_timeHH == "04"){
-            result_time = "0200"
-        } else if(now_timeHH == "05" || now_timeHH == "06" || now_timeHH == "07"){
-            result_time = "0500"
-        } else if (now_timeHH == "08" || now_timeHH == "09" || now_timeHH == "10") {
-            result_time = "0800"
-        } else if (now_timeHH == "11" || now_timeHH == "12" || now_timeHH == "13") {
-            result_time = "1100"
-        } else if (now_timeHH == "14" || now_timeHH == "15" || now_timeHH == "16") {
-            result_time = "1400"
-        } else if (now_timeHH == "17" || now_timeHH == "18" || now_timeHH == "19") {
-            result_time = "1700"
-        } else if (now_timeHH == "20" || now_timeHH == "21" || now_timeHH == "22") {
-            result_time = "2000"
-        } else if (now_timeHH == "23" || now_timeHH == "00" || now_timeHH == "01") {
-            result_time = "2300"
+    fun basetimeShortTerm(current_hour : Int) : String {
+        var base_time = ""
+        //동네예보 base_time : 0200 0500 0800 1100 1400 1700 2000 2300
+        when(current_hour) {
+            2, 3, 4 -> base_time = "0200"
+            5, 6, 7 -> base_time = "0500"
+            8, 9, 10 -> base_time = "0800"
+            11, 12, 13 -> base_time = "1100"
+            14, 15, 16 -> base_time = "1400"
+            17, 18, 19 -> base_time = "1700"
+            20, 21, 22 -> base_time = "2000"
+            23, 0, 1 -> base_time = "2300"
         }
-        return result_time
+        return base_time
     }
 }

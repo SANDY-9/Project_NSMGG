@@ -28,7 +28,6 @@ abstract class NSMGGDatabase : RoomDatabase() {
     abstract fun nationalWeatherInterface(): NationalWeatherInterface
     abstract fun cityWeatherInterface(): CityWeatherInterface
     abstract fun bookMarkerInterface(): BookMarkerInterface
-
     companion object {
         private var INSTANCE: NSMGGDatabase? = null
 
@@ -45,73 +44,6 @@ abstract class NSMGGDatabase : RoomDatabase() {
         }
     }
 }
-
-@Dao
-interface NationalWeatherInterface { // 동네예보
-    // db 전부 호출
-    @Query("SELECT * FROM dongnae")
-    suspend fun getAll(): List<NationalWeatherTable>
-
-    // 동 이름으로 데이터 찾기
-    @Query("SELECT * FROM dongnae WHERE name3 LIKE :dong")
-    suspend fun getChoice(dong : String): List<NationalWeatherTable>
-
-    // nx, ny 값으로 데이터 가져오기
-    @Query("SELECT * FROM dongnae WHERE x = :x AND y = :y")
-    suspend fun getXY(x : Int, y : Int): List<NationalWeatherTable>
-
-    @Insert
-    suspend fun insert(nationalWeatherTable: NationalWeatherTable)
-
-    @Query("DELETE FROM dongnae")
-    suspend fun deleteAll()
-}
-
-@Dao
-interface CityWeatherInterface { // 중기예보
-    @Query("SELECT * FROM weekly")
-    suspend fun getAll(): List<CityWeatherTable>
-
-    // 도시, 지역 이름으로 코드 찾기
-    @Query("SELECT weeklyCode FROM weekly WHERE region LIKE :region AND city LIKE :city")
-    suspend fun getRegId( region: String, city: String): String
-
-    // 지역 이름으로 코드 찾기
-    @Query("SELECT weeklyCode FROM weekly WHERE region LIKE :region")
-    suspend fun getRegIdRegion( region: String): String
-
-    // db insert
-    @Insert
-    suspend fun insert(cityWeatherTable: CityWeatherTable)
-
-    // delete db
-    @Query("DELETE FROM weekly")
-    suspend fun deleteAll()
-}
-
-@Dao
-interface BookMarkerInterface { // 즐겨찾기
-    @Query("SELECT * FROM my_Bookmark")
-    suspend fun getAll(): List<BookmarkTable>
-
-//    불러오고 싶은 함수 추후
-    // 지역 이름으로 db유무 확인
-    @Query("SELECT COUNT(*) FROM my_Bookmark WHERE region = :region")
-    suspend fun getReg( region: String): Int
-
-    // db insert
-    @Insert
-    suspend fun insert(bookmarkTable: BookmarkTable)
-
-    // delete db
-    @Query("DELETE FROM my_Bookmark")
-    suspend fun deleteAll()
-
-    // delete db select one
-    @Query("DELETE FROM my_Bookmark Where region like :region")
-    suspend fun deleteOne(region: String)
-}
-
 
 
 // 기상청 제공 데이터들은 최초 실행시 한 번만 저장하게 함
@@ -179,52 +111,5 @@ private fun WeeklyReadTxt(context: Context, WeatherDB: NSMGGDatabase) {
         var output = WeatherDB.cityWeatherInterface().getAll()
 
         Log.d("db_test", "$output")
-    }
-}
-
-// 즐겨찾기 추가하기
-fun AddBookMarker(WeatherDB: NSMGGDatabase,region : String,
-                  nx : Int, ny:Int, dustation:String,
-                  codetemp:String,codeRain:String){
-    // db 확인하는 코드
-    CoroutineScope(Dispatchers.Main).launch {
-        var output = WeatherDB.bookMarkerInterface().getAll()
-        Log.d("db_test", "$output")
-
-        val result = WeatherDB.bookMarkerInterface().getReg(region)
-        if (result>0){
-            val input = BookmarkTable(BOOKMARK_ID, region, nx, ny, dustation, codetemp, codeRain)
-            WeatherDB.bookMarkerInterface().insert(input)
-        }else{
-            Log.d("db_test", "이미 같은 지역이 즐겨찾기가 되어있음")
-        }
-
-    }
-}
-
-// 즐겨찾기 항목 삭제하기.
-fun DeleteBookMarker(WeatherDB: NSMGGDatabase,region : String){
-    CoroutineScope(Dispatchers.Main).launch {
-        //항목 찾기
-        val result = WeatherDB.bookMarkerInterface().getReg(region)
-        if (result>0){
-            WeatherDB.bookMarkerInterface().deleteOne(region)
-            Log.d("db_test", "항목이 삭제.")
-        }else{
-            Log.d("db_test", "항목이 없습니다.")
-        }
-    }
-}
-
-fun AddressList( WeatherDB: NSMGGDatabase) {
-
-    CoroutineScope(Dispatchers.Main).launch {
-        val output = WeatherDB.nationalWeatherInterface().getAll()
-        val address = ArrayList<String>()
-        Log.d("db_test", "${output.size}")
-        for (i in output.indices){
-            address.add("${output[i].name1} ${output[i].name2} ${output[i].name3}")
-        }
-        Log.d("db_test", address.toString())
     }
 }
