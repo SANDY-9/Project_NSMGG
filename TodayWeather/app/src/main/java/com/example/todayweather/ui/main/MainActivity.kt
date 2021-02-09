@@ -17,6 +17,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
+    val locationViewModel : LocationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

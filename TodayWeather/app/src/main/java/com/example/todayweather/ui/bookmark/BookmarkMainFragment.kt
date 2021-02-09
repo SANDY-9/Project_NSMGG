@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentBookmarkMainBinding
 
 class BookmarkMainFragment : Fragment() {
 
     lateinit var binding : FragmentBookmarkMainBinding
+    lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,9 +26,11 @@ class BookmarkMainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.imageButton.setOnClickListener {
-            //activity.supportFragmentManager.beginTransaction().remove(this).commit()
+        navController = Navigation.findNavController(view)
+        binding.closeButton.setOnClickListener {
+            navController.navigate(R.id.action_bookmarkMainFragment_to_mainFragment)
         }
+
     }
 
 }

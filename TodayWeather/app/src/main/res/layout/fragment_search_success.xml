@@ -68,7 +68,6 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
                     android:text="-3"
-                    android:textColor="#000000"
                     android:textSize="60dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/imageView7"
@@ -89,7 +88,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ºC"
-                    android:textColor="#000000"
                     android:textSize="25dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/textView14"
@@ -113,7 +111,6 @@
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="10dp"
                     android:text="2021년 01월 12일 화요일 오후 1시 13분"
-                    android:textColor="#000000"
                     android:textSize="15dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/button" />

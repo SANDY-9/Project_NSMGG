@@ -35,7 +35,9 @@ abstract class NSMGGDatabase : RoomDatabase() {
         fun getInstance(context: Context): NSMGGDatabase? {
             if (INSTANCE == null) {
                 synchronized(NSMGGDatabase::class) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext, NSMGGDatabase::class.java, "weatherDB").build()
+                    INSTANCE = Room.databaseBuilder(context.applicationContext, NSMGGDatabase::class.java, "weatherDB")
+//                            .createFromAsset("weatherdb")//여긴 그냥 써봄 좀 있다가 테스트해봐야함
+                            .build()
                 }
             } else {
                 Log.d("[test_instance]", "인스턴스 null 아님")
@@ -107,7 +109,6 @@ interface BookMarkerInterface { // 즐겨찾기
     suspend fun deleteAll()
 
     // delete db select one
-
     @Query("DELETE FROM my_Bookmark Where region like :region")
     suspend fun deleteOne(region: String)
 }
@@ -177,6 +178,7 @@ private fun WeeklyReadTxt(context: Context, WeatherDB: NSMGGDatabase) {
         //cityWeatherDB.cityWeatherInterface().deleteAll()
         //cityWeatherDB.cityWeatherInterface().insert(input)
         var output = WeatherDB.cityWeatherInterface().getAll()
+
         Log.d("db_test", "$output")
     }
 }
@@ -215,3 +217,15 @@ fun DeleteBookMarker(WeatherDB: NSMGGDatabase,region : String){
     }
 }
 
+fun AddressList( WeatherDB: NSMGGDatabase) {
+
+    CoroutineScope(Dispatchers.Main).launch {
+        val output = WeatherDB.nationalWeatherInterface().getAll()
+        val address = ArrayList<String>()
+        Log.d("db_test", "${output.size}")
+        for (i in output.indices){
+            address.add("${output[i].name1} ${output[i].name2} ${output[i].name3}")
+        }
+        Log.d("db_test", address.toString())
+    }
+}

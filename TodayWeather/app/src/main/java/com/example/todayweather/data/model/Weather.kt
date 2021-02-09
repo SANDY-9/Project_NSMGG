@@ -15,14 +15,14 @@ import com.example.todayweather.helper.ConvertWeatherHelper
 //현재 날씨
 class CurrentWeather {
         val date: String = ConvertDateHelper.dateFormToday()       //현재시각
-        var region: String? = null                 //지역
-        var temperature: String? = null            //기온
-        val feeltemperature: String? = null        //체감온도
-        var rainfall: String? = null               //강수량
-        var humid: String? = null                  //습도
-        var weather: String? = null                //날씨
-        var wind: String? = null                   //풍속
-        var dust: String? = null                   //미세먼지
+        var region: String = "-"                 //지역
+        var temperature: String = "-"            //기온
+        val feeltemperature: String = "-"        //체감온도
+        var rainfall: String = "-"               //강수량
+        var humid: String = "-"                  //습도
+        var weather: String = "-"                //날씨
+        var wind: String = "-"                   //풍속
+        var dust: String = "-"                  //미세먼지
         var icon : Int = R.drawable.icon_sun       //날씨 아이콘
         override fun toString(): String {
                 return "CurrentWeather(date='$date', region=$region, temperature=$temperature, feeltemperature=$feeltemperature, rainfall=$rainfall, humid=$humid, weather=$weather, wind=$wind, dust=$dust)"
@@ -32,13 +32,13 @@ class CurrentWeather {
 
 //오늘 날씨
 class DailyWeather {
-        var date: String? = null                   //날짜
-        var region: String? = null                 //지역
-        var fcstTime: String? = null               //시간
-        var temperature: String? = null            //온도
-        var weather: String? = null                //날씨
-        var wind: String? = null                   //풍속
-        var rainfall: String? = null               //강수량
+        var date: String = "-"                   //날짜
+        var region: String = "-"                 //지역
+        var fcstTime: String = "-"               //시간
+        var temperature: String = "-"            //온도
+        var weather: String = "-"                //날씨
+        var wind: String = "-"                   //풍속
+        var rainfall: String = "-"               //강수량
         var icon : Int = R.drawable.icon_sun       //날씨 아이콘
         override fun toString(): String {
                 return "DailyWeather(date=$date, region=$region, fcstTime=$fcstTime, temperature=$temperature, weather=$weather, wind=$wind, rainfall=$rainfall)"
@@ -47,12 +47,12 @@ class DailyWeather {
 
 //주간 날씨
 class WeeklyWeather {
-        var region: String? = null                 //지역
-        var date: String? = null                   //날짜
-        var rainPossible: Int? = null             //강수확률
-        var weather: String? = null               //날씨
-        var tempMin: Int? = null                  //최저기온
-        var tempMax: Int? = null                  //최고기온
+        var region: String = "-"                 //지역
+        var date: String = "-"                   //날짜
+        var rainPossible: Int = 0            //강수확률
+        var weather: String = "-"               //날씨
+        var tempMin: Int = 0                  //최저기온
+        var tempMax: Int = 0                  //최고기온
         var icon : Int = R.drawable.icon_sun      //날씨 아이콘
         override fun toString(): String {
                 return "WeeklyWeather(region='$region', date='$date', rainPossible=$rainPossible, weather='$weather', tempMin=$tempMin, tempMax=$tempMax)"

@@ -10,10 +10,12 @@ import androidx.fragment.app.activityViewModels
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentDailyDetailBinding
 import com.example.todayweather.viewModel.LocationViewModel
+import com.example.todayweather.viewModel.WeatherViewModel
 
 class CurrentFragment : Fragment() {
 
     lateinit var binding : FragmentDailyDetailBinding
+    val weatherViewmodel : WeatherViewModel by activityViewModels()
     val locationViewModel : LocationViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -12,6 +12,7 @@
         <action
             android:id="@+id/action_searchMainFragment_to_mainFragment"
             app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -70,7 +71,14 @@
         android:id="@+id/bookmarkMainFragment"
         android:name="com.example.todayweather.ui.bookmark.BookmarkMainFragment"
         android:label="fragment_bookmark_main"
-        tools:layout="@layout/fragment_bookmark_main" />
+        tools:layout="@layout/fragment_bookmark_main" >
+        <action
+            android:id="@+id/action_bookmarkMainFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/settingMainFragment"
         android:name="com.example.todayweather.ui.setting.SettingMainFragment"
