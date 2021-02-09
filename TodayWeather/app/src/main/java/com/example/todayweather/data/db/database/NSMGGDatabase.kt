@@ -23,7 +23,7 @@ import java.io.InputStream
  */
 
 // splash 있던 room 관련 코드를 여기에 옮기기
-@Database(entities = [NationalWeatherTable::class, CityWeatherTable::class, BookmarkTable::class], version = 1, exportSchema = false)
+@Database(entities = [NationalWeatherTable::class, CityWeatherTable::class, BookmarkTable::class], version = 3, exportSchema = false)
 abstract class NSMGGDatabase : RoomDatabase() {
     abstract fun nationalWeatherInterface(): NationalWeatherInterface
     abstract fun cityWeatherInterface(): CityWeatherInterface
@@ -36,7 +36,6 @@ abstract class NSMGGDatabase : RoomDatabase() {
             if (INSTANCE == null) {
                 synchronized(NSMGGDatabase::class) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext, NSMGGDatabase::class.java, "weatherDB")
-//                            .createFromAsset("weatherdb")//여긴 그냥 써봄 좀 있다가 테스트해봐야함
                             .build()
                 }
             } else {
