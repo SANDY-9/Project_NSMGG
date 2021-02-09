@@ -2,6 +2,7 @@ package com.example.todayweather.ui.main
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -85,11 +86,9 @@ class MainFragment : Fragment() {
                     binding.menuLayout.startAnimation(menu_Animation)
 
                     //백그라운드 어둡게
-                    Handler().postDelayed({
+                    Handler(Looper.getMainLooper()).postDelayed({
                         binding.backlayout.visibility = VISIBLE
                     },500)
-
-
 
                     true
                 }
