@@ -29,9 +29,23 @@ class WeatherDAO {
     }
 
     //주소 3단계 이름으로 x 가져오기 : return Int
-
+    fun XWeather(WeatherDB: NSMGGDatabase, dong: String) : Int {
+        var find : Int = 0
+        CoroutineScope(Dispatchers.Main).launch {
+            //항목 찾기
+            find = WeatherDB.nationalWeatherInterface().getX(dong)
+        }
+        return find
+    }
     //주소 3단계 이름으로 y 가져오기 : return Int
-
+    fun YWeather(WeatherDB: NSMGGDatabase, dong: String) : Int {
+        var find : Int = 0
+        CoroutineScope(Dispatchers.Main).launch {
+            //항목 찾기
+            find = WeatherDB.nationalWeatherInterface().getY(dong)
+        }
+        return find
+    }
     //주소 3단계 이름으로 기온코드 가져오기 : return String(주간예보 최저/최고기온 조회)
 
     //주소 3단계 이름으로 행정구역코드 가져오기 : return String(주간예보조 강수/날씨 조회)

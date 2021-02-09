@@ -23,6 +23,14 @@ interface NationalWeatherInterface { // 동네예보
     @Query("SELECT * FROM dongnae WHERE name3 LIKE :dong")
     suspend fun getChoice(dong : String): List<NationalWeatherTable>
 
+    // 동 이름으로 x 찾기
+    @Query("SELECT x FROM dongnae WHERE name3 LIKE :dong")
+    suspend fun getX(dong : String): Int
+
+    // 동 이름으로 y 찾기
+    @Query("SELECT y FROM dongnae WHERE name3 LIKE :dong")
+    suspend fun getY(dong : String): Int
+
     // nx, ny 값으로 데이터 가져오기
     @Query("SELECT * FROM dongnae WHERE x = :x AND y = :y")
     suspend fun getXY(x : Int, y : Int): List<NationalWeatherTable>
@@ -65,6 +73,26 @@ interface BookMarkerInterface { // 즐겨찾기
     // 지역 이름으로 db유무 확인
     @Query("SELECT COUNT(*) FROM my_Bookmark WHERE region = :region")
     suspend fun getReg( region: String): Int
+
+    // 지역 이름으로 x 확인
+    @Query("SELECT x FROM my_Bookmark WHERE region = :region")
+    suspend fun getX( region: String): Int
+
+    // 지역 이름으로 y 확인
+    @Query("SELECT y FROM my_Bookmark WHERE region = :region")
+    suspend fun getY( region: String): Int
+
+    // 지역 이름으로 code_temp 확인
+    @Query("SELECT code_temp FROM my_Bookmark WHERE region = :region")
+    suspend fun getTemp( region: String): String
+
+    // 지역 이름으로 code_temp 확인
+    @Query("SELECT code_local FROM my_Bookmark WHERE region = :region")
+    suspend fun getCodeLocal( region: String): String
+
+    // 지역 이름으로 code_temp 확인
+    @Query("SELECT num_local FROM my_Bookmark WHERE region = :region")
+    suspend fun getNumLocal( region: String): String
 
     // db insert
     @Insert

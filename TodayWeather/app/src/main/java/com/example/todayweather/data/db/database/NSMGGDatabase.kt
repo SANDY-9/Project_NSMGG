@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.util.Log
 import androidx.room.*
-import com.example.todayweather.data.db.entity.BOOKMARK_ID
 import com.example.todayweather.data.db.entity.BookmarkTable
 import com.example.todayweather.data.network.temporary.CityWeatherTable
 import com.example.todayweather.data.network.temporary.NationalWeatherTable
