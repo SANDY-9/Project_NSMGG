@@ -20,6 +20,7 @@ import com.example.todayweather.data.db.database.NSMGGDatabase.Companion.getInst
 import com.example.todayweather.data.db.database.SharedPref
 import com.example.todayweather.databinding.ActivityStartBinding
 import com.example.todayweather.helper.CalculationHelper
+import com.facebook.stetho.Stetho
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import java.util.*
 
@@ -45,6 +46,7 @@ class StartActivity : AppCompatActivity(), LocationListener {
         binding.activity = this
         NationalWeatherDB = getInstance(this)!!
         SharedPref(this,NationalWeatherDB)
+        Stetho.initializeWithDefaults(this)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
 
 
