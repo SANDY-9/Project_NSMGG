@@ -37,6 +37,7 @@ class WeatherDAO {
         }
         return find
     }
+
     //주소 3단계 이름으로 y 가져오기 : return Int
     fun YWeather(WeatherDB: NSMGGDatabase, dong: String) : Int {
         var find : Int = 0
@@ -46,10 +47,34 @@ class WeatherDAO {
         }
         return find
     }
+
     //주소 3단계 이름으로 기온코드 가져오기 : return String(주간예보 최저/최고기온 조회)
+    fun CodeTempWeather(WeatherDB: NSMGGDatabase, region: String , city : String) : String {
+        var find : String = ""
+        CoroutineScope(Dispatchers.Main).launch {
+            //항목 찾기
+            find = WeatherDB.cityWeatherInterface().getRegIdRegion(region,city)
+        }
+        return find
+    }
 
     //주소 3단계 이름으로 행정구역코드 가져오기 : return String(주간예보조 강수/날씨 조회)
+    fun CodeLocalWeather(WeatherDB: NSMGGDatabase, region: String , city : String) : String {
+        var find : String = ""
+        CoroutineScope(Dispatchers.Main).launch {
+            //항목 찾기
+            find = WeatherDB.cityWeatherInterface().getCodeLocal(region,city)
+        }
+        return find
+    }
 
     //지점코드 가져오기 : : return String
-
+    fun NumLocalWeather(WeatherDB: NSMGGDatabase, region: String , city : String) : String {
+        var find : String = ""
+        CoroutineScope(Dispatchers.Main).launch {
+            //항목 찾기
+            find = WeatherDB.cityWeatherInterface().getNumLocal(region,city)
+        }
+        return find
+    }
 }

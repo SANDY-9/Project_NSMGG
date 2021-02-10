@@ -1,5 +1,6 @@
 package com.example.todayweather.data.network.temporary
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -16,7 +17,15 @@ import com.google.gson.annotations.SerializedName
 data class CityWeatherTable(
     val region: String,
     val city: String,
-    @PrimaryKey val weeklyCode: String
+
+    @ColumnInfo(name = "num_local")
+    val num_local: String,
+
+    @ColumnInfo(name = "code_temp")
+    @PrimaryKey val codeTemp: String,
+
+    @ColumnInfo(name = "code_local")
+    val codeLocal: String
 )
 
 // retrofit을 사용한 api 통신 data class(주간 최저.고 온도)

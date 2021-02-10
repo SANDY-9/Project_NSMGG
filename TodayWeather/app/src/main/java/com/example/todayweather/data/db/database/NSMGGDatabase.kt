@@ -92,11 +92,11 @@ private fun DongnaeReadTxt(context: Context, WeatherDB: NSMGGDatabase) {
 private fun WeeklyReadTxt(context: Context, WeatherDB: NSMGGDatabase) {
 
     val assetManager: AssetManager = context.resources.assets
-    val inputStream: InputStream = assetManager.open("weekly.txt")
+    val inputStream: InputStream = assetManager.open("weekly.txt")// 집에서 다시 새로운 메모장으로 넣기
 
     inputStream.bufferedReader().readLines().forEach {
         val token = it.split("\t")
-        val input = CityWeatherTable(token[0], token[1], token[2])
+        val input = CityWeatherTable(token[0], token[1], token[2], token[3], token[4])
         CoroutineScope(Dispatchers.Main).launch {
             WeatherDB.cityWeatherInterface().insert(input)
         }
