@@ -20,7 +20,7 @@ import com.example.todayweather.ui.setting.SettingsFragment
  * @created 2021-02-03
  * @desc
  */
-class AlarmReciver : BroadcastReceiver() {
+class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         val mintent = Intent(context, AlarmIntentService::class.java)
         context?.startService(mintent)
@@ -28,10 +28,7 @@ class AlarmReciver : BroadcastReceiver() {
 
         if (intent?.action == "android.intent.action.BOOT_COMPLETED") {
             SettingsFragment().createNotificationChannel()
-            SettingsFragment().alarmBroadcastReceiver(
-                SettingsFragment.alramHour,
-                SettingsFragment.alramMin
-            )
+            SettingsFragment().alarmBroadcastReceiver(7,0)
         }
     }
 }

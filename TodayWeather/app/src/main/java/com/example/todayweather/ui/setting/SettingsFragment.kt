@@ -12,10 +12,9 @@ import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
 import androidx.preference.SwitchPreferenceCompat
 import com.example.todayweather.R
-import com.example.todayweather.push.AlarmReciver
+import com.example.todayweather.push.AlarmReceiver
 import java.util.*
 
 
@@ -26,7 +25,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-        alarmBroadcastReceiverintent = Intent(context, AlarmReciver::class.java)
+        alarmBroadcastReceiverintent = Intent(context, AlarmReceiver::class.java)
         pendingIntent = PendingIntent.getBroadcast(context, 0, alarmBroadcastReceiverintent, PendingIntent.FLAG_CANCEL_CURRENT)
         alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         // 버튼 누르면 이메일 보내기로 가기
@@ -56,6 +55,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val timeSetting  = pref?.getBoolean("timeSetting", false)
         val hourSetting  = pref?.getString("hourSetting", "오전 07")
         val minSetting  = pref?.getString("minSetting", "00")
+
+
 
         val editer : SharedPreferences.Editor = pref!!.edit()
 
@@ -92,6 +93,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    fun Time() : String{
+        val pref : SharedPreferences? = activity?.getSharedPreferences(
+                "timeSetting",
+                Activity.MODE_PRIVATE
+        )
+        val hourSetting  = pref?.getString("hourSetting", "오전 07")
+        val minSetting  = pref?.getString("minSetting", "00")
+        return "${hourSetting!!.split(" ")[1]} ${minSetting}"
+    }
 
     fun numberPickerCustom(attachment: Preference, editer: SharedPreferences.Editor, base_hour: Int, base_min: Int) {
         val d = AlertDialog.Builder(context)
@@ -138,8 +148,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             ).show()
 
             // 저장하는 코드
-            alramHour = result_hour
-            alramMin = result_min
             editer.putString("hourSetting", str_hour)
             editer.putString("minSetting", str_min)
             editer.apply()
@@ -187,11 +195,5 @@ class SettingsFragment : PreferenceFragmentCompat() {
             Log.d("[test]","createNotificationChannel")
         }
     }
-
-    companion object {
-        var alramHour = 0
-        var alramMin = 0
-    }
-
 
 }
