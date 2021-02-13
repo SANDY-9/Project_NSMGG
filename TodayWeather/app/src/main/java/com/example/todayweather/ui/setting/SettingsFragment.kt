@@ -1,10 +1,8 @@
 package com.example.todayweather.ui.setting
 
 import android.app.*
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.Intent.ACTION_SENDTO
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -132,7 +130,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if (result_min < 10){
                 str_min = "0$result_min"
             }
-            attachment.summary = "매일 $str_hour:${str_min}에 오늘 날씨에 대한 정보 알림을 받습니다."
 
             Toast.makeText(
                     context,
@@ -141,10 +138,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
             ).show()
 
             // 저장하는 코드
+            alramHour = result_hour
+            alramMin = result_min
             editer.putString("hourSetting", str_hour)
             editer.putString("minSetting", str_min)
             editer.apply()
             editer.commit()
+
+            attachment.summary = "매일 $str_hour:${str_min}에 오늘 날씨에 대한 정보 알림을 받습니다."
 
             createNotificationChannel()
             alarmBroadcastReceiver(result_hour,result_min)
@@ -170,7 +171,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         Log.d("[test]","cal : ${calendar.time}, Cal : ${Calendar.getInstance().time}")
         // With setInexactRepeating(), you have to use one of the AlarmManager interval
         // constants--in this case, AlarmManager.INTERVAL_DAY.
-        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
     }
 
     //    API26(Oreo)+ notification 작동을 위해서는 channel을 생성해야 함
@@ -186,5 +187,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             Log.d("[test]","createNotificationChannel")
         }
     }
+
+    companion object {
+        var alramHour = 0
+        var alramMin = 0
+    }
+
 
 }

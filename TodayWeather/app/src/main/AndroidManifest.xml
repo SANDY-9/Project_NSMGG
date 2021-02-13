@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 네트워크 상태 접근 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 제공되는 위치보다 더 정확한 위치 제공 -->
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/> <!-- 기기 종료시 알람 삭제 방지 -->
 
     <application
         android:allowBackup="true"
@@ -22,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.MainActivity"></activity> <!-- 푸쉬알림기능 -->
+        <activity android:name=".ui.main.MainActivity"/> <!-- 푸쉬알림기능 -->
         <service android:name=".data.network.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -31,7 +32,11 @@
 
         <receiver
             android:name=".push.AlarmReciver"
-            android:enabled="true"></receiver>
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".push.AlarmIntentService"

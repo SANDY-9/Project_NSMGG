@@ -12,6 +12,7 @@ import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.example.todayweather.R
 import com.example.todayweather.ui.main.StartActivity
+import com.example.todayweather.ui.setting.SettingsFragment
 
 /**
  * @author seungwon
@@ -24,6 +25,14 @@ class AlarmReciver : BroadcastReceiver() {
         val mintent = Intent(context, AlarmIntentService::class.java)
         context?.startService(mintent)
         Log.d("[test]","AlarmReciver")
+
+        if (intent?.action == "android.intent.action.BOOT_COMPLETED") {
+            SettingsFragment().createNotificationChannel()
+            SettingsFragment().alarmBroadcastReceiver(
+                SettingsFragment.alramHour,
+                SettingsFragment.alramMin
+            )
+        }
     }
 }
 class AlarmIntentService : IntentService("AlarmIntentService") {

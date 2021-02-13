@@ -1,6 +1,7 @@
 package com.example.todayweather.ui.main
 
 import android.Manifest
+import android.content.ComponentName
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -48,6 +49,14 @@ class StartActivity : AppCompatActivity(), LocationListener {
         SharedPref(this,NationalWeatherDB)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
 
+
+        val receiver = ComponentName(this, AlarmReceiver::class.java)
+
+        this.packageManager.setComponentEnabledSetting(
+            receiver,
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP
+        )
 
 //        WeeklyRetrofit("경기도","성남시", 1).WeeklyRetrofit()
 //        DailyRetrofit(1).weather(convertX!!,convertY!!)
