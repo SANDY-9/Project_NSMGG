@@ -22,7 +22,6 @@ import com.example.todayweather.data.db.database.SharedPref
 import com.example.todayweather.data.db.database.repository.WeatherDAO
 import com.example.todayweather.databinding.ActivityStartBinding
 import com.example.todayweather.helper.CalculationHelper
-import com.example.todayweather.push.AlarmReceiver
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import java.util.*
 
@@ -49,15 +48,6 @@ class StartActivity : AppCompatActivity(), LocationListener {
         NationalWeatherDB = getInstance(this)!!
         SharedPref(this,NationalWeatherDB)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
-
-// 재부팅시 알람 삭제 방지
-        val receiver = ComponentName(this, AlarmReceiver::class.java)
-
-        this.packageManager.setComponentEnabledSetting(
-            receiver,
-            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP
-        )
 
 //        WeeklyRetrofit("경기도","성남시", 1).WeeklyRetrofit()
 //        DailyRetrofit(1).weather(convertX!!,convertY!!)
