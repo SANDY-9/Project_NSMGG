@@ -17,6 +17,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.todayweather.R
 import com.example.todayweather.data.network.SimpleWorker
+import com.example.todayweather.data.network.WorkerUtil
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -41,7 +42,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 context?.packageName.toString(),
                 PackageManager.GET_ACTIVITIES
         )?.versionName
-
 
 
 // 시간 수정 버튼 누를 때 dialog띄우기
@@ -81,9 +81,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
         sync?.setOnPreferenceChangeListener { preference, newValue ->
             if (sync.isChecked){
                 // 없애기
+                WorkerUtil.cancelAllWorker()
                 Log.d("[test]","체크 되어있을 때")
             }else{
-                numberPickerCustom(attachment, editer, hourSetting!!.split(" ")[1].toInt(), minSetting!!.toInt())
+                if (hourSetting!!.split(" ")[0]=="오후"){
+                    numberPickerCustom(attachment, editer, hourSetting.split(" ")[1].toInt()+12, minSetting!!.toInt())
+                }else{
+                    numberPickerCustom(attachment, editer, hourSetting.split(" ")[1].toInt(), minSetting!!.toInt())
+                }
             }
             true
         }
@@ -105,7 +110,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         numberPickerM.minValue = 0
         numberPickerM.maxValue = 59
         numberPickerM.value = base_min
-//        numberPickerM.displayedValues = arrayOf("0", "10", "20", "30", "40", "50")
 
         d.setPositiveButton("설정") { dialogInterface, i ->
             val result_hour = numberPickerH.value
@@ -140,15 +144,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             editer.commit()
 
             attachment.summary = "매일 $str_hour:${str_min}에 오늘 날씨에 대한 정보 알림을 받습니다."
-            setHour = result_hour
-            setMin = result_min
+
+            WorkerUtil.cancelAllWorker()
             createNotificationChannel()
-            DailyWorkRequeset()
-            val dailyWorkRequeset = OneTimeWorkRequestBuilder<SimpleWorker>()
-                .setInitialDelay(getTimeUsingInWorkRequest(result_hour, result_min), TimeUnit.MILLISECONDS)
-                .addTag("notify_day_by_day")
-                .build()
-            WorkManager.getInstance(requireContext()).enqueue(dailyWorkRequeset)
+            WorkerUtil.DailyWorkRequeset(result_hour, result_min)
 
 //            alarmBroadcastReceiver(result_hour,result_min)
             Log.d("[test]","re h : ${ result_hour}, re m : ${result_min}")
@@ -157,30 +156,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val alertDialog = d.create()
         alertDialog.show()
     }
-
-    fun DailyWorkRequeset(): Boolean {
-        val dailyWorkRequeset = OneTimeWorkRequestBuilder<SimpleWorker>()
-            .setInitialDelay(getTimeUsingInWorkRequest(setHour, setMin), TimeUnit.MILLISECONDS)
-            .addTag("notify_day_by_day")
-            .build()
-        WorkManager.getInstance(requireContext()).enqueue(dailyWorkRequeset)
-        return true
-    }
-
-    fun getTimeUsingInWorkRequest(hour:Int, min:Int): Long {
-        val currentDate = Calendar.getInstance()
-        val calendar: Calendar = Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
-            set(Calendar.HOUR_OF_DAY, hour)
-            set(Calendar.MINUTE, min)
-        }
-        if (calendar.before(currentDate)) {
-            Log.d("[test]","내일 알람")
-            calendar.add(Calendar.DATE, 1)
-        }
-        return calendar.timeInMillis- currentDate.timeInMillis
-    }
-
 
     //    API26(Oreo)+ notification 작동을 위해서는 channel을 생성해야 함
     fun createNotificationChannel() {
@@ -195,10 +170,4 @@ class SettingsFragment : PreferenceFragmentCompat() {
             Log.d("[test]","createNotificationChannel")
         }
     }
-
-    companion object {
-        var setHour : Int = 0
-        var setMin : Int = 0
-    }
-
 }

@@ -30,8 +30,8 @@ class MyFirebaseMessagingService  :  FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) { //
         if(remoteMessage.notification != null) {
-            var msg = remoteMessage.notification?.title
-            var title = remoteMessage.notification?.body
+            val msg = remoteMessage.notification?.title
+            val title = remoteMessage.notification?.body
             Log.d(TAG, "From: " + remoteMessage.from)
             Log.d(TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
             sendNotification(title, msg)
@@ -44,19 +44,20 @@ class MyFirebaseMessagingService  :  FirebaseMessagingService() {
             putExtra("channel_id", body)
         }
 
-        var pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        var notificationBuilder = NotificationCompat.Builder(this, "channel_id")
+        val notificationBuilder = NotificationCompat.Builder(this, "channel_id")
             .setSmallIcon(R.drawable.icon_cloud)
             .setContentTitle(title)
             .setContentText(body)
             .setAutoCancel(true)
+            .setWhen(System.currentTimeMillis())
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))
             .setSound(notificationSound)
             .setContentIntent(pendingIntent)
 
-        var notificationManager: NotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager: NotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(0, notificationBuilder.build())
     }
 }

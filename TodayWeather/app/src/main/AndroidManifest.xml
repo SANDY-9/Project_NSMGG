@@ -30,20 +30,6 @@
             </intent-filter>
         </service>
 
-        <receiver
-            android:name=".push.AlarmReceiver"
-            android:enabled="true"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name=".push.AlarmIntentService"
-            android:exported="false" />
-
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/cloud" />
