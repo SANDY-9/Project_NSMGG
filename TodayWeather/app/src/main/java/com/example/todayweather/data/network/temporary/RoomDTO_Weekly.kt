@@ -15,14 +15,17 @@ import com.google.gson.annotations.SerializedName
 // 내장 db data class
 @Entity(tableName = "weekly")
 data class CityWeatherTable(
+    @PrimaryKey val id : Int,
+
     val region: String,
+
     val city: String,
 
     @ColumnInfo(name = "num_local")
     val num_local: String,
 
     @ColumnInfo(name = "code_temp")
-    @PrimaryKey val codeTemp: String,
+    val codeTemp: String,
 
     @ColumnInfo(name = "code_local")
     val codeLocal: String

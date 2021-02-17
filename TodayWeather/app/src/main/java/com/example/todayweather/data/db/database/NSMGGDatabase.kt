@@ -93,14 +93,15 @@ private fun WeeklyReadTxt(context: Context, WeatherDB: NSMGGDatabase) {
 
     val assetManager: AssetManager = context.resources.assets
     val inputStream: InputStream = assetManager.open("weekly.txt")// 집에서 다시 새로운 메모장으로 넣기
-
+    var a = 0
     inputStream.bufferedReader().readLines().forEach {
         val token = it.split("\t")
-        val input = CityWeatherTable(token[0], token[1], token[2], token[3], token[4])
+        val input = CityWeatherTable(a, token[0], token[1], token[2], token[3], token[4])
+        a++
         CoroutineScope(Dispatchers.Main).launch {
             WeatherDB.cityWeatherInterface().insert(input)
+            Log.d("file_test", token.toString())
         }
-//            Log.d("file_test", token.toString())
     }
 // 여기까지 db생성 코드
 

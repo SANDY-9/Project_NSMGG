@@ -46,7 +46,7 @@ class StartActivity : AppCompatActivity(), LocationListener {
         binding = DataBindingUtil.setContentView<ActivityStartBinding>(this, R.layout.activity_start)
         binding.activity = this
         NationalWeatherDB = getInstance(this)!!
-        SharedPref(this,NationalWeatherDB)
+        SharedPref(this, NationalWeatherDB)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
 
 //        WeeklyRetrofit("경기도","성남시", 1).WeeklyRetrofit()
