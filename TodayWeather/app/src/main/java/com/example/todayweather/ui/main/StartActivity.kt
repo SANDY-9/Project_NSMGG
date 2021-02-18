@@ -54,17 +54,17 @@ class StartActivity : AppCompatActivity(), LocationListener {
     }
 
     // 위치파악시 GPS, Network provider사용 구분 함수
-    private fun registerLocationUpdates() {
+    fun registerLocationUpdates() :String {
         // LocationManager.GPS_PROVIDER 또는 LocationManager.NETWORK_PROVIDER 를 얻어온다.
         val provider = locationManager.getBestProvider(Criteria(), true)
         Toast.makeText(this, "GPS를 사용할 수 있습니다.", Toast.LENGTH_SHORT).show()
         if (provider == null) {
             Toast.makeText(this, "위치 정보를 사용할 수 있는 상태가 아닙니다, GPS를 켜주세요.", Toast.LENGTH_SHORT).show()
-            return
+            return "NONE GPS"
         }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            return
+            return "NONE PERMISSION"
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1f, this)
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1f, this);
@@ -85,6 +85,8 @@ class StartActivity : AppCompatActivity(), LocationListener {
                 address = getAddress(realX!!,realY!!)
             }
         }
+        locationManager.removeUpdates(this)
+        return address
     }
 
     //  버튼 클릭 이벤트
