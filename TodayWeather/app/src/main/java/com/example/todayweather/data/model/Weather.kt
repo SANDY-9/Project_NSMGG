@@ -14,9 +14,9 @@ import com.example.todayweather.helper.ConvertWeatherHelper
 
 //현재 날씨
 class CurrentWeather {
-        val date: String = ConvertDateHelper.dateFormToday()       //현재시각
-        var region: String = "-"                 //지역
-        var temperature: String = "-"            //기온
+        var date: String = ConvertDateHelper.dateFormToday()       //현재시각
+        var region: String = "지역"                               //지역
+        var temperature: String = "온도"                           //기온
         val feeltemperature: String = "-"        //체감온도
         var rainfall: String = "-"               //강수량
         var humid: String = "-"                  //습도
