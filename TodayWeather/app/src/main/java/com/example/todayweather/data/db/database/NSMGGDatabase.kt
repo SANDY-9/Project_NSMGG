@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.util.Log
 import androidx.room.*
-import com.example.todayweather.data.db.entity.BOOKMARK_ID
 import com.example.todayweather.data.db.entity.BookmarkTable
 import com.example.todayweather.data.network.temporary.CityWeatherTable
 import com.example.todayweather.data.network.temporary.NationalWeatherTable
@@ -23,7 +22,7 @@ import java.io.InputStream
  */
 
 // splash 있던 room 관련 코드를 여기에 옮기기
-@Database(entities = [NationalWeatherTable::class, CityWeatherTable::class, BookmarkTable::class], version = 1, exportSchema = false)
+@Database(entities = [NationalWeatherTable::class, CityWeatherTable::class, BookmarkTable::class], version = 3, exportSchema = false)
 abstract class NSMGGDatabase : RoomDatabase() {
     abstract fun nationalWeatherInterface(): NationalWeatherInterface
     abstract fun cityWeatherInterface(): CityWeatherInterface
@@ -35,7 +34,6 @@ abstract class NSMGGDatabase : RoomDatabase() {
             if (INSTANCE == null) {
                 synchronized(NSMGGDatabase::class) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext, NSMGGDatabase::class.java, "weatherDB")
-//                            .createFromAsset("weatherdb")//여긴 그냥 써봄 좀 있다가 테스트해봐야함
                             .build()
                 }
             } else {
@@ -94,15 +92,16 @@ private fun DongnaeReadTxt(context: Context, WeatherDB: NSMGGDatabase) {
 private fun WeeklyReadTxt(context: Context, WeatherDB: NSMGGDatabase) {
 
     val assetManager: AssetManager = context.resources.assets
-    val inputStream: InputStream = assetManager.open("weekly.txt")
-
+    val inputStream: InputStream = assetManager.open("weekly.txt")// 집에서 다시 새로운 메모장으로 넣기
+    var a = 0
     inputStream.bufferedReader().readLines().forEach {
         val token = it.split("\t")
-        val input = CityWeatherTable(token[0], token[1], token[2])
+        val input = CityWeatherTable(a, token[0], token[1], token[2], token[3], token[4])
+        a++
         CoroutineScope(Dispatchers.Main).launch {
             WeatherDB.cityWeatherInterface().insert(input)
+            Log.d("file_test", token.toString())
         }
-//            Log.d("file_test", token.toString())
     }
 // 여기까지 db생성 코드
 

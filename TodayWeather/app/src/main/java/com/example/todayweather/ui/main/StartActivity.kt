@@ -1,6 +1,7 @@
 package com.example.todayweather.ui.main
 
 import android.Manifest
+import android.content.ComponentName
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -18,6 +19,7 @@ import com.example.todayweather.R
 import com.example.todayweather.data.db.database.NSMGGDatabase
 import com.example.todayweather.data.db.database.NSMGGDatabase.Companion.getInstance
 import com.example.todayweather.data.db.database.SharedPref
+import com.example.todayweather.data.db.database.repository.WeatherDAO
 import com.example.todayweather.databinding.ActivityStartBinding
 import com.example.todayweather.helper.CalculationHelper
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -44,9 +46,8 @@ class StartActivity : AppCompatActivity(), LocationListener {
         binding = DataBindingUtil.setContentView<ActivityStartBinding>(this, R.layout.activity_start)
         binding.activity = this
         NationalWeatherDB = getInstance(this)!!
-        SharedPref(this,NationalWeatherDB)
+        SharedPref(this, NationalWeatherDB)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager // GPS정보를 어디서 얻어올 건지 초기화
-
 
 //        WeeklyRetrofit("경기도","성남시", 1).WeeklyRetrofit()
 //        DailyRetrofit(1).weather(convertX!!,convertY!!)
@@ -119,7 +120,7 @@ class StartActivity : AppCompatActivity(), LocationListener {
 //            intent.putExtra("address", address)
 //            intent.putExtra("x", realX)
 //            intent.putExtra("y", realY)// 앱 버전이 같으면 MainActivity로 이동
-            //AddressList(NationalWeatherDB)
+            WeatherDAO().AddressList(NationalWeatherDB)
             startActivity(intent)
             this.finish()
         } else if (strVersionName!=strLatestVersion) { // 앱 버전이 서로 다른 경우 끄기.

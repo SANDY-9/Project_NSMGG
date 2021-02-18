@@ -1,10 +1,8 @@
 package com.example.todayweather.ui.setting
 
 import android.app.*
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.Intent.ACTION_SENDTO
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -14,23 +12,21 @@ import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
 import androidx.preference.SwitchPreferenceCompat
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.todayweather.R
-import com.example.todayweather.push.AlarmReciver
+import com.example.todayweather.data.network.SimpleWorker
+import com.example.todayweather.data.network.WorkerUtil
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
-    lateinit var alarmMgr : AlarmManager
-    lateinit var pendingIntent : PendingIntent
-    lateinit var alarmBroadcastReceiverintent : Intent
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-        alarmBroadcastReceiverintent = Intent(context, AlarmReciver::class.java)
-        pendingIntent = PendingIntent.getBroadcast(context, 0, alarmBroadcastReceiverintent, PendingIntent.FLAG_CANCEL_CURRENT)
-        alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         // 버튼 누르면 이메일 보내기로 가기
         val peedback : Preference? = findPreference("peedback")
         peedback?.setOnPreferenceClickListener {
@@ -46,7 +42,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 context?.packageName.toString(),
                 PackageManager.GET_ACTIVITIES
         )?.versionName
-
 
 
 // 시간 수정 버튼 누를 때 dialog띄우기
@@ -85,15 +80,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val sync : SwitchPreferenceCompat? = findPreference("sync")
         sync?.setOnPreferenceChangeListener { preference, newValue ->
             if (sync.isChecked){
-                alarmMgr.cancel(pendingIntent)
+                // 없애기
+                WorkerUtil.cancelAllWorker()
                 Log.d("[test]","체크 되어있을 때")
             }else{
-                numberPickerCustom(attachment, editer, hourSetting!!.split(" ")[1].toInt(), minSetting!!.toInt())
+                if (hourSetting!!.split(" ")[0]=="오후"){
+                    numberPickerCustom(attachment, editer, hourSetting.split(" ")[1].toInt()+12, minSetting!!.toInt())
+                }else{
+                    numberPickerCustom(attachment, editer, hourSetting.split(" ")[1].toInt(), minSetting!!.toInt())
+                }
             }
             true
         }
     }
-
 
     fun numberPickerCustom(attachment: Preference, editer: SharedPreferences.Editor, base_hour: Int, base_min: Int) {
         val d = AlertDialog.Builder(context)
@@ -111,7 +110,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         numberPickerM.minValue = 0
         numberPickerM.maxValue = 59
         numberPickerM.value = base_min
-//        numberPickerM.displayedValues = arrayOf("0", "10", "20", "30", "40", "50")
 
         d.setPositiveButton("설정") { dialogInterface, i ->
             val result_hour = numberPickerH.value
@@ -132,7 +130,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if (result_min < 10){
                 str_min = "0$result_min"
             }
-            attachment.summary = "매일 $str_hour:${str_min}에 오늘 날씨에 대한 정보 알림을 받습니다."
 
             Toast.makeText(
                     context,
@@ -146,31 +143,18 @@ class SettingsFragment : PreferenceFragmentCompat() {
             editer.apply()
             editer.commit()
 
+            attachment.summary = "매일 $str_hour:${str_min}에 오늘 날씨에 대한 정보 알림을 받습니다."
+
+            WorkerUtil.cancelAllWorker()
             createNotificationChannel()
-            alarmBroadcastReceiver(result_hour,result_min)
+            WorkerUtil.DailyWorkRequeset(result_hour, result_min)
+
+//            alarmBroadcastReceiver(result_hour,result_min)
             Log.d("[test]","re h : ${ result_hour}, re m : ${result_min}")
         }
         d.setNegativeButton("취소") { dialogInterface, i -> }
         val alertDialog = d.create()
         alertDialog.show()
-    }
-
-    fun alarmBroadcastReceiver(hour:Int, min:Int) {
-        pendingIntent = PendingIntent.getBroadcast(context, 0, alarmBroadcastReceiverintent, PendingIntent.FLAG_CANCEL_CURRENT)
-
-        val calendar: Calendar = Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
-            set(Calendar.HOUR_OF_DAY, hour)
-            set(Calendar.MINUTE, min)
-        }
-        if (calendar.before(Calendar.getInstance())) {
-            Log.d("[test]","내일 알람")
-            calendar.add(Calendar.DATE, 1)
-        }
-        Log.d("[test]","cal : ${calendar.time}, Cal : ${Calendar.getInstance().time}")
-        // With setInexactRepeating(), you have to use one of the AlarmManager interval
-        // constants--in this case, AlarmManager.INTERVAL_DAY.
-        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
     }
 
     //    API26(Oreo)+ notification 작동을 위해서는 channel을 생성해야 함
@@ -186,5 +170,4 @@ class SettingsFragment : PreferenceFragmentCompat() {
             Log.d("[test]","createNotificationChannel")
         }
     }
-
 }
