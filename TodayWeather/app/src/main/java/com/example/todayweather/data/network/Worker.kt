@@ -79,9 +79,9 @@ object WorkerUtil{
         }
         if (calendar.before(currentDate)) {
             Log.d("[test]","내일 알람")
-            calendar.add(Calendar.DATE, 1)
+            calendar.add(Calendar.HOUR_OF_DAY, 24)
         }
-        Log.d("[test_time]","${calendar.timeInMillis- currentDate.timeInMillis}ms")
+        Log.d("[test_time]","${calendar.timeInMillis - currentDate.timeInMillis}ms")
         return calendar.timeInMillis- currentDate.timeInMillis
     }
 
