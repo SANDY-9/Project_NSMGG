@@ -82,6 +82,7 @@ object WorkerUtil{
             calendar.add(Calendar.DATE, 1)
         }
         Log.d("[test_time]","${calendar.timeInMillis - currentDate.timeInMillis}ms")
+        Log.d("[test_time]","${calendar.time} : calender.time, ${currentDate.time} : current.time")
         return calendar.timeInMillis- currentDate.timeInMillis
     }
 
