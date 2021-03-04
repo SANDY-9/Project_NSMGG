@@ -41,7 +41,12 @@
 
 ## 역할
 ### [SANDY-9 (feature_SunmiWork)](https://github.com/SANDY-9) ( 프로젝트 총괄 )
-- 
+- 앱 디자인 총괄
+- MVVM 패턴 설계
+- navigation 설계
 
 ### [aoqnwnd (feature_Seung)](https://github.com/aoqnwnd)
-- 
+- Database 관리
+- 환경설정 담당
+- FCM, Remote Config 담당
+- 위치 서비스
