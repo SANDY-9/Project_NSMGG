@@ -1,4 +1,5 @@
-![KakaoTalk_20210304_145055950](https://user-images.githubusercontent.com/71866565/109917717-2090e600-7cf9-11eb-9965-a6dec8a39e45.jpg)
+![image](https://user-images.githubusercontent.com/71866565/109917806-44542c00-7cf9-11eb-9655-d9a9a6ea6bbe.png)
+
 ## Project_NSMGG (날씨머꼬)
 날씨 관리 어플리케이션
 
