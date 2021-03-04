@@ -39,3 +39,9 @@
 | 데이터베이스 | Sqlite |
 | 언어 | Kotlin, Sql |
 
+## 역할
+### [SANDY-9 (feature_SunmiWork)](https://github.com/SANDY-9) ( 프로젝트 총괄 )
+- 
+
+### [aoqnwnd (feature_Seung)](https://github.com/aoqnwnd)
+- 
