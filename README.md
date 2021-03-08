@@ -4,7 +4,7 @@
 ![image](https://user-images.githubusercontent.com/71866565/109917867-651c8180-7cf9-11eb-9af9-d388993bf6bc.png)
 
 ## Project_NSMGG (날씨머꼬)
-날씨 관리 어플리케이션
+날씨 어플리케이션
 
 ## 목표
 - 우리가 만든 앱을 플레이스토어에 출시하는 것
