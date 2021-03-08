@@ -32,6 +32,7 @@ class DailyFragment : Fragment() {
         //데이터 바인딩 초기화
         binding = DataBindingUtil.inflate<FragmentDailyBinding>(inflater, R.layout.fragment_daily, container, false)
         binding.weather = weatherViewmodel
+        binding.location = locationViewModel
         binding.lifecycleOwner = this
         return binding.root
     }

@@ -9,6 +9,9 @@
         <variable
             name="weather"
             type="com.example.todayweather.viewModel.WeatherViewModel" />
+        <variable
+            name="location"
+            type="com.example.todayweather.viewModel.LocationViewModel" />
     </data>
 
 

@@ -7,6 +7,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.todayweather.data.model.CurrentWeather
 
 /**
  * @author SANDY
@@ -23,6 +24,7 @@ class LocationViewModel : ViewModel() {
     init {
         X.value = 0
         Y.value = 0
+//        location.value =
     }
 
 
