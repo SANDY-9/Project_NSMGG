@@ -1,9 +1,12 @@
 package com.example.todayweather.data.model
 
+import android.app.Application
+import android.content.Context
 import com.example.todayweather.R
 import com.example.todayweather.helper.CalculationHelper
 import com.example.todayweather.helper.ConvertDateHelper
 import com.example.todayweather.helper.ConvertWeatherHelper
+import com.example.todayweather.viewModel.LocationLiveData
 
 /**
  * @author SANDY
@@ -13,9 +16,9 @@ import com.example.todayweather.helper.ConvertWeatherHelper
  */
 
 //현재 날씨
-class CurrentWeather {
+class CurrentWeather(application: Application) {
         var date: String = ConvertDateHelper.dateFormToday()       //현재시각
-        var region: String = "지역"                               //지역
+        var region: String = "몰라"                               //지역
         var temperature: String = "온도"                           //기온
         val feeltemperature: String = "-"        //체감온도
         var rainfall: String = "-"               //강수량
@@ -27,7 +30,6 @@ class CurrentWeather {
         override fun toString(): String {
                 return "CurrentWeather(date='$date', region=$region, temperature=$temperature, feeltemperature=$feeltemperature, rainfall=$rainfall, humid=$humid, weather=$weather, wind=$wind, dust=$dust)"
         }
-
 }
 
 //오늘 날씨
