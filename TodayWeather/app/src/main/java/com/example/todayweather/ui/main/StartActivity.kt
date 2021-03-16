@@ -173,11 +173,13 @@ class StartActivity : AppCompatActivity(), LocationListener {
         val address : String = geocoder.getFromLocation(lat, lng, 1)[0].getAddressLine(0) // 현재 주소
         Log.e("[address]", address)
         // 시 구 동으로 나눔
-//        si = address.split(" ")[1]
-//        gu = address.split(" ")[2]
-//        dong = address.split(" ")[3]
-        return address
+        val si = address.split(" ")[1]
+        val gu = address.split(" ")[2]
+        val dong = address.split(" ")[3]
+        
+        return "$si $gu $dong"
     }
+
     companion object {
         var realX : Double? = null
         var realY : Double? = null

@@ -40,10 +40,6 @@ class LocationViewModel private constructor(context: Context) : ViewModel() {
 //        return LocationLiveData.get()
 //    }
 
-
-
-
-
 }
 class LocationLiveData constructor(var context: Context?) : MutableLiveData<Location>() {
     private val locationManager: LocationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager

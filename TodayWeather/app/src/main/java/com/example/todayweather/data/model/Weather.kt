@@ -19,7 +19,7 @@ import com.example.todayweather.viewModel.LocationLiveData
  */
 
 //현재 날씨
-class CurrentWeather(application: Application) {
+class CurrentWeather() {
         var date: String = ConvertDateHelper.dateFormToday()       //현재시각
         var region: String = StartActivity().getAddress(realX!!, realY!!)                              //지역
         var temperature: String = "온도"                           //기온

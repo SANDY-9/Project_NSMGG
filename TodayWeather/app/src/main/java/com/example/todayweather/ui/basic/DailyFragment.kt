@@ -1,6 +1,5 @@
 package com.example.todayweather.ui.basic
 
-import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +23,7 @@ class DailyFragment : Fragment() {
 
     lateinit var binding: FragmentDailyBinding
     val weatherViewmodel : WeatherViewModel by lazy {
-        ViewModelProvider(this, WeatherViewModel.Factory(application = Application()))
+        ViewModelProvider(this, WeatherViewModel.Factory())
                 .get(WeatherViewModel::class.java)
     }
     val locationViewModel : LocationViewModel by activityViewModels()
