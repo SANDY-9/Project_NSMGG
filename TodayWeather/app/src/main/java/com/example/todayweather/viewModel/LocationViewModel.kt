@@ -11,6 +11,11 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.todayweather.helper.CalculationHelper
+import com.example.todayweather.ui.main.StartActivity
+import com.example.todayweather.ui.main.StartActivity.Companion.convertX
+import com.example.todayweather.ui.main.StartActivity.Companion.convertY
+import com.example.todayweather.ui.main.StartActivity.Companion.realX
+import com.example.todayweather.ui.main.StartActivity.Companion.realY
 import java.util.*
 
 
@@ -42,10 +47,7 @@ class LocationViewModel private constructor(context: Context) : ViewModel() {
 }
 class LocationLiveData constructor(var context: Context?) : MutableLiveData<Location>() {
     private val locationManager: LocationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    var realX : Double? = null
-    var realY : Double? = null
-    var convertX : Int? = null
-    var convertY : Int? = null
+    var address = "위치 탐색중"
 
     companion object {
         private var sInstance: LocationLiveData? = null
@@ -58,16 +60,7 @@ class LocationLiveData constructor(var context: Context?) : MutableLiveData<Loca
             return sInstance
         }
     }
-    fun getAddress(lat: Double, lng: Double): String {
-        val geocoder = Geocoder(context, Locale.getDefault()) //주소 구하기 객체
-        val address : String = geocoder.getFromLocation(lat, lng, 1)[0].getAddressLine(0) // 현재 주소
-        Log.e("[address]", address)
-        // 시 구 동으로 나눔
-//        si = address.split(" ")[1]
-//        gu = address.split(" ")[2]
-//        dong = address.split(" ")[3]
-        return address
-    }
+
     private val listener: LocationListener = object : LocationListener {
 
         override fun onLocationChanged(location: Location) {
@@ -77,7 +70,7 @@ class LocationLiveData constructor(var context: Context?) : MutableLiveData<Loca
             convertY = CalculationHelper.convertGRID_Y(realX!!, realY!!)
             Log.d("[test_gps_viewmodel]", "x = $convertX, y = $convertY , location = $location")
 
-            val address = getAddress(realX!!,realY!!)
+            val address = StartActivity().getAddress(realX!!,realY!!)
             Log.d("[test_gps_viewmodel]", "$address")
         }
     }

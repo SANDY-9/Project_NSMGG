@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.MainThread
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -22,6 +23,7 @@ import com.example.todayweather.data.db.database.SharedPref
 import com.example.todayweather.data.db.database.repository.WeatherDAO
 import com.example.todayweather.databinding.ActivityStartBinding
 import com.example.todayweather.helper.CalculationHelper
+import com.example.todayweather.viewModel.LocationLiveData
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import java.util.*
 
@@ -34,11 +36,6 @@ class StartActivity : AppCompatActivity(), LocationListener {
     lateinit var address : String
 
     lateinit var NationalWeatherDB : NSMGGDatabase // room db
-
-    var realX : Double? = null
-    var realY : Double? = null
-    var convertX : Int? = null
-    var convertY : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,7 +168,7 @@ class StartActivity : AppCompatActivity(), LocationListener {
     }
 
     //  현재 주소 구하기
-    private fun getAddress(lat: Double, lng: Double): String {
+    fun getAddress(lat: Double, lng: Double): String {
         val geocoder = Geocoder(this, Locale.getDefault()) //주소 구하기 객체
         val address : String = geocoder.getFromLocation(lat, lng, 1)[0].getAddressLine(0) // 현재 주소
         Log.e("[address]", address)
@@ -180,5 +177,11 @@ class StartActivity : AppCompatActivity(), LocationListener {
 //        gu = address.split(" ")[2]
 //        dong = address.split(" ")[3]
         return address
+    }
+    companion object {
+        var realX : Double? = null
+        var realY : Double? = null
+        var convertX : Int? = null
+        var convertY : Int? = null
     }
 }

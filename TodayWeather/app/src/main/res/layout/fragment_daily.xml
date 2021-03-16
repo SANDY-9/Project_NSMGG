@@ -91,7 +91,7 @@
             android:paddingEnd="10dp"
             android:singleLine="false"
             android:textColor="#FFFFFF"
-            android:text="지역"
+            android:text="@{weather.currentWeather.region}"
             android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_gps"

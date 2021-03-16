@@ -13,6 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.todayweather.R
 import com.example.todayweather.databinding.FragmentDailyBinding
+import com.example.todayweather.ui.main.StartActivity
+import com.example.todayweather.ui.main.StartActivity.Companion.realX
+import com.example.todayweather.ui.main.StartActivity.Companion.realY
 import com.example.todayweather.viewModel.LocationLiveData
 import com.example.todayweather.viewModel.LocationViewModel
 import com.example.todayweather.viewModel.WeatherViewModel
@@ -41,8 +44,9 @@ class DailyFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.buttonGps.setOnClickListener {
             Toast.makeText(context, "위치 탐색중",Toast.LENGTH_SHORT).show()
+            binding.region.text = StartActivity().getAddress(realX!!,realY!!)
             LocationLiveData.get(context)!!.observe(viewLifecycleOwner, Observer {
-                binding.region.text = "위치 탐색중"
+//                binding.region.text = "위치 탐색중"
             })
         }
     }
