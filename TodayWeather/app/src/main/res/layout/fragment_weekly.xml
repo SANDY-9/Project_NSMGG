@@ -3,7 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <data>
+        <variable
+            name="weather_weekly"
+            type="com.example.todayweather.viewModel.WeatherViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -95,7 +99,7 @@
                     android:letterSpacing="-0.07"
                     android:paddingEnd="10dp"
                     android:singleLine="false"
-                    android:text="서울특별시 성동구 성수1동"
+                    android:text="@{weather_weekly.weeklyWeather.region}"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="@+id/button_gps2"

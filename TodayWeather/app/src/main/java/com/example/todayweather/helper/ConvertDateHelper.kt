@@ -67,12 +67,4 @@ object ConvertDateHelper {
         return result
     }
 
-//    fun dateFormLocation() : String{
-//        val result = StartActivity().registerLocationUpdates()
-//        return if (result!="NONE GPS" && result!="NONE PERMISSION"){
-//            result
-//        }else{
-//            "위치 서비스나 데이터를 켜주세요."
-//        }
-//    }
 }

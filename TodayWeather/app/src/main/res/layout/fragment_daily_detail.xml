@@ -4,6 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="weather_detail"
+            type="com.example.todayweather.viewModel.WeatherViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -58,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
-            android:text="DATE"
+            android:text="@{weather_detail.DailyWeather.date}"
             android:textColor="#FFFFFF"
             android:textSize="17dp"
             android:textStyle="bold"
@@ -89,7 +94,7 @@
             android:letterSpacing="-0.07"
             android:paddingEnd="10dp"
             android:singleLine="false"
-            android:text="지역"
+            android:text="@{weather_detail.DailyWeather.region}"
             android:textColor="#FFFFFF"
             android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"

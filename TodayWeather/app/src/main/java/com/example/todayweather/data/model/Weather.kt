@@ -37,8 +37,8 @@ class CurrentWeather() {
 
 //오늘 날씨
 class DailyWeather {
-        var date: String = "-"                   //날짜
-        var region: String = "-"                 //지역
+        var date: String = ConvertDateHelper.dateFormToday()                   //날짜
+        var region: String = StartActivity().getAddress(realX!!, realY!!) //지역
         var fcstTime: String = "-"               //시간
         var temperature: String = "-"            //온도
         var weather: String = "-"                //날씨
@@ -52,8 +52,8 @@ class DailyWeather {
 
 //주간 날씨
 class WeeklyWeather {
-        var region: String = "-"                 //지역
-        var date: String = "-"                   //날짜
+        var date: String = ConvertDateHelper.dateFormToday()                   //날짜
+        var region: String = StartActivity().getAddress(realX!!, realY!!)      //지역
         var rainPossible: Int = 0            //강수확률
         var weather: String = "-"               //날씨
         var tempMin: Int = 0                  //최저기온
