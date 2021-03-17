@@ -7,6 +7,9 @@
         <variable
             name="weather_weekly"
             type="com.example.todayweather.viewModel.WeatherViewModel" />
+        <variable
+            name="location"
+            type="com.example.todayweather.viewModel.LocationViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -91,7 +94,7 @@
                     app:srcCompat="@drawable/gps" />
 
                 <TextView
-                    android:id="@+id/region2"
+                    android:id="@+id/region"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
@@ -99,7 +102,7 @@
                     android:letterSpacing="-0.07"
                     android:paddingEnd="10dp"
                     android:singleLine="false"
-                    android:text="@{weather_weekly.weeklyWeather.region}"
+                    android:text="@{location.getAddress()}"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="@+id/button_gps2"

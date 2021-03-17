@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.todayweather.data.model.CurrentWeather
 import com.example.todayweather.data.model.DailyWeather
 import com.example.todayweather.data.model.WeeklyWeather
+import com.example.todayweather.data.network.RetrofitNetWorkImpl
+import com.example.todayweather.data.network.WeatherAPIService
 import com.example.todayweather.helper.ConvertDateHelper
 
 /**
@@ -34,6 +36,6 @@ class WeatherViewModel() : ViewModel() {
         }
     }
     fun setCurrentWeather () {
-        
+
     }
 }

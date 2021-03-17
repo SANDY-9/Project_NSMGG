@@ -22,28 +22,28 @@ import com.example.todayweather.viewModel.WeatherViewModel
 class CurrentFragment : Fragment() {
 
     lateinit var binding : FragmentDailyDetailBinding
-    val weatherViewmodel : WeatherViewModel by lazy {
-        ViewModelProvider(this, WeatherViewModel.Factory())
-                .get(WeatherViewModel::class.java)
-    }
+    val weatherViewmodel : WeatherViewModel by activityViewModels()
     val locationViewModel : LocationViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate<FragmentDailyDetailBinding>(inflater, R.layout.fragment_daily_detail, container, false)
         binding.weatherDetail  = weatherViewmodel
+        binding.location = locationViewModel
         binding.lifecycleOwner = this
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.buttonGps.setOnClickListener {
-            Toast.makeText(context, "위치 탐색중", Toast.LENGTH_SHORT).show()
-            binding.region.text = StartActivity().getAddress(realX!!,realY!!)
-            LocationLiveData.get(context)!!.observe(viewLifecycleOwner, Observer {
-//                binding.region.text = "위치 탐색중"
-            })
-        }
+//        binding.buttonGps.setOnClickListener {
+//            Toast.makeText(context, "위치 탐색중", Toast.LENGTH_SHORT).show()
+//            LocationLiveData.get(context)?.observe(viewLifecycleOwner, Observer {
+//                LocationViewModel().setLocation(it)
+//            })
+//            binding.region.text = StartActivity().getAddress(realX!!,realY!!)
+//        }
     }
 }

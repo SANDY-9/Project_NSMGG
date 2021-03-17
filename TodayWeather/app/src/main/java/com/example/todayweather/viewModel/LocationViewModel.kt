@@ -1,6 +1,7 @@
 package com.example.todayweather.viewModel
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
 import android.location.Geocoder
 import android.location.Location
@@ -8,14 +9,20 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.util.Log
 import androidx.annotation.MainThread
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.todayweather.helper.CalculationHelper
 import com.example.todayweather.ui.main.StartActivity
 import com.example.todayweather.ui.main.StartActivity.Companion.convertX
 import com.example.todayweather.ui.main.StartActivity.Companion.convertY
+import com.example.todayweather.ui.main.StartActivity.Companion.dong_object
+import com.example.todayweather.ui.main.StartActivity.Companion.gu_object
 import com.example.todayweather.ui.main.StartActivity.Companion.realX
 import com.example.todayweather.ui.main.StartActivity.Companion.realY
+import com.example.todayweather.ui.main.StartActivity.Companion.si_object
+import java.security.acl.Owner
 import java.util.*
 
 
@@ -25,25 +32,37 @@ import java.util.*
  * @created 2021-01-30
  * @desc 위치정보 관련 모든 처리 뷰모델(지역 이름, 위도, 경도, x,y 등)
  */
-class LocationViewModel private constructor(context: Context) : ViewModel() {
+class LocationViewModel() : ViewModel() {
 
-    var location : MutableLiveData<Location> = MutableLiveData<Location>()
-    var X : MutableLiveData<Int> = MutableLiveData<Int>()
-    var Y : MutableLiveData<Int> = MutableLiveData<Int>()
+    val location : MutableLiveData<Location> = MutableLiveData<Location>()
+    val address : MutableLiveData<String> = MutableLiveData<String>()
+    val X : MutableLiveData<Int> = MutableLiveData<Int>()
+    val Y : MutableLiveData<Int> = MutableLiveData<Int>()
 
     init {
         X.value = 0
         Y.value = 0
-//        location.value = LocationLiveData()
+        address.value = "${si_object} ${gu_object} ${dong_object}"
     }
-//    fun getLoction() : MutableLiveData<Location>{
-//        return LocationLiveData.get()
-//    }
+    fun setLocation(location: Location) {
+        this.location.value = location
+        X.value = CalculationHelper.convertGRID_X(location.latitude,location.longitude)
+        Y.value = CalculationHelper.convertGRID_Y(location.latitude,location.longitude)
+        setAddress(location.latitude,location.longitude)
+    }
+
+    fun getLocation() : Location? {
+        return location.value
+    }
+
+    fun setAddress(latitude: Double, longitude: Double) {
+        address.value = StartActivity().getAddress(latitude, longitude)
+    }
+    fun getAddress() = address.value
 
 }
 class LocationLiveData constructor(var context: Context?) : MutableLiveData<Location>() {
     private val locationManager: LocationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    var address = "위치 탐색중"
 
     companion object {
         private var sInstance: LocationLiveData? = null
@@ -60,14 +79,10 @@ class LocationLiveData constructor(var context: Context?) : MutableLiveData<Loca
     private val listener: LocationListener = object : LocationListener {
 
         override fun onLocationChanged(location: Location) {
+            LocationViewModel().setLocation(location)
             realX = location.latitude
             realY = location.longitude
-            convertX = CalculationHelper.convertGRID_X(realX!!, realY!!)
-            convertY = CalculationHelper.convertGRID_Y(realX!!, realY!!)
-            Log.d("[test_gps_viewmodel]", "x = $convertX, y = $convertY , location = $location")
-
-            val address = StartActivity().getAddress(realX!!,realY!!)
-            Log.d("[test_gps_viewmodel]", "$address")
+            LocationViewModel().address.value = StartActivity().getAddress(realX!!, realY!!)
         }
     }
 

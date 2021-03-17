@@ -8,6 +8,9 @@
         <variable
             name="weather_detail"
             type="com.example.todayweather.viewModel.WeatherViewModel" />
+        <variable
+            name="location"
+            type="com.example.todayweather.viewModel.LocationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,7 +97,7 @@
             android:letterSpacing="-0.07"
             android:paddingEnd="10dp"
             android:singleLine="false"
-            android:text="@{weather_detail.DailyWeather.region}"
+            android:text="@{location.getAddress()}"
             android:textColor="#FFFFFF"
             android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,6 +1,8 @@
 package com.example.todayweather.ui.basic
 
+import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,18 +24,17 @@ import com.example.todayweather.viewModel.WeatherViewModel
 class DailyFragment : Fragment() {
 
     lateinit var binding: FragmentDailyBinding
-    val weatherViewmodel : WeatherViewModel by lazy {
-        ViewModelProvider(this, WeatherViewModel.Factory())
-                .get(WeatherViewModel::class.java)
-    }
+    val weatherViewmodel : WeatherViewModel by activityViewModels()
     val locationViewModel : LocationViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         //데이터 바인딩 초기화
         binding = DataBindingUtil.inflate<FragmentDailyBinding>(inflater, R.layout.fragment_daily, container, false)
         binding.weather = weatherViewmodel
-//        binding.location = locationViewModel
+        binding.location = locationViewModel
         binding.lifecycleOwner = this
 
         return binding.root
@@ -43,10 +44,11 @@ class DailyFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.buttonGps.setOnClickListener {
             Toast.makeText(context, "위치 탐색중",Toast.LENGTH_SHORT).show()
-            binding.region.text = StartActivity().getAddress(realX!!,realY!!)
-            LocationLiveData.get(context)!!.observe(viewLifecycleOwner, Observer {
-//                binding.region.text = "위치 탐색중"
+            LocationLiveData.get(context)?.observe(viewLifecycleOwner, Observer {
+                LocationViewModel().setLocation(it)
             })
+            binding.location!!.address.value = StartActivity().getAddress(realX!!, realY!!)
+
         }
     }
 

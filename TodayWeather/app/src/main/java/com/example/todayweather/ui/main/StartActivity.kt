@@ -1,7 +1,6 @@
 package com.example.todayweather.ui.main
 
 import android.Manifest
-import android.content.ComponentName
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -12,7 +11,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.MainThread
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -23,7 +21,6 @@ import com.example.todayweather.data.db.database.SharedPref
 import com.example.todayweather.data.db.database.repository.WeatherDAO
 import com.example.todayweather.databinding.ActivityStartBinding
 import com.example.todayweather.helper.CalculationHelper
-import com.example.todayweather.viewModel.LocationLiveData
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import java.util.*
 
@@ -176,14 +173,19 @@ class StartActivity : AppCompatActivity(), LocationListener {
         val si = address.split(" ")[1]
         val gu = address.split(" ")[2]
         val dong = address.split(" ")[3]
-        
+        si_object   = si
+        gu_object   = gu
+        dong_object = dong
         return "$si $gu $dong"
     }
 
     companion object {
-        var realX : Double? = null
-        var realY : Double? = null
-        var convertX : Int? = null
-        var convertY : Int? = null
+        var realX       : Double?   = null
+        var realY       : Double?   = null
+        var convertX    : Int?      = null
+        var convertY    : Int?      = null
+        var si_object   : String?   = null
+        var gu_object   : String?   = null
+        var dong_object : String?   = null
     }
 }

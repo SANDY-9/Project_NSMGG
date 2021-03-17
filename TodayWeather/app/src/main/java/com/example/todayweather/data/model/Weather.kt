@@ -9,7 +9,6 @@ import com.example.todayweather.helper.ConvertWeatherHelper
 import com.example.todayweather.ui.main.StartActivity
 import com.example.todayweather.ui.main.StartActivity.Companion.realX
 import com.example.todayweather.ui.main.StartActivity.Companion.realY
-import com.example.todayweather.viewModel.LocationLiveData
 
 /**
  * @author SANDY
@@ -21,7 +20,7 @@ import com.example.todayweather.viewModel.LocationLiveData
 //현재 날씨
 class CurrentWeather() {
         var date: String = ConvertDateHelper.dateFormToday()       //현재시각
-        var region: String = StartActivity().getAddress(realX!!, realY!!)                              //지역
+        var region: String = "" //지역
         var temperature: String = "온도"                           //기온
         val feeltemperature: String = "-"        //체감온도
         var rainfall: String = "-"               //강수량
