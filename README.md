@@ -38,7 +38,7 @@
 | ------ | ------ |
 | 개발 툴 | Android Studio, firebase, Postman, Open API(공공데이터 포털(기상청)) |
 | 버전 관리 | GitHub |
-| 데이터베이스 | Sqlite |
+| 데이터베이스 | Room |
 | 언어 | Kotlin, Sql |
 
 ## 역할
