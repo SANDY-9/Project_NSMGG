@@ -21,16 +21,16 @@ import com.example.todayweather.viewModel.WeatherViewModel
 
 class CurrentFragment : Fragment() {
 
-    lateinit var binding : FragmentDailyDetailBinding
-    val weatherViewmodel : WeatherViewModel by activityViewModels()
-    val locationViewModel : LocationViewModel by activityViewModels()
+    lateinit var binding: FragmentDailyDetailBinding
+    val weatherViewmodel: WeatherViewModel by activityViewModels()
+    val locationViewModel: LocationViewModel by activityViewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate<FragmentDailyDetailBinding>(inflater, R.layout.fragment_daily_detail, container, false)
-        binding.weatherDetail  = weatherViewmodel
+        binding.weatherDetail = weatherViewmodel
         binding.location = locationViewModel
         binding.lifecycleOwner = this
         return binding.root
